@@ -1,6 +1,6 @@
 # run_testsforLogin.py
 import unittest
-from selenium_tests.test_loginById import LoginPageTest, CleanTextTestResult, CustomTextTestRunner
+from selenium_tests.test_loginByType import LoginPageTest, CleanTextTestResult, CustomTextTestRunner
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(LoginPageTest)
