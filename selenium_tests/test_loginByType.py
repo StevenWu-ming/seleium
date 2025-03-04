@@ -131,7 +131,7 @@ class LoginPageTest(unittest.TestCase):
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            username.send_keys("cooper001")
+            username.send_keys("cooper003")
             password.send_keys("1234Qwer")
             login_button.click()
             
