@@ -166,8 +166,3 @@ class LoginPageTest(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
-
-if __name__ == "__main__":
-    suite = unittest.TestLoader().loadTestsFromTestCase(LoginPageTest)
-    runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=0)  # 將 verbosity 設置為 0
-    runner.run(suite)
