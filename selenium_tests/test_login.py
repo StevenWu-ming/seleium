@@ -193,10 +193,11 @@ class LoginPageTest(unittest.TestCase):
             phonenumber.send_keys("13100000001")
             password.send_keys("1234Qwer")
             login_button.click()
-
+            
             # 檢查是否直接登入成功（跳過驗證碼）
             try:
-                '''# 嘗試關閉所有可能的 Pop-up
+                # 嘗試關閉所有可能的 Pop-up
+                '''
                 popup_closed = False
                 while not popup_closed:
                     try:
@@ -212,8 +213,8 @@ class LoginPageTest(unittest.TestCase):
                             popup_closed = True
                     except Exception as popup_error:
                         print(f"No more pop-ups found or failed to close: {str(popup_error)}")
-                        popup_closed = True'''
-
+                        popup_closed = True
+                '''
                 # 嘗試等待登入成功的標誌（優化後的 XPath）
                 success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
                 self.assertIn("我的钱包", success_message.text)
@@ -235,8 +236,8 @@ class LoginPageTest(unittest.TestCase):
             # 等待驗證碼輸入框出現
             verify_code_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']")))
             verify_code_input.send_keys("123456")
-
-            '''popup_closed = False
+            '''
+            popup_closed = False
             while not popup_closed:
                     try:
                         popup_close_buttons = self.wait.until(
@@ -251,8 +252,8 @@ class LoginPageTest(unittest.TestCase):
                             popup_closed = True
                     except Exception as popup_error:
                         print(f"No more pop-ups found or failed to close: {str(popup_error)}")
-                        popup_closed = True'''
-
+                        popup_closed = True
+            '''
 
             # 等待登入成功的標誌（優化後的 XPath）
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
@@ -264,6 +265,30 @@ class LoginPageTest(unittest.TestCase):
             print(f"Test Case 4 - 手機號碼登入失敗: FAILED - {str(e)}")
             self.fail()
 
+
+    def test_05_mail_login(self):
+        try:
+            # 定位並點擊「郵箱」標籤
+            phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")))
+            phone_tab.click()
+
+            # 輸入郵箱和密碼
+            email = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='text']")))
+            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
+            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
+            email.send_keys("hrtqdwmk@sharklasers.com")
+            password.send_keys("1234Qwer")
+            login_button.click()
+
+            # 等待登入成功的標誌（優化後的 XPath）
+            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
+            self.assertIn("我的钱包", success_message.text)
+            print("Test Case 2 - 郵箱登入成功: PASSED ")
+            self.assertIsNotNone(success_message)
+
+        except Exception as e:
+            print(f"Test Case 2 - 郵箱登入失敗: FAILED - {str(e)}")
+            self.fail()
 
     def tearDown(self):
         self.driver.quit()
