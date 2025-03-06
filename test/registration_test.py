@@ -14,9 +14,7 @@ def fetch_selenium_headers_and_cookies(url):
     options.add_argument("--disable-dev-shm-usage")
     options.set_capability("goog:loggingPrefs", {"performance": "ALL"})  # 啟用性能日誌
 
-    service = Service("/Users/steven/deepseek/chromedriver")  # 替換為你的 chromedriver 路徑
-    driver = webdriver.Chrome(service=service, options=options)
-    
+    driver = webdriver.Chrome(options=options)    
     try:
         driver.get(url)
         driver.implicitly_wait(10)

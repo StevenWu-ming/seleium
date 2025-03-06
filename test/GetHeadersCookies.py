@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from pprint import pprint
 import json
+import os
 
 def fetch_selenium_headers_and_cookies(url):
     # 設置 Chrome 選項
@@ -13,8 +14,7 @@ def fetch_selenium_headers_and_cookies(url):
     options.set_capability("goog:loggingPrefs", {"performance": "ALL"})  # 啟用性能日誌
 
     # 指定 Chrome 驅動路徑
-    service = Service("/Users/steven/deepseek/chromedriver")  # 替換為你的 chromedriver 路徑
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(options=options)    
     
     try:
         # 開啟網頁
@@ -54,9 +54,17 @@ if __name__ == "__main__":
     target_url = "https://uat-newplatform.mxsyl.com/"
     headers, cookies = fetch_selenium_headers_and_cookies(target_url)
 
-    # 儲存 headers 和 cookies 至檔案
+    # 獲取當前腳本所在目錄
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 確保 test 資料夾存在
+    test_dir = os.path.join(script_dir, "test")
+    if not os.path.exists(test_dir):
+        os.makedirs(test_dir)
+
+    # 儲存 headers 和 cookies 至 test 資料夾
     if headers and cookies:
-        with open("headers.txt", "w", encoding="utf-8") as f:
-            f.write(str(headers))
-        with open("cookies.txt", "w", encoding="utf-8") as f:
-            f.write(str(cookies))
+        with open(os.path.join(test_dir, "headers.txt"), "w", encoding="utf-8") as f:
+            json.dump(headers, f, ensure_ascii=False, indent=4)  # 使用 JSON 格式儲存
+        with open(os.path.join(test_dir, "cookies.txt"), "w", encoding="utf-8") as f:
+            json.dump(cookies, f, ensure_ascii=False, indent=4)  # 使用 JSON 格式儲存
