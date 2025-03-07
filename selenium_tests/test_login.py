@@ -76,7 +76,7 @@ class LoginPageTest(unittest.TestCase):
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
         #chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.get("https://uat-newplatform.mxsyl.com/zh-cn/login")
+        self.driver.get("https://uat5-newplatform.mxsyl.com/zh-cn#login")
         self.wait = WebDriverWait(self.driver, 10)
     
     def generate_random_username(self, length=8):
