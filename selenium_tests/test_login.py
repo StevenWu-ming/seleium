@@ -1,14 +1,33 @@
+# selenium_tests/test_login.py
+import os
+import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import unittest
 import time
-import sys
 import random
 import string
 from unittest.runner import TextTestResult
+from config import Config, config  # 導入 Config 和 config
+
+# 設置日誌文件路徑為 selenium_tests/test_log.log
+log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
+log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
+
+# 配置日誌，調整級別為 INFO
+logging.basicConfig(
+    level=logging.INFO,  # 改為 INFO 級別
+    format='%(asctime)s - %(levelname)s - [%(name)s] %(message)s',
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 class CleanTextTestResult(TextTestResult):
     def __init__(self, stream, descriptions, verbosity):
@@ -19,48 +38,49 @@ class CleanTextTestResult(TextTestResult):
     def addSuccess(self, test):
         super().addSuccess(test)
         self.pass_count += 1
-        # 移除 "PASS" 輸出，僅保留您自定義的 print 訊息
+        logger.info(f"測試用例通過: {test._testMethodName}")
         if self.showAll:
-            self.stream.write('')  # 空輸出，避免多餘的行
+            self.stream.write('')
         elif self.dots:
-            self.stream.write('')  # 移除點號
+            self.stream.write('')
             self.stream.flush()
 
     def addFailure(self, test, err):
         if test not in self.failures:
             super().addFailure(test, err)
             self.fail_count += 1
+        logger.error(f"測試用例失敗: {test._testMethodName} - 錯誤: {str(err[1])}")
         if self.showAll:
-            self.stream.write('')  # 移除 "FAIL" 輸出
+            self.stream.write('')
         elif self.dots:
-            self.stream.write('')  # 移除 'F'
+            self.stream.write('')
             self.stream.flush()
 
     def addError(self, test, err):
         if test not in self.errors:
             super().addError(test, err)
             self.fail_count += 1
+        logger.error(f"測試用例錯誤: {test._testMethodName} - 錯誤: {str(err[1])}")
         if self.showAll:
-            self.stream.write('')  # 移除 "ERROR" 輸出
+            self.stream.write('')
         elif self.dots:
-            self.stream.write('')  # 移除 'E'
+            self.stream.write('')
             self.stream.flush()
 
     def printErrors(self):
-        # 覆蓋 printErrors 方法，移除默認的 "ok" 和測試名稱輸出
         pass
 
     def printSummary(self):
         total = self.pass_count + self.fail_count
-        self.stream.writeln(f"\n測試結果摘要:")
-        self.stream.writeln(f"通過測試數: {self.pass_count}")
-        self.stream.writeln(f"失敗測試數: {self.fail_count}")
-        self.stream.writeln(f"總測試數: {total}")
+        logger.info(f"\n測試結果摘要:")
+        logger.info(f"通過測試數: {self.pass_count}")
+        logger.info(f"失敗測試數: {self.fail_count}")
+        logger.info(f"總測試數: {total}")
 
 class CustomTextTestRunner(unittest.TextTestRunner):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.verbosity = 0  # 設置 verbosity 為 0，防止輸出測試名稱和 "ok"
+        self.verbosity = 0
 
     def run(self, test):
         result = super().run(test)
@@ -70,225 +90,173 @@ class CustomTextTestRunner(unittest.TextTestRunner):
 
 class LoginPageTest(unittest.TestCase):
     def setUp(self):
-        self.delay_seconds = 2
+        self.delay_seconds = Config.DELAY_SECONDS  # 使用 Config.DELAY_SECONDS
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        #chrome_options.add_argument("--headless")
-        self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.get("https://uat5-newplatform.mxsyl.com/zh-cn#login")
-        self.wait = WebDriverWait(self.driver, 10)
-    
+        # chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(
+            options=chrome_options,
+            service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
+        )
+        self.driver.get(config.BASE_URL)  # 使用 config.BASE_URL
+        self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
+        logger.info(f"設置測試環境: {config.BASE_URL}")
+
     def generate_random_username(self, length=8):
-        # 定義可能的字元集（字母和數字，適合用於帳號）
-        letters_and_digits = string.ascii_lowercase + string.digits  # 小寫字母和數字
-        # 確保帳號只包含小寫字母和數字（根據網站需求調整）
+        letters_and_digits = string.ascii_lowercase + string.digits
         random_username = ''.join(random.choice(letters_and_digits) for _ in range(length))
-        return random_username
-    
+        return f"{config.INVALID_USERNAME_PREFIX}{random_username}"
 
     def test_01_check_login_button_enabled_after_username_and_password(self):
         try:
-            # 等待用戶名輸入欄位、密碼輸入欄位和登入按鈕加載
+            logger.info("開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用")
             username_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
             password_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='password']")))
             login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
 
-            # 初始檢查：按鈕是否為 disabled（未輸入任何內容時）
             initial_disabled = "disabled" in login_button.get_attribute("class")
-            print(f"未輸入任何資料 {'disabled' if initial_disabled else 'enabled'}")
+            logger.debug(f"未輸入任何資料: {'disabled' if initial_disabled else 'enabled'}")
 
-            # 輸入用戶名
             username = "cooper001"
             username_input.send_keys(username)
-            time.sleep(1)  # 等待頁面更新（根據需要調整）
+            time.sleep(self.delay_seconds)
 
-            # 中間檢查：輸入用戶名後，按鈕是否仍為 disabled（密碼未輸入）
             mid_login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
             mid_disabled = "disabled" in mid_login_button.get_attribute("class")
-            print(f"僅輸入帳號: {'disabled' if mid_disabled else 'enabled'}")
+            logger.debug(f"僅輸入帳號: {'disabled' if mid_disabled else 'enabled'}")
 
-            # 輸入密碼
             password = "1234Qwer"
             password_input.send_keys(password)
-            time.sleep(1)  # 等待頁面更新（根據需要調整）
+            time.sleep(self.delay_seconds)
 
-            # 最終檢查：輸入用戶名和密碼後，按鈕是否變為 enabled（移除 disabled）
             final_login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
             final_disabled = "disabled" in final_login_button.get_attribute("class")
-            print(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
+            logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
 
-            # 斷言：確認輸入用戶名和密碼後按鈕應為 enabled（不包含 disabled 類名）
             self.assertFalse(final_disabled, "Login button should be enabled after username and password input")
-
-            print(f"Test Case 1 - 登入按鈕檢查: PASSED")
+            logger.info("測試用例通過：登入按鈕檢查成功")
         except Exception as e:
-            print(f"Test Case 1 - 登入按鈕檢查: FAILED - {str(e)}")
+            logger.error(f"測試用例失敗：登入按鈕檢查 - 錯誤: {str(e)}")
             self.fail()
 
     def test_02_successful_login(self):
-        try:   
+        try:
+            logger.info("開始測試：帳號密碼正確登入")
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            username.send_keys("cooper005")
-            password.send_keys("1234Qwer")
+            username.send_keys(config.VALID_USERNAME)
+            password.send_keys(config.VALID_PASSWORD)
             login_button.click()
-            
 
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
-            print("Test Case 2 - 帳號密碼正確: PASSED")
-            #self.assertIsNotNone(success_message)
+            logger.info("測試用例通過：帳號密碼正確登入成功")
         except Exception as e:
-            print(f"Test Case 2 - 帳號密碼正確: FAILED - {str(e)}")
+            logger.error(f"測試用例失敗：帳號密碼正確登入 - 錯誤: {str(e)}")
             self.fail()
 
     def test_03_invalid_credentials(self):
-        try:    
+        try:
+            logger.info("開始測試：帳號密碼錯誤登入")
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            random_username = self.generate_random_username(length=8)  # 您可以調整帳號長度
+            random_username = self.generate_random_username()
             username.send_keys(random_username)
-            password.send_keys("1234Qwer")
+            password.send_keys(config.VALID_PASSWORD)
             login_button.click()
-            
+
             error_message = self.wait.until(EC.presence_of_element_located(
                 (By.XPATH, "//div[contains(text(), '您输入的密码不正确')]")
             ))
             self.assertIn("您输入的密码不正确", error_message.text)
-            print("Test Case 3 - 帳號密碼錯誤: PASSED")
-            #self.assertIsNotNone(error_message)
+            logger.info("測試用例通過：帳號密碼錯誤無法登入成功")
         except Exception as e:
-            print(f"Test Case 3 - 帳號密碼錯誤: FAILED - {str(e)}")
+            logger.error(f"測試用例失敗：帳號密碼錯誤登入 - 錯誤: {str(e)}")
             self.fail()
 
     def test_04_phonenumber_login(self):
         try:
-            # 打印頁面標題以確認加載
+            logger.info("開始測試：手機號碼登入")
             print(f"Page title: {self.driver.title}")
 
-            # 定位並點擊「手机」標籤
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
-            print("Found phone tab, clicking...")
+            logger.debug("Found phone tab, clicking...")
             phone_tab.click()
 
-            # 定位並點擊手機號碼下拉選單
             phone_dropdown = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'phone-box')]//button[contains(@class, 'select-btn')]")))
-            print("Found phone dropdown, clicking...")
+            logger.debug("Found phone dropdown, clicking...")
             phone_dropdown.click()
 
-            # 等待並選擇「+86」相關的選項
             search_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='搜索' or contains(@class, 'search')]")))
             search_input.send_keys("+86")
             china_option = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '+86')] | //li[contains(text(), '+86')]")))
-            print("Found '+86' option, clicking...")
+            logger.debug("Found '+86' option, clicking...")
             china_option.click()
 
-            # 輸入手機號和密碼
             phonenumber = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='number']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            phonenumber.send_keys("13100000001")
-            password.send_keys("1234Qwer")
+            phonenumber.send_keys(config.PHONE_NUMBER)
+            password.send_keys(config.VALID_PASSWORD)
             login_button.click()
-            
-            # 檢查是否直接登入成功（跳過驗證碼）
+
             try:
-                # 嘗試關閉所有可能的 Pop-up
-                '''
-                popup_closed = False
-                while not popup_closed:
-                    try:
-                        popup_close_buttons = self.wait.until(
-                            EC.presence_of_all_elements_located((By.XPATH, "//i[contains(@class, 'close-btn') and contains(@class, 'icon-close-simple')]"))
-                        )
-                        if popup_close_buttons:
-                            for button in popup_close_buttons:
-                                print("Found pop-up close button, clicking...")
-                                button.click()
-                                time.sleep(1)  # 等待 Pop-up 關閉
-                        else:
-                            popup_closed = True
-                    except Exception as popup_error:
-                        print(f"No more pop-ups found or failed to close: {str(popup_error)}")
-                        popup_closed = True
-                '''
-                # 嘗試等待登入成功的標誌（優化後的 XPath）
                 success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
                 self.assertIn("我的钱包", success_message.text)
-                print("Test Case 4 - 手機號碼登入成功: PASSED (直接登入成功)")
+                logger.info("測試用例通過：手機號碼直接登入成功")
                 self.assertIsNotNone(success_message)
-                return  # 直接退出函數，跳過驗證碼流程
+                return
 
             except Exception as direct_login_error:
-                print(f"直接登入失敗，可能需要驗證碼: {str(direct_login_error)}")
+                logger.warning(f"直接登入失敗，可能需要驗證碼: {str(direct_login_error)}")
 
-
-            # 定位並點擊「獲取驗證碼」按鈕
             get_code_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")))
+            logger.debug("Clicking get code button...")
             get_code_button.click()
 
-            # 等待成功提示框出現（例如包含「成功」的提示）
             success_toast = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'toast-text')]//p[contains(text(), '成功')]")))
+            logger.debug("Verification code sent successfully")
 
-            # 等待驗證碼輸入框出現
             verify_code_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']")))
-            verify_code_input.send_keys("123456")
-            '''
-            popup_closed = False
-            while not popup_closed:
-                    try:
-                        popup_close_buttons = self.wait.until(
-                            EC.presence_of_all_elements_located((By.XPATH, "//i[contains(@class, 'close-btn') and contains(@class, 'icon-close-simple')]"))
-                        )
-                        if popup_close_buttons:
-                            for button in popup_close_buttons:
-                                print("Found pop-up close button, clicking...")
-                                button.click()
-                                time.sleep(1)  # 等待 Pop-up 關閉
-                        else:
-                            popup_closed = True
-                    except Exception as popup_error:
-                        print(f"No more pop-ups found or failed to close: {str(popup_error)}")
-                        popup_closed = True
-            '''
+            verify_code_input.send_keys(config.VERIFY_CODE)
 
-            # 等待登入成功的標誌（優化後的 XPath）
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
-            print("Test Case 4 - 手機號碼登入成功: PASSED (經由驗證碼登入成功)")
+            logger.info("測試用例通過：手機號碼經由驗證碼登入成功")
             self.assertIsNotNone(success_message)
 
         except Exception as e:
-            print(f"Test Case 4 - 手機號碼登入失敗: FAILED - {str(e)}")
+            logger.error(f"測試用例失敗：手機號碼登入 - 錯誤: {str(e)}")
             self.fail()
-
 
     def test_05_mail_login(self):
         try:
-            # 定位並點擊「郵箱」標籤
+            logger.info("開始測試：郵箱登入")
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")))
             phone_tab.click()
 
-            # 輸入郵箱和密碼
             email = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='text']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            email.send_keys("hrtqdwmk@sharklasers.com")
-            password.send_keys("1234Qwer")
+            email.send_keys(config.EMAIL)
+            password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
-            # 等待登入成功的標誌（優化後的 XPath）
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
-            print("Test Case 2 - 郵箱登入成功: PASSED ")
+            logger.info("測試用例通過：郵箱登入成功")
             self.assertIsNotNone(success_message)
 
         except Exception as e:
-            print(f"Test Case 2 - 郵箱登入失敗: FAILED - {str(e)}")
+            logger.error(f"測試用例失敗：郵箱登入 - 錯誤: {str(e)}")
             self.fail()
 
     def tearDown(self):
+        logger.info("測試結束，關閉瀏覽器")
         self.driver.quit()
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
