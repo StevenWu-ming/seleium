@@ -1,5 +1,3 @@
-# selenium_tests/config.py
-
 import os
 
 class Config:
@@ -7,6 +5,9 @@ class Config:
     CHROMEDRIVER_PATH = "/Users/steven/deepseek/chromedriver"  # ChromeDriver 路徑，根據需要調整
     DELAY_SECONDS = 2
     WAIT_TIMEOUT = 10  # WebDriverWait 超時時間
+    
+    # 直接指定環境（不再依賴環境變數）
+    ENV = "TestEnv"
 
     # 測試環境配置
     class TestEnv:
@@ -40,9 +41,6 @@ class Config:
         PHONE_NUMBER = "13800000001"
         EMAIL = "prod_hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
-
-    # 根據環境變數選擇環境
-    ENV = os.getenv("TEST_ENV", "TestEnv")
 
 # 在類定義完成後設置 CURRENT_ENV 和 config
 CURRENT_ENV = getattr(Config, Config.ENV)
