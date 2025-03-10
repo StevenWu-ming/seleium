@@ -6,46 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from pprint import pprint
 import json
 
-# 動態抓取 headers 和 cookies 的函數（來自之前的修復版本）
-def fetch_selenium_headers_and_cookies(url):
-    options = Options()
-    options.headless = True  # 無頭模式
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.set_capability("goog:loggingPrefs", {"performance": "ALL"})  # 啟用性能日誌
 
-    driver = webdriver.Chrome(options=options)    
-    try:
-        driver.get(url)
-        driver.implicitly_wait(10)
-
-        # 獲取網絡請求的性能日誌
-        logs = driver.get_log("performance")
-        headers = {}
-        
-        # 解析日誌以提取 headers
-        for entry in logs:
-            message = json.loads(entry['message'])['message']
-            if message['method'] == 'Network.requestWillBeSent':
-                request = message['params']['request']
-                if request['url'] == url:  # 只提取目標 URL 的請求
-                    headers = request['headers']
-                    break
-
-        # 獲取 cookies
-        cookies = driver.get_cookies()
-        cookies_dict = {cookie['name']: cookie['value'] for cookie in cookies}
-
-        # 打印 headers 和 cookies
-        print("Fetched Headers:")
-        pprint(headers)
-        print("\nFetched Cookies:")
-        pprint(cookies_dict)
-        
-        return headers, cookies_dict
-    
-    finally:
-        driver.quit()
 
 # 修改後的註冊帳號函數
 def register_accounts():
@@ -53,8 +14,38 @@ def register_accounts():
     api_url = "https://uat-newplatform.mxsyl.com/v1/member/auth/registerbyuserpwd"
     
     # 獲取動態 headers 和 cookies
-    target_url = "https://uat-newplatform.mxsyl.com/"
-    headers, cookies = fetch_selenium_headers_and_cookies(target_url)
+    headers = {
+        'accept': 'application/json, text/plain, */*',
+        'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'apm-request-id': '968b34647625c745',
+        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJubyI6ImExMjNmNzI1YzVkZTlmMjZjZTQzNmU4NzI2NjljYWUwIiwidmUiOiIiLCJsYSI6ImVuLXVzIiwidGkiOiIxIiwidWEiOiJmSzNyMUJ2OU1nbjMyTXFUY1Y5cGl5ZE96ekxnSWJUeWNjSVk2UFJrZkt5N3Y0REkrMnN2YVJaR1FWZ2ZZcnJ6eUpBZlVBcGdLVm9GS2NWNHF3dGF6ZVpGdHYvQWh0VERteU1kSk5pblpBbmI0dFpjdTVUdlorQU1KZVZQd2wzSGhSdDBHOC9oWHRnOXNIbU1RSk5DL0tJMnpiMWQyVWltSStZT1JzY2JlT29VWkZRVHREbU9LMmhnNDRqOHhORTUiLCJpYXQiOiIxNzQxNTc2MTM3IiwiZG8iOiJ1YXQtbmV3cGxhdGZvcm0ubXhzeWwuY29tIiwicmUiOiIxNzQ0MTk2OTM3IiwibmJmIjoxNzQxNTc2MTM3LCJleHAiOjE3NDE2MDQ5MzcsImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCJ9.NMeHZqtg5Smya42pCRK5q6PPkheAo6ttnlzUpNv6KII',
+        'cache-control': 'no-store,no-cache',
+        'content-type': 'application/json;charset=utf-8',
+        'fp-visitor-id': 'nd8ffe2F0m1obxmzSvhh',
+        'lang': 'en-us',
+        'ngsw-bypass': 'true',
+        'priority': 'u=1, i',
+        'referer': 'https://uat-newplatform.mxsyl.com/en-us/casino/category/1152546797191237',
+        'sec-ch-ua': '"Chromium";v="134", "Not:A-Brand";v="24", "Microsoft Edge";v="134"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"macOS"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0'
+    }
+
+    cookies = {
+        '_ga': 'GA1.1.770330830.1741144518',
+        '_hjSessionUser_3823075': 'eyJpZCI6ImM2ZDg0NTMyLWMwYjYtNTBlZi05ODg2LTg2NzIzMzQzYWMyZiIsImNyZWF0ZWQiOjE3NDExNDQ4Mjk5MDQsImV4aXN0aW5nIjp0cnVlfQ==',
+        '_vid_t': 'b3y+hLkZPHNIXlsrAvj26nWMlsiy4cddQ2+rDQqqQcWJDUwrbJ6FBWXCCZK1tWpQDWny8JaZYFGylw==',
+        '_hjSession_3823075': 'eyJpZCI6IjM0M2EzOTJlLTAxZDItNGE1My05ZTE0LWQwMTRiMmQ5ZDAxMyIsImMiOjE3NDE1NzQ4MzgzMzQsInMiOjEsInIiOjEsInNiIjowLCJzciI6MCwic2UiOjAsImZzIjowLCJzcCI6MH0=',
+        '_hjHasCachedUserAttributes': 'true',
+        'JSESSIONID': '474CE228F3161CC85939C4A39CBD6C94',
+        '_hjUserAttributesHash': '1137861a9474880520c99bfc70722e34',
+        '_ga_DP31FC7D8Z': 'GS1.1.1741574838.8.1.1741576165.0.0.0',
+        '_ga_2RY83PV4BH': 'GS1.1.1741574838.8.1.1741576165.0.0.1213001250'
+    }
 
     # 獲取用戶輸入
     prefix = input("請輸入帳號前綴（例如 cooper）：")
