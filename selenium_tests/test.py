@@ -113,17 +113,22 @@ class LoginPageTest(unittest.TestCase):
             email = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='text']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            email.send_keys(config.EMAIL)
+            email.send_keys(config.INVALID_EMAIL)
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
-            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
-            self.assertIn("我的钱包", success_message.text)
-            logger.info("測試用例通過：郵箱登入成功")
-            self.assertIsNotNone(success_message)
+            error_message = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//div[contains(text(), '邮箱与密码不匹配')]")
+            ))
+            logger.debug("Found error message for invalid email ")
+            
+            # 驗證錯誤訊息
+            self.assertIn("邮箱与密码不匹配", error_message.text)  # 根據實際的錯誤訊息文字調整
+            logger.info("測試用例通過：錯誤郵箱登入測試")
+            self.assertIsNotNone(error_message)
 
         except Exception as e:
-            logger.error(f"測試用例失敗：郵箱登入 - 錯誤: {str(e)}")
+            logger.error(f"測試用例失敗：錯誤郵箱登入測試 - 錯誤: {str(e)}")
             self.fail()
     
     def tearDown(self):

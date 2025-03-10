@@ -14,6 +14,11 @@ def generate_japanese_phone_number():
     remaining_digits = ''.join([str(random.randint(0, 9)) for _ in range(8)])
     return prefix + remaining_digits
 
+def generate_random_email():
+    """生成隨機的 Gmail 地址"""
+    username = generate_random_username()
+    return f"{username}@gmail.com"
+
 class Config:
         # 通用配置
         CHROMEDRIVER_PATH = "/Users/steven/deepseek/chromedriver"  # ChromeDriver 路徑，根據需要調整
@@ -31,6 +36,7 @@ class Config:
             VALID_PASSWORD = "1234Qwer"
             INVALID_USERNAME_PREFIX = generate_random_username()
             INVALID_PHONE_NUMBER = generate_japanese_phone_number()
+            INVALID_EMAIL = generate_random_email()
             PHONE_NUMBER = "13100000001"
             EMAIL = "hrtqdwmk@sharklasers.com"
             VERIFY_CODE = "123456"
@@ -41,7 +47,9 @@ class Config:
             LOGIN_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
             VALID_USERNAME = "dev_cooper005"
             VALID_PASSWORD = "Dev1234Qwer"
-            INVALID_USERNAME_PREFIX = "dev_random"
+            INVALID_USERNAME_PREFIX = generate_random_username()
+            INVALID_PHONE_NUMBER = generate_japanese_phone_number()
+            INVALID_EMAIL = generate_random_email()
             PHONE_NUMBER = "13900000001"
             EMAIL = "dev_hrtqdwmk@sharklasers.com"
             VERIFY_CODE = "123456"
@@ -52,7 +60,9 @@ class Config:
             LOGIN_URL = "https://prod-newplatform.mxsyl.com/zh-cn/login"
             VALID_USERNAME = "prod_cooper005"
             VALID_PASSWORD = "Prod1234Qwer"
-            INVALID_USERNAME_PREFIX = "prod_random"
+            INVALID_USERNAME_PREFIX = generate_random_username()
+            INVALID_PHONE_NUMBER = generate_japanese_phone_number()
+            INVALID_EMAIL = generate_random_email()           
             PHONE_NUMBER = "13800000001"
             EMAIL = "prod_hrtqdwmk@sharklasers.com"
             VERIFY_CODE = "123456"
