@@ -1,5 +1,3 @@
-import os
-import time
 import random
 import string
 
@@ -19,6 +17,7 @@ def generate_random_email():
     username = generate_random_username()
     return f"{username}@gmail.com"
 
+
 class Config:
         # 通用配置
         CHROMEDRIVER_PATH = "/Users/steven/deepseek/chromedriver"  # ChromeDriver 路徑，根據需要調整
@@ -32,6 +31,7 @@ class Config:
         class TestEnv:
             BASE_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
             LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
+            REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
             VALID_USERNAME = "cooper005"
             VALID_PASSWORD = "1234Qwer"
             INVALID_USERNAME_PREFIX = generate_random_username()
@@ -45,6 +45,7 @@ class Config:
         class DevEnv:
             BASE_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
             LOGIN_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
+            REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
             VALID_USERNAME = "dev_cooper005"
             VALID_PASSWORD = "Dev1234Qwer"
             INVALID_USERNAME_PREFIX = generate_random_username()
@@ -58,6 +59,7 @@ class Config:
         class ProdEnv:
             BASE_URL = "https://prod-newplatform.mxsyl.com/zh-cn/login"
             LOGIN_URL = "https://prod-newplatform.mxsyl.com/zh-cn/login"
+            REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
             VALID_USERNAME = "prod_cooper005"
             VALID_PASSWORD = "Prod1234Qwer"
             INVALID_USERNAME_PREFIX = generate_random_username()

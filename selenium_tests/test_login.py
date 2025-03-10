@@ -99,14 +99,9 @@ class LoginPageTest(unittest.TestCase):
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
         )
-        self.driver.get(config.BASE_URL)  # 使用 config.BASE_URL
+        self.driver.get(config.LOGIN_URL)  # 使用 config.BASE_URL
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
-        logger.info(f"設置測試環境: {config.BASE_URL}")
-
-    # def generate_random_username(self, length=8):
-    #     letters_and_digits = string.ascii_lowercase + string.digits
-    #     random_username = ''.join(random.choice(letters_and_digits) for _ in range(length))
-    #     return f"{config.INVALID_USERNAME_PREFIX}{random_username}"
+        logger.info(f"設置測試環境: {config.LOGIN_URL}")
 
     def test_01_01check_login_button_enabled_after_username_and_password(self):
         try:
@@ -117,22 +112,25 @@ class LoginPageTest(unittest.TestCase):
 
             initial_disabled = "disabled" in login_button.get_attribute("class")
             logger.debug(f"未輸入任何資料: {'disabled' if initial_disabled else 'enabled'}")
+            self.assertTrue(initial_disabled, "登入按鈕初始狀態應為 disabled")
 
             username = "cooper001"
             username_input.send_keys(username)
             time.sleep(self.delay_seconds)
 
-            mid_login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
-            mid_disabled = "disabled" in mid_login_button.get_attribute("class")
+            mid_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
+            mid_disabled = "disabled" in login_button.get_attribute("class")
             logger.debug(f"僅輸入帳號: {'disabled' if mid_disabled else 'enabled'}")
+            self.assertTrue(mid_disabled, "僅輸入用戶名後，登入按鈕應仍為 disabled")
 
             password = "1234Qwer"
             password_input.send_keys(password)
             time.sleep(self.delay_seconds)
 
-            final_login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
-            final_disabled = "disabled" in final_login_button.get_attribute("class")
+            final_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
+            final_disabled = "disabled" in login_button.get_attribute("class")
             logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
+            self.assertFalse(final_disabled, "輸入用戶名和密碼，登入按鈕應為 enabled")
 
             self.assertFalse(final_disabled, "Login button should be enabled after username and password input")
             logger.info("測試用例通過：登入按鈕檢查成功")
