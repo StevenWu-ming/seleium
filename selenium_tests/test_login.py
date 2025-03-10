@@ -72,10 +72,10 @@ class CleanTextTestResult(TextTestResult):
 
     def printSummary(self):
         total = self.pass_count + self.fail_count
-        logger.info(f"\n測試結果摘要:")
-        logger.info(f"通過測試數: {self.pass_count}")
-        logger.info(f"失敗測試數: {self.fail_count}")
-        logger.info(f"總測試數: {total}")
+        logger.info(f"\n📌測試結果摘要:")
+        logger.info(f"✅通過測試數: {self.pass_count}")
+        logger.info(f"❌失敗測試數: {self.fail_count}")
+        logger.info(f"📊總測試數: {total}")
 
 class CustomTextTestRunner(unittest.TextTestRunner):
     def __init__(self, *args, **kwargs):
@@ -103,10 +103,10 @@ class LoginPageTest(unittest.TestCase):
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
         logger.info(f"設置測試環境: {config.BASE_URL}")
 
-    def generate_random_username(self, length=8):
-        letters_and_digits = string.ascii_lowercase + string.digits
-        random_username = ''.join(random.choice(letters_and_digits) for _ in range(length))
-        return f"{config.INVALID_USERNAME_PREFIX}{random_username}"
+    # def generate_random_username(self, length=8):
+    #     letters_and_digits = string.ascii_lowercase + string.digits
+    #     random_username = ''.join(random.choice(letters_and_digits) for _ in range(length))
+    #     return f"{config.INVALID_USERNAME_PREFIX}{random_username}"
 
     def test_01_check_login_button_enabled_after_username_and_password(self):
         try:
@@ -140,7 +140,7 @@ class LoginPageTest(unittest.TestCase):
             logger.error(f"測試用例失敗：登入按鈕檢查 - 錯誤: {str(e)}")
             self.fail()
 
-    def test_02_successful_login(self):
+    def test_01_1_successful_login(self):
         try:
             logger.info("開始測試：帳號密碼正確登入")
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
@@ -157,14 +157,14 @@ class LoginPageTest(unittest.TestCase):
             logger.error(f"測試用例失敗：帳號密碼正確登入 - 錯誤: {str(e)}")
             self.fail()
 
-    def test_03_invalid_credentials(self):
+    def test_01_2_invalid_credentials(self):
         try:
             logger.info("開始測試：帳號密碼錯誤登入")
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            random_username = self.generate_random_username()
-            username.send_keys(random_username)
+            # random_username = self.generate_random_username()
+            username.send_keys(config.INVALID_USERNAME_PREFIX)
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
@@ -177,7 +177,7 @@ class LoginPageTest(unittest.TestCase):
             logger.error(f"測試用例失敗：帳號密碼錯誤登入 - 錯誤: {str(e)}")
             self.fail()
 
-    def test_04_phonenumber_login(self):
+    def test_2_phonenumber_login(self):
         try:
             logger.info("開始測試：手機號碼登入")
             print(f"Page title: {self.driver.title}")
@@ -232,7 +232,44 @@ class LoginPageTest(unittest.TestCase):
             logger.error(f"測試用例失敗：手機號碼登入 - 錯誤: {str(e)}")
             self.fail()
 
-    def test_05_mail_login(self):
+
+    def test_2_01_phonenumber__wronglogin(self):
+        try:
+            logger.info("開始測試：輸入錯誤手機號碼登入")
+            print(f"Page title: {self.driver.title}")
+
+            phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
+            logger.debug("Found phone tab, clicking...")
+            phone_tab.click()
+
+            phonenumber = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='number']")))
+            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
+            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
+            # 使用無效的手機號碼
+            # random_username = self.generate_japanese_phone_number()
+            # phonenumber.send_keys(random_username)  
+            phonenumber.send_keys(config.INVALID_PHONE_NUMBER)
+            password.send_keys(config.VALID_PASSWORD)
+            login_button.click()
+
+
+            # 等待錯誤訊息出現
+            error_message = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//div[contains(text(), '您输入的密码不正确')]")
+            ))
+            logger.debug("Found error message for invalid phone number")
+            
+            # 驗證錯誤訊息
+            self.assertIn("您输入的密码不正确", error_message.text)  # 根據實際的錯誤訊息文字調整
+            logger.info("測試用例通過：錯誤手機號碼登入測試")
+            self.assertIsNotNone(error_message)
+
+        except Exception as e:
+            logger.error(f"測試用例失敗：錯誤手機號碼登入測試 - 錯誤: {str(e)}")
+            self.fail()
+
+
+    def test_3_mail_login(self):
         try:
             logger.info("開始測試：郵箱登入")
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")))
