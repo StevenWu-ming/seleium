@@ -1,4 +1,4 @@
-# selenium_tests/test_login.py
+# selenium_tests/test_registration.py
 import os
 import logging
 from selenium import webdriver
@@ -101,10 +101,9 @@ class registrationPageTest(unittest.TestCase):
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
         logger.info(f"設置測試環境: {config.REGISTER_URL}")
 
-
     def test_01_01check_registration_button_enabled_after_username_and_password(self):
         try:
-            logger.info("開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用")
+            logger.info("開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用")
 
             close_button = self.wait.until(EC.element_to_be_clickable(
                 (By.XPATH, "//i[contains(@class, 'close-btn')]")
@@ -142,22 +141,14 @@ class registrationPageTest(unittest.TestCase):
             logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
             self.assertFalse(final_disabled, "輸入用戶名和密碼並同意條款後，註冊按鈕應為 enabled")
 
-            #優化增加判斷chackbox取消勾選後 註冊按鈕是否為disabled
-            # checkbox = self.wait.until(EC.element_to_be_clickable(
-            #     (By.XPATH, "//mat-checkbox[contains(@class, 'mat-mdc-checkbox')]//input[contains(@class, 'mdc-checkbox__native-control')]")
-            # ))
-            # checkbox.click()
-
             logger.info("測試用例通過：登入按鈕檢查成功")
         except Exception as e:
             logger.error(f"測試用例失敗：登入按鈕檢查 - 錯誤: {str(e)}")
             self.fail()
 
-
-
-    def test_01_02_registration_login(self):
+    def test_01_02_registration(self):
         try:
-            logger.info("開始測試：帳號密碼正確登入")
+            logger.info("開始測試：帳號密碼正確註冊")
 
             close_button = self.wait.until(EC.element_to_be_clickable(
                 (By.XPATH, "//i[contains(@class, 'close-btn')]")
@@ -170,10 +161,10 @@ class registrationPageTest(unittest.TestCase):
 
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
-            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
+            registration_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
             username_input.send_keys(f'A'+config.INVALID_USERNAME_PREFIX)
             password.send_keys(config.VALID_PASSWORD)
-            login_button.click()
+            registration_button.click()
 
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
@@ -182,25 +173,35 @@ class registrationPageTest(unittest.TestCase):
             logger.error(f"測試用例失敗：帳號密碼正確登入 - 錯誤: {str(e)}")
             self.fail()
 
-    # def test_01_03_invalid_credentials(self):
-    #     try:
-    #         logger.info("開始測試：帳號密碼錯誤登入")
-    #         username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
-    #         password = self.driver.find_element(By.XPATH, "//input[@type='password']")
-    #         login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-    #         # random_username = self.generate_random_username()
-    #         username.send_keys(config.INVALID_USERNAME_PREFIX)
-    #         password.send_keys(config.VALID_PASSWORD)
-    #         login_button.click()
+    def test_01_03_registration_duplicate(self):
+        try:
+            logger.info("開始測試：帳號重複無法註冊")
 
-    #         error_message = self.wait.until(EC.presence_of_element_located(
-    #             (By.XPATH, "//div[contains(text(), '您输入的密码不正确')]")
-    #         ))
-    #         self.assertIn("您输入的密码不正确", error_message.text)
-    #         logger.info("測試用例通過：帳號密碼錯誤無法登入成功")
-    #     except Exception as e:
-    #         logger.error(f"測試用例失敗：帳號密碼錯誤登入 - 錯誤: {str(e)}")
-    #         self.fail()
+            close_button = self.wait.until(EC.element_to_be_clickable(
+                (By.XPATH, "//i[contains(@class, 'close-btn')]")
+            ))
+            if close_button:
+                close_button.click()
+                print("彈出窗口已關閉")
+            else:
+                print("未找到關閉按鈕")
+
+            username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
+            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
+            registration_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
+            username_input.send_keys(config.VALID_USERNAME)
+            password.send_keys(config.VALID_PASSWORD)
+            registration_button.click()
+
+            error_message = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//div[contains(text(), '该用户名已存在')]")
+            ))            
+            self.assertIn("该用户名已存在", error_message.text)
+            logger.info("測試用例通過：重複帳號無法註冊")
+        except Exception as e:
+            logger.error(f"測試用例失敗：重複帳號註冊 - 錯誤: {str(e)}")
+            self.fail()
+
 
     # def test_02_01_phonenumber_login(self):
     #     try:

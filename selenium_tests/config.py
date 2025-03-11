@@ -32,21 +32,22 @@ class Config:
             BASE_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
             LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
             REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
-            VALID_USERNAME = "cooper005"
+            VALID_USERNAME = "cooper011"
             VALID_PASSWORD = "1234Qwer"
             INVALID_USERNAME_PREFIX = generate_random_username()
             INVALID_PHONE_NUMBER = generate_japanese_phone_number()
             INVALID_EMAIL = generate_random_email()
-            PHONE_NUMBER = "13100000001"
+            PHONE_NUMBER = "13100000027"
             EMAIL = "hrtqdwmk@sharklasers.com"
             VERIFY_CODE = "123456"
+            DP_Amount = '1'
 
         # 開發環境配置
         class DevEnv:
             BASE_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
             LOGIN_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
             REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
-            VALID_USERNAME = "dev_cooper005"
+            VALID_USERNAME = "dev_cooper007"
             VALID_PASSWORD = "Dev1234Qwer"
             INVALID_USERNAME_PREFIX = generate_random_username()
             INVALID_PHONE_NUMBER = generate_japanese_phone_number()

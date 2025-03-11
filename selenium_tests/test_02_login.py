@@ -103,79 +103,7 @@ class LoginPageTest(unittest.TestCase):
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
         logger.info(f"設置測試環境: {config.LOGIN_URL}")
 
-    def test_01_01check_login_button_enabled_after_username_and_password(self):
-        try:
-            logger.info("開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用")
-            username_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
-            password_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='password']")))
-            login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
-
-            initial_disabled = "disabled" in login_button.get_attribute("class")
-            logger.debug(f"未輸入任何資料: {'disabled' if initial_disabled else 'enabled'}")
-            self.assertTrue(initial_disabled, "登入按鈕初始狀態應為 disabled")
-
-            username = "cooper001"
-            username_input.send_keys(username)
-            time.sleep(self.delay_seconds)
-
-            mid_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
-            mid_disabled = "disabled" in login_button.get_attribute("class")
-            logger.debug(f"僅輸入帳號: {'disabled' if mid_disabled else 'enabled'}")
-            self.assertTrue(mid_disabled, "僅輸入用戶名後，登入按鈕應仍為 disabled")
-
-            password = "1234Qwer"
-            password_input.send_keys(password)
-            time.sleep(self.delay_seconds)
-
-            final_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
-            final_disabled = "disabled" in login_button.get_attribute("class")
-            logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
-            self.assertFalse(final_disabled, "輸入用戶名和密碼，登入按鈕應為 enabled")
-
-            self.assertFalse(final_disabled, "Login button should be enabled after username and password input")
-            logger.info("測試用例通過：登入按鈕檢查成功")
-        except Exception as e:
-            logger.error(f"測試用例失敗：登入按鈕檢查 - 錯誤: {str(e)}")
-            self.fail()
-
-    def test_01_02_successful_login(self):
-        try:
-            logger.info("開始測試：帳號密碼正確登入")
-            username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
-            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
-            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            username.send_keys(config.VALID_USERNAME)
-            password.send_keys(config.VALID_PASSWORD)
-            login_button.click()
-
-            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
-            self.assertIn("我的钱包", success_message.text)
-            logger.info("測試用例通過：帳號密碼正確登入成功")
-        except Exception as e:
-            logger.error(f"測試用例失敗：帳號密碼正確登入 - 錯誤: {str(e)}")
-            self.fail()
-
-    def test_01_03_invalid_credentials(self):
-        try:
-            logger.info("開始測試：帳號密碼錯誤登入")
-            username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
-            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
-            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            # random_username = self.generate_random_username()
-            username.send_keys(config.INVALID_USERNAME_PREFIX)
-            password.send_keys(config.VALID_PASSWORD)
-            login_button.click()
-
-            error_message = self.wait.until(EC.presence_of_element_located(
-                (By.XPATH, "//div[contains(text(), '您输入的密码不正确')]")
-            ))
-            self.assertIn("您输入的密码不正确", error_message.text)
-            logger.info("測試用例通過：帳號密碼錯誤無法登入成功")
-        except Exception as e:
-            logger.error(f"測試用例失敗：帳號密碼錯誤登入 - 錯誤: {str(e)}")
-            self.fail()
-
-    def test_02_01_phonenumber_login(self):
+    def test_01_01_phonenumber_login(self):
         try:
             logger.info("開始測試：手機號碼登入")
             print(f"Page title: {self.driver.title}")
@@ -231,7 +159,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
 
-    def test_02_02_phonenumber__wronglogin(self):
+    def test_01_02_phonenumber__wronglogin(self):
         try:
             logger.info("開始測試：輸入錯誤手機號碼登入")
             print(f"Page title: {self.driver.title}")
@@ -266,6 +194,77 @@ class LoginPageTest(unittest.TestCase):
             logger.error(f"測試用例失敗：錯誤手機號碼登入測試 - 錯誤: {str(e)}")
             self.fail()
 
+    def test_02_01check_login_button_enabled_after_username_and_password(self):
+        try:
+            logger.info("開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用")
+            username_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
+            password_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='password']")))
+            login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
+
+            initial_disabled = "disabled" in login_button.get_attribute("class")
+            logger.debug(f"未輸入任何資料: {'disabled' if initial_disabled else 'enabled'}")
+            self.assertTrue(initial_disabled, "登入按鈕初始狀態應為 disabled")
+
+            username = "cooper001"
+            username_input.send_keys(username)
+            time.sleep(self.delay_seconds)
+
+            mid_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
+            mid_disabled = "disabled" in login_button.get_attribute("class")
+            logger.debug(f"僅輸入帳號: {'disabled' if mid_disabled else 'enabled'}")
+            self.assertTrue(mid_disabled, "僅輸入用戶名後，登入按鈕應仍為 disabled")
+
+            password = "1234Qwer"
+            password_input.send_keys(password)
+            time.sleep(self.delay_seconds)
+
+            final_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
+            final_disabled = "disabled" in login_button.get_attribute("class")
+            logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
+            self.assertFalse(final_disabled, "輸入用戶名和密碼，登入按鈕應為 enabled")
+
+            self.assertFalse(final_disabled, "Login button should be enabled after username and password input")
+            logger.info("測試用例通過：登入按鈕檢查成功")
+        except Exception as e:
+            logger.error(f"測試用例失敗：登入按鈕檢查 - 錯誤: {str(e)}")
+            self.fail()
+
+    def test_02_02_successful_login(self):
+        try:
+            logger.info("開始測試：帳號密碼正確登入")
+            username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
+            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
+            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
+            username.send_keys(config.VALID_USERNAME)
+            password.send_keys(config.VALID_PASSWORD)
+            login_button.click()
+
+            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
+            self.assertIn("我的钱包", success_message.text)
+            logger.info("測試用例通過：帳號密碼正確登入成功")
+        except Exception as e:
+            logger.error(f"測試用例失敗：帳號密碼正確登入 - 錯誤: {str(e)}")
+            self.fail()
+
+    def test_02_03_invalid_credentials(self):
+        try:
+            logger.info("開始測試：帳號密碼錯誤登入")
+            username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
+            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
+            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
+            # random_username = self.generate_random_username()
+            username.send_keys(config.INVALID_USERNAME_PREFIX)
+            password.send_keys(config.VALID_PASSWORD)
+            login_button.click()
+
+            error_message = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//div[contains(text(), '您输入的密码不正确')]")
+            ))
+            self.assertIn("您输入的密码不正确", error_message.text)
+            logger.info("測試用例通過：帳號密碼錯誤無法登入成功")
+        except Exception as e:
+            logger.error(f"測試用例失敗：帳號密碼錯誤登入 - 錯誤: {str(e)}")
+            self.fail()
 
     def test_03_01_mail_login(self):
         try:

@@ -3,6 +3,15 @@ openvpn
 Username: cooper
 Password: rVf75qEX2ffmwiP7gT3lcZ7VwinGXCd8
 
+ 
+# 登入自動化 優化
+手機地區號登入
+判斷郵箱是否符合規範
+# 註冊自動化 優化
+用戶名/郵箱/密碼是否符合規範
+優化增加判斷chackbox取消勾選後 註冊按鈕是否為disabled
+
+
 # git指令
 git add .
 git commit -m "更新內容"

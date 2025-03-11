@@ -2,7 +2,7 @@
 import os
 import unittest
 import logging
-from test_login import LoginPageTest, CleanTextTestResult, CustomTextTestRunner
+from selenium_tests.test_02_login import LoginPageTest, CleanTextTestResult, CustomTextTestRunner
 from config import config
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
