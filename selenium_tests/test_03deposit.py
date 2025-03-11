@@ -175,6 +175,7 @@ class LoginPageTest(unittest.TestCase):
             time.sleep(self.wait_timeout)
             self.driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'end' });", target_button)
             target_button.click()
+            time.sleep(self.wait_timeout)
 
             # 等待頁面轉跳並加載完成
             self.wait.until(

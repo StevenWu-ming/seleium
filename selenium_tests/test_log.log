@@ -1,1047 +1,210 @@
-2025-03-11 16:13:32,047 - WARNING - [test_02_login] 直接登入失敗，可能需要驗證碼: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001049602d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104958934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001044b9f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000104500de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000104541e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001044f5060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000104928c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x000000010492bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010490e578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x000000010492c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001048fef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000104948a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000104948be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001049585a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:13:37,743 - ERROR - [test_02_login] 測試用例失敗：手機號碼登入 - 錯誤: Message: no such window: target window already closed
-from unknown error: web view not found
+2025-03-11 18:23:02,531 - INFO - [__main__] 開始運行測試，當前環境: https://prod-newplatform.mxsyl.com/zh-cn/login
+2025-03-11 18:23:04,895 - ERROR - [test_02_login] 測試用例錯誤: test_01_01_phonenumber_login - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
   (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x00000001049602d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104958934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001044b9f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000104493964 chromedriver + 129380
-4   chromedriver                        0x0000000104528edc cxxbridge1$string$len + 547836
-5   chromedriver                        0x0000000104541994 cxxbridge1$string$len + 648884
-6   chromedriver                        0x00000001044f5060 cxxbridge1$string$len + 335232
-7   chromedriver                        0x0000000104928c38 cxxbridge1$str$ptr + 2512864
-8   chromedriver                        0x000000010492bf58 cxxbridge1$str$ptr + 2525952
-9   chromedriver                        0x000000010490e578 cxxbridge1$str$ptr + 2404640
-10  chromedriver                        0x000000010492c818 cxxbridge1$str$ptr + 2528192
-11  chromedriver                        0x00000001048fef2c cxxbridge1$str$ptr + 2341588
-12  chromedriver                        0x0000000104948a60 cxxbridge1$str$ptr + 2643464
-13  chromedriver                        0x0000000104948be8 cxxbridge1$str$ptr + 2643856
-14  chromedriver                        0x00000001049585a8 cxxbridge1$str$ptr + 2707792
-15  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-16  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x00000001028202d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x0000000102818934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x0000000102379f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x00000001023725f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x000000010236455c cxxbridge1$string$len + 4732
+5   chromedriver                        0x0000000102365f3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x00000001023649c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x0000000102364338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x0000000102364084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x0000000102361d9c chromedriver + 187804
+10  chromedriver                        0x00000001023628c0 chromedriver + 190656
+11  chromedriver                        0x000000010237cf40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x00000001024029b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x0000000102401e80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x00000001023b5060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x00000001027e8c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x00000001027ebf58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x00000001027ce578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x00000001027ec818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x00000001027bef2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x0000000102808a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x0000000102808be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x00000001028185a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:13:37,744 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:13:54,253 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:13:54,254 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:14:05,628 - WARNING - [test_02_login] 直接登入失敗，可能需要驗證碼: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001051402d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000105138934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000104c99f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000104ce0de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000104d21e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000104cd5060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000105108c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x000000010510bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x00000001050ee578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x000000010510c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001050def2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000105128a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000105128be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001051385a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:14:08,398 - INFO - [test_02_login] 測試用例通過：手機號碼經由驗證碼登入成功
-2025-03-11 16:14:08,399 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:14:13,986 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:14:13,987 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:14:40,703 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 16:15:01,216 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001026f82d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001026f0934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102251f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102298de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001022d9e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x000000010228d060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x00000001026c0c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x00000001026c3f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x00000001026a6578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x00000001026c4818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000102696f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001026e0a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001026e0be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001026f05a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:15:01,218 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:15:54,382 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:15:54,383 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:16:17,979 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 16:16:28,646 - INFO - [test_03deposit] 頁面已完全加載完成
-2025-03-11 16:16:28,666 - INFO - [test_03deposit] 測試用例通過：充值成功提交
-2025-03-11 16:16:28,667 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:16:58,166 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:16:58,167 - INFO - [test_01_registration] 開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:17:03,432 - INFO - [test_01_registration] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:17:03,433 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:17:11,892 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:17:11,893 - INFO - [test_01_registration] 開始測試：帳號密碼正確註冊
-2025-03-11 16:17:15,783 - INFO - [test_01_registration] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:17:15,783 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:17:18,463 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:17:18,467 - INFO - [test_01_registration] 開始測試：帳號重複無法註冊
-2025-03-11 16:17:23,939 - INFO - [test_01_registration] 測試用例通過：重複帳號無法註冊
-2025-03-11 16:17:23,940 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:17:27,092 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:17:27,093 - INFO - [test_02_login] 開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:17:32,337 - INFO - [test_02_login] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:17:32,338 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:17:34,820 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:17:34,820 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:17:45,898 - ERROR - [test_02_login] 測試用例失敗：帳號密碼正確登入 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x000000010325c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000103254934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102db5f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102dfcde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102e3de80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102df1060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000103224c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000103227f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010320a578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000103228818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001031faf2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000103244a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000103244be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001032545a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:17:45,898 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:17:48,398 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:17:48,399 - INFO - [test_02_login] 開始測試：帳號密碼錯誤登入
-2025-03-11 16:17:52,184 - INFO - [test_02_login] 測試用例通過：帳號密碼錯誤無法登入成功
-2025-03-11 16:17:52,184 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:17:54,585 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:17:54,585 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:17:56,366 - ERROR - [test_02_login] 測試用例失敗：手機號碼登入 - 錯誤: Message: element click intercepted: Element <div _ngcontent-ng-c1082818829="">...</div> is not clickable at point (744, 644). Other element would receive the click: <div _ngcontent-ng-c1082818829="" class="phoneDialog-container">...</div>
+2025-03-11 18:23:06,470 - ERROR - [test_02_login] 測試用例錯誤: test_01_02_phonenumber__wronglogin - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
   (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x0000000100c5c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000100c54934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001007b5f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100802858 cxxbridge1$string$len + 406904
-4   chromedriver                        0x0000000100800de8 cxxbridge1$string$len + 400136
-5   chromedriver                        0x00000001007febfc cxxbridge1$string$len + 391452
-6   chromedriver                        0x00000001007fdff8 cxxbridge1$string$len + 388376
-7   chromedriver                        0x00000001007f2af0 cxxbridge1$string$len + 342032
-8   chromedriver                        0x00000001007f257c cxxbridge1$string$len + 340636
-9   chromedriver                        0x000000010083de80 cxxbridge1$string$len + 650144
-10  chromedriver                        0x00000001007f1060 cxxbridge1$string$len + 335232
-11  chromedriver                        0x0000000100c24c38 cxxbridge1$str$ptr + 2512864
-12  chromedriver                        0x0000000100c27f58 cxxbridge1$str$ptr + 2525952
-13  chromedriver                        0x0000000100c0a578 cxxbridge1$str$ptr + 2404640
-14  chromedriver                        0x0000000100c28818 cxxbridge1$str$ptr + 2528192
-15  chromedriver                        0x0000000100bfaf2c cxxbridge1$str$ptr + 2341588
-16  chromedriver                        0x0000000100c44a60 cxxbridge1$str$ptr + 2643464
-17  chromedriver                        0x0000000100c44be8 cxxbridge1$str$ptr + 2643856
-18  chromedriver                        0x0000000100c545a8 cxxbridge1$str$ptr + 2707792
-19  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-20  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x00000001028a82d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x00000001028a0934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x0000000102401f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x00000001023fa5f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x00000001023ec55c cxxbridge1$string$len + 4732
+5   chromedriver                        0x00000001023edf3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x00000001023ec9c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x00000001023ec338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x00000001023ec084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x00000001023e9d9c chromedriver + 187804
+10  chromedriver                        0x00000001023ea8c0 chromedriver + 190656
+11  chromedriver                        0x0000000102404f40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x000000010248a9b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x0000000102489e80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x000000010243d060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x0000000102870c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x0000000102873f58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x0000000102856578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x0000000102874818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x0000000102846f2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x0000000102890a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x0000000102890be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x00000001028a05a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:17:56,366 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:17:58,598 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:17:58,598 - INFO - [test_02_login] 開始測試：輸入錯誤手機號碼登入
-2025-03-11 16:18:01,856 - INFO - [test_02_login] 測試用例通過：錯誤手機號碼登入測試
-2025-03-11 16:18:01,856 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:18:04,187 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:18:04,187 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:18:08,070 - INFO - [test_02_login] 測試用例通過：郵箱登入成功
-2025-03-11 16:18:08,070 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:18:10,319 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:18:10,319 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:18:13,758 - INFO - [test_02_login] 測試用例通過：錯誤郵箱登入測試
-2025-03-11 16:18:13,758 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:18:16,165 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:18:16,165 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:18:30,223 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001031682d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000103160934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102cc1f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102d08de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102d49e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102cfd060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000103130c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000103133f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000103116578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000103134818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000103106f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000103150a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000103150be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001031605a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:18:30,223 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:18:59,767 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:18:59,768 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:19:11,174 - ERROR - [test_02_login] 測試用例失敗：帳號密碼正確登入 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001008d02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001008c8934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100429f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100470de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001004b1e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000100465060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000100898c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x000000010089bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010087e578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x000000010089c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010086ef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001008b8a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001008b8be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001008c85a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:19:11,176 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:19:17,494 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:19:17,495 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:19:19,243 - ERROR - [test_02_login] 測試用例失敗：手機號碼登入 - 錯誤: Message: element click intercepted: Element <div _ngcontent-ng-c1082818829="">...</div> is not clickable at point (744, 644). Other element would receive the click: <div _ngcontent-ng-c1082818829="" class="phoneDialog-container">...</div>
+2025-03-11 18:23:07,900 - ERROR - [test_02_login] 測試用例錯誤: test_02_01check_login_button_enabled_after_username_and_password - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
   (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x0000000104f882d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104f80934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000104ae1f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000104b2e858 cxxbridge1$string$len + 406904
-4   chromedriver                        0x0000000104b2cde8 cxxbridge1$string$len + 400136
-5   chromedriver                        0x0000000104b2abfc cxxbridge1$string$len + 391452
-6   chromedriver                        0x0000000104b29ff8 cxxbridge1$string$len + 388376
-7   chromedriver                        0x0000000104b1eaf0 cxxbridge1$string$len + 342032
-8   chromedriver                        0x0000000104b1e57c cxxbridge1$string$len + 340636
-9   chromedriver                        0x0000000104b69e80 cxxbridge1$string$len + 650144
-10  chromedriver                        0x0000000104b1d060 cxxbridge1$string$len + 335232
-11  chromedriver                        0x0000000104f50c38 cxxbridge1$str$ptr + 2512864
-12  chromedriver                        0x0000000104f53f58 cxxbridge1$str$ptr + 2525952
-13  chromedriver                        0x0000000104f36578 cxxbridge1$str$ptr + 2404640
-14  chromedriver                        0x0000000104f54818 cxxbridge1$str$ptr + 2528192
-15  chromedriver                        0x0000000104f26f2c cxxbridge1$str$ptr + 2341588
-16  chromedriver                        0x0000000104f70a60 cxxbridge1$str$ptr + 2643464
-17  chromedriver                        0x0000000104f70be8 cxxbridge1$str$ptr + 2643856
-18  chromedriver                        0x0000000104f805a8 cxxbridge1$str$ptr + 2707792
-19  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-20  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x00000001045502d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x0000000104548934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x00000001040a9f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x00000001040a25f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x000000010409455c cxxbridge1$string$len + 4732
+5   chromedriver                        0x0000000104095f3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x00000001040949c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x0000000104094338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x0000000104094084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x0000000104091d9c chromedriver + 187804
+10  chromedriver                        0x00000001040928c0 chromedriver + 190656
+11  chromedriver                        0x00000001040acf40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x00000001041329b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x0000000104131e80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x00000001040e5060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x0000000104518c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x000000010451bf58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x00000001044fe578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x000000010451c818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x00000001044eef2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x0000000104538a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x0000000104538be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x00000001045485a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:19:19,243 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:19:24,919 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:19:24,919 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:19:36,300 - WARNING - [test_02_login] 直接登入失敗，可能需要驗證碼: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001012c02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001012b8934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100e19f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100e60de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000100ea1e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000100e55060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000101288c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x000000010128bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010126e578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x000000010128c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010125ef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001012a8a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001012a8be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001012b85a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:19:39,539 - INFO - [test_02_login] 測試用例通過：手機號碼經由驗證碼登入成功
-2025-03-11 16:19:39,539 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:19:45,793 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:19:45,793 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:19:50,459 - INFO - [test_02_login] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:19:50,459 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:22:09,395 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:22:09,396 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:22:35,300 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001012b02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001012a8934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100e09f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100e50de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000100e91e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000100e45060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000101278c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x000000010127bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010125e578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x000000010127c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010124ef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000101298a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000101298be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001012a85a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:22:35,302 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:22:40,802 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:22:40,802 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:23:05,466 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 16:23:25,878 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001047302d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104728934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000104289f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001042d0de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000104311e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001042c5060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x00000001046f8c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x00000001046fbf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x00000001046de578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x00000001046fc818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001046cef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000104718a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000104718be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001047285a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:23:25,880 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:24:47,732 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:24:47,733 - INFO - [test_01_registration] 開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:24:52,671 - INFO - [test_01_registration] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:24:52,672 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:24:55,161 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:24:55,162 - INFO - [test_01_registration] 開始測試：帳號密碼正確註冊
-2025-03-11 16:24:59,997 - INFO - [test_01_registration] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:24:59,997 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:25:02,312 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:25:02,313 - INFO - [test_01_registration] 開始測試：帳號重複無法註冊
-2025-03-11 16:25:05,900 - INFO - [test_01_registration] 測試用例通過：重複帳號無法註冊
-2025-03-11 16:25:05,900 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:25:08,084 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:25:08,084 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:25:10,330 - ERROR - [test_02_login] 測試用例失敗：手機號碼登入 - 錯誤: Message: element click intercepted: Element <div _ngcontent-ng-c1082818829="">...</div> is not clickable at point (748, 638). Other element would receive the click: <div _ngcontent-ng-c1082818829="" class="phoneDialog-container">...</div>
+2025-03-11 18:23:09,373 - ERROR - [test_02_login] 測試用例錯誤: test_02_02_successful_login - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
   (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x000000010290c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102904934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102465f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001024b2858 cxxbridge1$string$len + 406904
-4   chromedriver                        0x00000001024b0de8 cxxbridge1$string$len + 400136
-5   chromedriver                        0x00000001024aebfc cxxbridge1$string$len + 391452
-6   chromedriver                        0x00000001024adff8 cxxbridge1$string$len + 388376
-7   chromedriver                        0x00000001024a2af0 cxxbridge1$string$len + 342032
-8   chromedriver                        0x00000001024a257c cxxbridge1$string$len + 340636
-9   chromedriver                        0x00000001024ede80 cxxbridge1$string$len + 650144
-10  chromedriver                        0x00000001024a1060 cxxbridge1$string$len + 335232
-11  chromedriver                        0x00000001028d4c38 cxxbridge1$str$ptr + 2512864
-12  chromedriver                        0x00000001028d7f58 cxxbridge1$str$ptr + 2525952
-13  chromedriver                        0x00000001028ba578 cxxbridge1$str$ptr + 2404640
-14  chromedriver                        0x00000001028d8818 cxxbridge1$str$ptr + 2528192
-15  chromedriver                        0x00000001028aaf2c cxxbridge1$str$ptr + 2341588
-16  chromedriver                        0x00000001028f4a60 cxxbridge1$str$ptr + 2643464
-17  chromedriver                        0x00000001028f4be8 cxxbridge1$str$ptr + 2643856
-18  chromedriver                        0x00000001029045a8 cxxbridge1$str$ptr + 2707792
-19  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-20  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x00000001030e02d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x00000001030d8934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x0000000102c39f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x0000000102c325f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x0000000102c2455c cxxbridge1$string$len + 4732
+5   chromedriver                        0x0000000102c25f3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x0000000102c249c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x0000000102c24338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x0000000102c24084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x0000000102c21d9c chromedriver + 187804
+10  chromedriver                        0x0000000102c228c0 chromedriver + 190656
+11  chromedriver                        0x0000000102c3cf40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x0000000102cc29b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x0000000102cc1e80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x0000000102c75060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x00000001030a8c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x00000001030abf58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x000000010308e578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x00000001030ac818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x000000010307ef2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x00000001030c8a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x00000001030c8be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x00000001030d85a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:25:10,331 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:25:12,730 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:25:12,730 - INFO - [test_02_login] 開始測試：輸入錯誤手機號碼登入
-2025-03-11 16:25:15,977 - INFO - [test_02_login] 測試用例通過：錯誤手機號碼登入測試
-2025-03-11 16:25:15,977 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:25:18,244 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:25:18,245 - INFO - [test_02_login] 開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:25:23,114 - INFO - [test_02_login] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:25:23,114 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:25:25,867 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:25:25,867 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:25:40,399 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:25:40,400 - INFO - [test_01_registration] 開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:25:45,244 - INFO - [test_01_registration] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:25:45,245 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:25:47,436 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:25:47,436 - INFO - [test_01_registration] 開始測試：帳號密碼正確註冊
-2025-03-11 16:25:51,268 - INFO - [test_01_registration] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:25:51,269 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:25:53,460 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:25:53,460 - INFO - [test_01_registration] 開始測試：帳號重複無法註冊
-2025-03-11 16:25:56,779 - INFO - [test_01_registration] 測試用例通過：重複帳號無法註冊
-2025-03-11 16:25:56,779 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:25:59,122 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:25:59,122 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:26:10,866 - WARNING - [test_02_login] 直接登入失敗，可能需要驗證碼: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000102a782d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102a70934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001025d1f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102618de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102659e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x000000010260d060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000102a40c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000102a43f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000102a26578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000102a44818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000102a16f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000102a60a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000102a60be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000102a705a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:26:14,115 - INFO - [test_02_login] 測試用例通過：手機號碼經由驗證碼登入成功
-2025-03-11 16:26:14,116 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:16,110 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:16,110 - INFO - [test_02_login] 開始測試：輸入錯誤手機號碼登入
-2025-03-11 16:26:19,395 - INFO - [test_02_login] 測試用例通過：錯誤手機號碼登入測試
-2025-03-11 16:26:19,395 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:21,561 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:21,561 - INFO - [test_02_login] 開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:26:26,254 - INFO - [test_02_login] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:26:26,254 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:28,490 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:28,491 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:26:32,388 - INFO - [test_02_login] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:26:32,389 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:34,678 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:34,678 - INFO - [test_02_login] 開始測試：帳號密碼錯誤登入
-2025-03-11 16:26:37,935 - INFO - [test_02_login] 測試用例通過：帳號密碼錯誤無法登入成功
-2025-03-11 16:26:37,935 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:40,429 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:40,429 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:26:43,736 - INFO - [test_02_login] 測試用例通過：郵箱登入成功
-2025-03-11 16:26:43,736 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:46,176 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:46,176 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:26:48,925 - INFO - [test_02_login] 測試用例通過：錯誤郵箱登入測試
-2025-03-11 16:26:48,925 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:26:51,351 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:26:51,352 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:27:13,269 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x000000010516c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000105164934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000104cc5f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000104d0cde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000104d4de80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000104d01060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000105134c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000105137f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010511a578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000105138818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010510af2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000105154a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000105154be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001051645a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:27:13,271 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:27:22,360 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:27:22,361 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:27:52,289 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000102be82d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102be0934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102741f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102788de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001027c9e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x000000010277d060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000102bb0c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000102bb3f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000102b96578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000102bb4818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000102b86f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000102bd0a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000102bd0be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000102be05a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:27:52,290 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:32:12,147 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:32:12,147 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:32:39,129 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 16:32:59,631 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x000000010309c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000103094934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102bf5f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102c3cde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102c7de80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102c31060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000103064c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000103067f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010304a578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000103068818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010303af2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000103084a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000103084be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001030945a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:32:59,632 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:33:06,348 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:33:06,349 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:33:30,438 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 16:33:42,780 - INFO - [test_03deposit] 頁面已完全加載完成
-2025-03-11 16:33:42,800 - INFO - [test_03deposit] 測試用例通過：充值成功提交
-2025-03-11 16:33:42,801 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:38:01,809 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:38:01,810 - INFO - [test_01_registration] 開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:38:07,034 - INFO - [test_01_registration] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:38:07,035 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:38:09,466 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:38:09,466 - INFO - [test_01_registration] 開始測試：帳號密碼正確註冊
-2025-03-11 16:38:13,498 - INFO - [test_01_registration] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:38:13,498 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:38:15,808 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:38:15,808 - INFO - [test_01_registration] 開始測試：帳號重複無法註冊
-2025-03-11 16:38:19,585 - INFO - [test_01_registration] 測試用例通過：重複帳號無法註冊
-2025-03-11 16:38:19,586 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:38:22,877 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:38:22,877 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:38:24,634 - ERROR - [test_02_login] 測試用例失敗：手機號碼登入 - 錯誤: Message: element click intercepted: Element <div _ngcontent-ng-c1082818829="">...</div> is not clickable at point (748, 638). Other element would receive the click: <div _ngcontent-ng-c1082818829="" class="phoneDialog-container">...</div>
+2025-03-11 18:23:10,858 - ERROR - [test_02_login] 測試用例錯誤: test_02_03_invalid_credentials - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
   (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x00000001014442d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x000000010143c934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100f9df90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100fea858 cxxbridge1$string$len + 406904
-4   chromedriver                        0x0000000100fe8de8 cxxbridge1$string$len + 400136
-5   chromedriver                        0x0000000100fe6bfc cxxbridge1$string$len + 391452
-6   chromedriver                        0x0000000100fe5ff8 cxxbridge1$string$len + 388376
-7   chromedriver                        0x0000000100fdaaf0 cxxbridge1$string$len + 342032
-8   chromedriver                        0x0000000100fda57c cxxbridge1$string$len + 340636
-9   chromedriver                        0x0000000101025e80 cxxbridge1$string$len + 650144
-10  chromedriver                        0x0000000100fd9060 cxxbridge1$string$len + 335232
-11  chromedriver                        0x000000010140cc38 cxxbridge1$str$ptr + 2512864
-12  chromedriver                        0x000000010140ff58 cxxbridge1$str$ptr + 2525952
-13  chromedriver                        0x00000001013f2578 cxxbridge1$str$ptr + 2404640
-14  chromedriver                        0x0000000101410818 cxxbridge1$str$ptr + 2528192
-15  chromedriver                        0x00000001013e2f2c cxxbridge1$str$ptr + 2341588
-16  chromedriver                        0x000000010142ca60 cxxbridge1$str$ptr + 2643464
-17  chromedriver                        0x000000010142cbe8 cxxbridge1$str$ptr + 2643856
-18  chromedriver                        0x000000010143c5a8 cxxbridge1$str$ptr + 2707792
-19  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-20  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x0000000102ba02d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x0000000102b98934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x00000001026f9f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x00000001026f25f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x00000001026e455c cxxbridge1$string$len + 4732
+5   chromedriver                        0x00000001026e5f3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x00000001026e49c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x00000001026e4338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x00000001026e4084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x00000001026e1d9c chromedriver + 187804
+10  chromedriver                        0x00000001026e28c0 chromedriver + 190656
+11  chromedriver                        0x00000001026fcf40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x00000001027829b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x0000000102781e80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x0000000102735060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x0000000102b68c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x0000000102b6bf58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x0000000102b4e578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x0000000102b6c818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x0000000102b3ef2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x0000000102b88a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x0000000102b88be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x0000000102b985a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:38:24,635 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:38:27,244 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:38:27,244 - INFO - [test_02_login] 開始測試：輸入錯誤手機號碼登入
-2025-03-11 16:38:30,625 - INFO - [test_02_login] 測試用例通過：錯誤手機號碼登入測試
-2025-03-11 16:38:30,625 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:38:32,776 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:38:32,776 - INFO - [test_02_login] 開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:38:37,938 - INFO - [test_02_login] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:38:37,938 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:38:41,529 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:38:41,530 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:38:51,928 - ERROR - [test_02_login] 測試用例失敗：帳號密碼正確登入 - 錯誤: Message: 
+2025-03-11 18:23:12,229 - ERROR - [test_02_login] 測試用例錯誤: test_03_01_mail_login - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x00000001011442d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x000000010113c934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100c9df90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100ce4de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000100d25e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000100cd9060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x000000010110cc38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x000000010110ff58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x00000001010f2578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000101110818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001010e2f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x000000010112ca60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x000000010112cbe8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x000000010113c5a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x000000010298c2d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x0000000102984934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x00000001024e5f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x00000001024de5f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x00000001024d055c cxxbridge1$string$len + 4732
+5   chromedriver                        0x00000001024d1f3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x00000001024d09c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x00000001024d0338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x00000001024d0084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x00000001024cdd9c chromedriver + 187804
+10  chromedriver                        0x00000001024ce8c0 chromedriver + 190656
+11  chromedriver                        0x00000001024e8f40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x000000010256e9b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x000000010256de80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x0000000102521060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x0000000102954c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x0000000102957f58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x000000010293a578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x0000000102958818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x000000010292af2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x0000000102974a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x0000000102974be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x00000001029845a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:38:51,930 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:38:54,345 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:38:54,345 - INFO - [test_02_login] 開始測試：帳號密碼錯誤登入
-2025-03-11 16:38:57,575 - INFO - [test_02_login] 測試用例通過：帳號密碼錯誤無法登入成功
-2025-03-11 16:38:57,575 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:39:00,751 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:39:00,751 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:39:06,783 - INFO - [test_02_login] 測試用例通過：郵箱登入成功
-2025-03-11 16:39:06,783 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:39:10,315 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:39:10,315 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:39:13,768 - INFO - [test_02_login] 測試用例通過：錯誤郵箱登入測試
-2025-03-11 16:39:13,769 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:39:16,302 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:39:16,302 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:39:30,340 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
+2025-03-11 18:23:13,691 - ERROR - [test_02_login] 測試用例錯誤: test_03_02_mail_wronglogin - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=133.0.6943.143)
 Stacktrace:
-0   chromedriver                        0x0000000100dfc2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000100df4934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100955f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x000000010099cde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001009dde80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000100991060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000100dc4c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000100dc7f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000100daa578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000100dc8818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000100d9af2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000100de4a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000100de4be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000100df45a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
+0   chromedriver                        0x00000001007e02d4 cxxbridge1$str$ptr + 2739836
+1   chromedriver                        0x00000001007d8934 cxxbridge1$str$ptr + 2708700
+2   chromedriver                        0x0000000100339f90 cxxbridge1$string$len + 93360
+3   chromedriver                        0x00000001003325f4 cxxbridge1$string$len + 62228
+4   chromedriver                        0x000000010032455c cxxbridge1$string$len + 4732
+5   chromedriver                        0x0000000100325f3c cxxbridge1$string$len + 11356
+6   chromedriver                        0x00000001003249c4 cxxbridge1$string$len + 5860
+7   chromedriver                        0x0000000100324338 cxxbridge1$string$len + 4184
+8   chromedriver                        0x0000000100324084 cxxbridge1$string$len + 3492
+9   chromedriver                        0x0000000100321d9c chromedriver + 187804
+10  chromedriver                        0x00000001003228c0 chromedriver + 190656
+11  chromedriver                        0x000000010033cf40 cxxbridge1$string$len + 105568
+12  chromedriver                        0x00000001003c29b4 cxxbridge1$string$len + 653012
+13  chromedriver                        0x00000001003c1e80 cxxbridge1$string$len + 650144
+14  chromedriver                        0x0000000100375060 cxxbridge1$string$len + 335232
+15  chromedriver                        0x00000001007a8c38 cxxbridge1$str$ptr + 2512864
+16  chromedriver                        0x00000001007abf58 cxxbridge1$str$ptr + 2525952
+17  chromedriver                        0x000000010078e578 cxxbridge1$str$ptr + 2404640
+18  chromedriver                        0x00000001007ac818 cxxbridge1$str$ptr + 2528192
+19  chromedriver                        0x000000010077ef2c cxxbridge1$str$ptr + 2341588
+20  chromedriver                        0x00000001007c8a60 cxxbridge1$str$ptr + 2643464
+21  chromedriver                        0x00000001007c8be8 cxxbridge1$str$ptr + 2643856
+22  chromedriver                        0x00000001007d85a8 cxxbridge1$str$ptr + 2707792
+23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
 
-2025-03-11 16:39:30,342 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:39:38,296 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:39:38,297 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:39:49,921 - WARNING - [test_02_login] 直接登入失敗，可能需要驗證碼: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001033cc2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001033c4934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102f25f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102f6cde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102fade80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102f61060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000103394c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000103397f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010337a578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000103398818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010336af2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001033b4a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001033b4be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001033c45a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:39:52,652 - INFO - [test_02_login] 測試用例通過：手機號碼經由驗證碼登入成功
-2025-03-11 16:39:52,653 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:39:57,684 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:39:57,685 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:40:01,466 - INFO - [test_02_login] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:40:01,466 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:40:07,245 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:40:07,245 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:40:38,925 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001032cc2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001032c4934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102e25f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102e6cde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102eade80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102e61060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000103294c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000103297f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010327a578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000103298818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x000000010326af2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001032b4a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001032b4be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001032c45a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:40:38,926 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:41:00,951 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:41:00,951 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:41:30,166 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x000000010335c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000103354934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102eb5f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102efcde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102f3de80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102ef1060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000103324c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000103327f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x000000010330a578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000103328818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001032faf2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000103344a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000103344be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001033545a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:41:30,166 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:46:38,199 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:46:38,201 - INFO - [test_01_registration] 開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:46:42,528 - INFO - [test_01_registration] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:46:42,529 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:46:45,696 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:46:45,696 - INFO - [test_01_registration] 開始測試：帳號密碼正確註冊
-2025-03-11 16:46:49,052 - INFO - [test_01_registration] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:46:49,052 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:46:51,514 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
-2025-03-11 16:46:51,514 - INFO - [test_01_registration] 開始測試：帳號重複無法註冊
-2025-03-11 16:46:55,307 - INFO - [test_01_registration] 測試用例通過：重複帳號無法註冊
-2025-03-11 16:46:55,308 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
-2025-03-11 16:46:57,712 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:46:57,712 - INFO - [test_02_login] 開始測試：手機號碼登入
-2025-03-11 16:47:08,938 - WARNING - [test_02_login] 直接登入失敗，可能需要驗證碼: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000100b142d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000100b0c934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x000000010066df90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001006b4de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001006f5e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001006a9060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000100adcc38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000100adff58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000100ac2578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000100ae0818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000100ab2f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000100afca60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000100afcbe8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000100b0c5a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:47:11,588 - INFO - [test_02_login] 測試用例通過：手機號碼經由驗證碼登入成功
-2025-03-11 16:47:11,588 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:13,789 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:13,789 - INFO - [test_02_login] 開始測試：輸入錯誤手機號碼登入
-2025-03-11 16:47:17,064 - INFO - [test_02_login] 測試用例通過：錯誤手機號碼登入測試
-2025-03-11 16:47:17,064 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:19,400 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:19,401 - INFO - [test_02_login] 開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用
-2025-03-11 16:47:24,121 - INFO - [test_02_login] 測試用例通過：登入按鈕檢查成功
-2025-03-11 16:47:24,122 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:26,161 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:26,161 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
-2025-03-11 16:47:30,583 - INFO - [test_02_login] 測試用例通過：帳號密碼正確登入成功
-2025-03-11 16:47:30,584 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:32,839 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:32,840 - INFO - [test_02_login] 開始測試：帳號密碼錯誤登入
-2025-03-11 16:47:36,081 - INFO - [test_02_login] 測試用例通過：帳號密碼錯誤無法登入成功
-2025-03-11 16:47:36,081 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:38,278 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:38,278 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:47:42,096 - INFO - [test_02_login] 測試用例通過：郵箱登入成功
-2025-03-11 16:47:42,096 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:44,652 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:44,652 - INFO - [test_02_login] 開始測試：郵箱登入
-2025-03-11 16:47:47,920 - INFO - [test_02_login] 測試用例通過：錯誤郵箱登入測試
-2025-03-11 16:47:47,921 - INFO - [test_02_login] 測試結束，關閉瀏覽器
-2025-03-11 16:47:50,363 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:47:50,363 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:48:11,722 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000104ef82d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104ef0934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000104a51f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000104a98de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000104ad9e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000104a8d060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000104ec0c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000104ec3f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000104ea6578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000104ec4818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000104e96f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000104ee0a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000104ee0be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000104ef05a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:48:11,722 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:48:19,707 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:48:19,708 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:48:44,679 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 16:49:05,366 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000100a3c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000100a34934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100595f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001005dcde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x000000010061de80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001005d1060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000100a04c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000100a07f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x00000001009ea578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000100a08818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001009daf2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000100a24a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000100a24be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000100a345a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:49:05,367 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 16:51:38,193 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:51:38,193 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 16:56:58,371 - INFO - [__main__] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 16:56:58,372 - INFO - [__main__] 開始測試：充值
-2025-03-11 16:56:58,372 - INFO - [__main__] 等待用戶名輸入框
-2025-03-11 16:56:59,791 - INFO - [__main__] 檢查彈出窗口
-2025-03-11 16:57:05,425 - INFO - [__main__] 檢查彈出窗口
-2025-03-11 16:57:07,487 - INFO - [__main__] 檢查彈出窗口
-2025-03-11 16:57:17,706 - INFO - [__main__] 等待充值按鈕
-2025-03-11 16:57:17,758 - INFO - [__main__] 等待網銀轉賬按鈕
-2025-03-11 16:57:20,824 - ERROR - [__main__] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x000000010070c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000100704934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100265f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001002acde4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001002ede80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001002a1060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x00000001006d4c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x00000001006d7f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x00000001006ba578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x00000001006d8818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x00000001006aaf2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001006f4a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001006f4be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001007045a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 16:57:20,824 - INFO - [__main__] 測試結束，關閉瀏覽器
-2025-03-11 17:00:21,763 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:00:21,763 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:00:21,763 - INFO - [test_03deposit] 等待用戶名輸入框
-2025-03-11 17:00:22,639 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:00:28,284 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:00:30,400 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:00:40,623 - INFO - [test_03deposit] 等待充值按鈕
-2025-03-11 17:00:40,678 - INFO - [test_03deposit] 等待網銀轉賬按鈕
-2025-03-11 17:00:44,780 - INFO - [test_03deposit] 等待確認按鈕
-2025-03-11 17:00:47,866 - INFO - [test_03deposit] 等待金額輸入框
-2025-03-11 17:00:47,878 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:00:47,895 - INFO - [test_03deposit] 等待銀行下拉選單
-2025-03-11 17:00:47,906 - INFO - [test_03deposit] 已成功展開銀行下拉選單
-2025-03-11 17:00:47,906 - INFO - [test_03deposit] 等待選擇 '中国民生银行'
-2025-03-11 17:00:58,132 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000102d642d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102d5c934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001028bdf90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102904de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102945e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001028f9060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000102d2cc38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000102d2ff58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000102d12578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000102d30818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000102d02f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000102d4ca60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000102d4cbe8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000102d5c5a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 17:00:58,133 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:01:54,054 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:01:54,055 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:01:54,055 - INFO - [test_03deposit] 等待用戶名輸入框
-2025-03-11 17:01:55,235 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:02:00,546 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:02:02,585 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:02:12,784 - INFO - [test_03deposit] 等待充值按鈕
-2025-03-11 17:02:12,827 - INFO - [test_03deposit] 等待網銀轉賬按鈕
-2025-03-11 17:02:13,362 - INFO - [test_03deposit] 等待確認按鈕
-2025-03-11 17:02:18,460 - INFO - [test_03deposit] 等待金額輸入框
-2025-03-11 17:02:18,479 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:02:18,497 - INFO - [test_03deposit] 等待銀行下拉選單
-2025-03-11 17:02:18,505 - INFO - [test_03deposit] 已成功展開銀行下拉選單
-2025-03-11 17:02:18,505 - INFO - [test_03deposit] 等待選擇 '中国民生银行'
-2025-03-11 17:02:20,555 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x00000001009e82d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001009e0934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100541f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000100588de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x00000001005c9e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x000000010057d060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x00000001009b0c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x00000001009b3f58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000100996578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x00000001009b4818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000100986f2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x00000001009d0a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x00000001009d0be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x00000001009e05a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 17:02:20,555 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:02:53,589 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:02:53,590 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:02:53,590 - INFO - [test_03deposit] 等待用戶名輸入框
-2025-03-11 17:02:54,447 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:03:00,275 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:03:02,331 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:03:12,537 - INFO - [test_03deposit] 等待充值按鈕
-2025-03-11 17:03:12,584 - INFO - [test_03deposit] 等待網銀轉賬按鈕
-2025-03-11 17:03:14,666 - INFO - [test_03deposit] 等待確認按鈕
-2025-03-11 17:03:15,187 - INFO - [test_03deposit] 等待金額輸入框
-2025-03-11 17:03:15,209 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:03:15,237 - INFO - [test_03deposit] 等待銀行下拉選單
-2025-03-11 17:03:15,264 - INFO - [test_03deposit] 已成功展開銀行下拉選單
-2025-03-11 17:03:15,264 - INFO - [test_03deposit] 等待選擇 '中国民生银行'
-2025-03-11 17:03:17,844 - INFO - [test_03deposit] 已選擇銀行: 中国民生银行
-2025-03-11 17:03:17,844 - INFO - [test_03deposit] 舊 URL: https://uat-newplatform.mxsyl.com/zh-cn/deposit/fiat
-2025-03-11 17:03:17,844 - INFO - [test_03deposit] 等待頁面轉跳並加載完成
-2025-03-11 17:03:28,065 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-
-2025-03-11 17:03:28,065 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:04:28,763 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:04:28,763 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:04:28,764 - INFO - [test_03deposit] 等待用戶名輸入框
-2025-03-11 17:04:29,627 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:04:35,327 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:04:37,368 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:04:47,572 - INFO - [test_03deposit] 等待充值按鈕
-2025-03-11 17:04:47,607 - INFO - [test_03deposit] 等待網銀轉賬按鈕
-2025-03-11 17:04:48,193 - INFO - [test_03deposit] 等待確認按鈕
-2025-03-11 17:04:52,790 - INFO - [test_03deposit] 等待金額輸入框
-2025-03-11 17:04:52,810 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:04:52,831 - INFO - [test_03deposit] 等待銀行下拉選單
-2025-03-11 17:04:52,841 - INFO - [test_03deposit] 已成功展開銀行下拉選單
-2025-03-11 17:04:52,841 - INFO - [test_03deposit] 等待選擇 '中国民生银行'
-2025-03-11 17:04:52,876 - INFO - [test_03deposit] 已選擇銀行: 中国民生银行
-2025-03-11 17:04:52,876 - INFO - [test_03deposit] 舊 URL: https://uat-newplatform.mxsyl.com/zh-cn/deposit/fiat
-2025-03-11 17:04:52,876 - INFO - [test_03deposit] 等待頁面轉跳並加載完成
-2025-03-11 17:04:57,963 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-
-2025-03-11 17:04:57,963 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:05:51,718 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:05:51,719 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:05:51,720 - INFO - [test_03deposit] 等待用戶名輸入框
-2025-03-11 17:05:52,396 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:05:58,049 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:06:00,088 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:06:10,299 - INFO - [test_03deposit] 等待充值按鈕
-2025-03-11 17:06:10,340 - INFO - [test_03deposit] 等待網銀轉賬按鈕
-2025-03-11 17:06:12,922 - INFO - [test_03deposit] 等待確認按鈕
-2025-03-11 17:06:14,962 - INFO - [test_03deposit] 等待金額輸入框
-2025-03-11 17:06:14,978 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:06:14,996 - INFO - [test_03deposit] 等待銀行下拉選單
-2025-03-11 17:06:15,005 - INFO - [test_03deposit] 已成功展開銀行下拉選單
-2025-03-11 17:06:15,005 - INFO - [test_03deposit] 等待選擇 '中国民生银行'
-2025-03-11 17:06:15,036 - INFO - [test_03deposit] 已選擇銀行: 中国民生银行
-2025-03-11 17:06:15,036 - INFO - [test_03deposit] 舊 URL: https://uat-newplatform.mxsyl.com/zh-cn/deposit/fiat
-2025-03-11 17:06:15,036 - INFO - [test_03deposit] 等待頁面轉跳並加載完成
-2025-03-11 17:06:25,231 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-
-2025-03-11 17:06:25,231 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:07:00,237 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:07:00,238 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:07:00,238 - INFO - [test_03deposit] 等待用戶名輸入框
-2025-03-11 17:07:00,389 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:07:05,629 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:07:07,676 - INFO - [test_03deposit] 檢查彈出窗口
-2025-03-11 17:07:17,880 - INFO - [test_03deposit] 等待充值按鈕
-2025-03-11 17:07:17,920 - INFO - [test_03deposit] 等待網銀轉賬按鈕
-2025-03-11 17:07:18,460 - INFO - [test_03deposit] 等待確認按鈕
-2025-03-11 17:07:21,010 - INFO - [test_03deposit] 等待金額輸入框
-2025-03-11 17:07:21,027 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:07:21,049 - INFO - [test_03deposit] 等待銀行下拉選單
-2025-03-11 17:07:21,061 - INFO - [test_03deposit] 已成功展開銀行下拉選單
-2025-03-11 17:07:21,061 - INFO - [test_03deposit] 等待選擇 '中国民生银行'
-2025-03-11 17:07:21,098 - INFO - [test_03deposit] 已選擇銀行: 中国民生银行
-2025-03-11 17:07:21,098 - INFO - [test_03deposit] 舊 URL: https://uat-newplatform.mxsyl.com/zh-cn/deposit/fiat
-2025-03-11 17:07:21,098 - INFO - [test_03deposit] 等待頁面轉跳並加載完成
-2025-03-11 17:07:36,391 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-
-2025-03-11 17:07:36,391 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:09:42,554 - INFO - [__main__] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:09:42,554 - INFO - [__main__] 開始測試：充值
-2025-03-11 17:10:09,384 - INFO - [__main__] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:10:29,732 - ERROR - [__main__] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000104b502d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104b48934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001046a9f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001046f0de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000104731e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x00000001046e5060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000104b18c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000104b1bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000104afe578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000104b1c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000104aeef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000104b38a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000104b38be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000104b485a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 17:10:29,732 - INFO - [__main__] 測試結束，關閉瀏覽器
-2025-03-11 17:11:26,743 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:11:26,744 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:11:50,129 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:12:00,256 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: 'LoginPageTest' object has no attribute 'WebDriverWait'
-2025-03-11 17:12:00,257 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
-2025-03-11 17:16:45,880 - INFO - [__main__] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:16:45,881 - INFO - [__main__] 開始測試：充值
-2025-03-11 17:16:45,882 - INFO - [__main__] 等待用戶名輸入框
-2025-03-11 17:16:46,033 - INFO - [__main__] 檢查彈出窗口
-2025-03-11 17:16:51,768 - INFO - [__main__] 檢查彈出窗口
-2025-03-11 17:16:53,821 - INFO - [__main__] 檢查彈出窗口
-2025-03-11 17:17:04,038 - INFO - [__main__] 等待充值按鈕
-2025-03-11 17:17:05,098 - INFO - [__main__] 等待網銀轉賬按鈕
-2025-03-11 17:17:07,191 - INFO - [__main__] 等待確認按鈕
-2025-03-11 17:17:09,747 - INFO - [__main__] 等待金額輸入框
-2025-03-11 17:17:09,764 - INFO - [__main__] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:17:09,782 - INFO - [__main__] 等待銀行下拉選單
-2025-03-11 17:17:09,793 - INFO - [__main__] 已成功展開銀行下拉選單
-2025-03-11 17:17:09,794 - INFO - [__main__] 等待選擇 '中国民生银行'
-2025-03-11 17:17:10,337 - INFO - [__main__] 已選擇銀行: 中国民生银行
-2025-03-11 17:17:10,338 - INFO - [__main__] 等待頁面轉跳並加載完成
-2025-03-11 17:17:20,566 - ERROR - [__main__] 測試用例失敗：充值 - 錯誤: Message: 
-
-2025-03-11 17:17:20,566 - INFO - [__main__] 測試結束，關閉瀏覽器
-2025-03-11 17:18:39,529 - INFO - [__main__] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:18:39,529 - INFO - [__main__] 開始測試：充值
-2025-03-11 17:19:05,655 - INFO - [__main__] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:19:15,804 - INFO - [__main__] 等待頁面轉跳並加載完成
-2025-03-11 17:19:15,809 - ERROR - [__main__] 測試用例失敗：充值 - 錯誤: name 'old_url' is not defined
-2025-03-11 17:19:15,809 - INFO - [__main__] 測試結束，關閉瀏覽器
-2025-03-11 17:19:24,636 - INFO - [__main__] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:19:24,636 - INFO - [__main__] 開始測試：充值
-2025-03-11 17:19:48,025 - INFO - [__main__] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:19:58,154 - INFO - [__main__] 等待頁面轉跳並加載完成
-2025-03-11 17:19:58,159 - ERROR - [__main__] 測試用例失敗：充值 - 錯誤: name 'old_url' is not defined
-2025-03-11 17:19:58,160 - INFO - [__main__] 測試結束，關閉瀏覽器
-2025-03-11 17:20:51,233 - INFO - [__main__] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:20:51,234 - INFO - [__main__] 開始測試：充值
-2025-03-11 17:21:13,100 - INFO - [__main__] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:21:25,784 - INFO - [__main__] 頁面已完全加載完成
-2025-03-11 17:21:25,797 - INFO - [__main__] 測試用例通過：充值成功提交
-2025-03-11 17:21:25,797 - INFO - [__main__] 測試結束，關閉瀏覽器
-2025-03-11 17:21:35,455 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 17:21:35,456 - INFO - [test_03deposit] 開始測試：充值
-2025-03-11 17:22:00,344 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
-2025-03-11 17:22:20,678 - ERROR - [test_03deposit] 測試用例失敗：充值 - 錯誤: Message: 
-Stacktrace:
-0   chromedriver                        0x0000000102ec02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102eb8934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102a19f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102a60de4 cxxbridge1$string$len + 383748
-4   chromedriver                        0x0000000102aa1e80 cxxbridge1$string$len + 650144
-5   chromedriver                        0x0000000102a55060 cxxbridge1$string$len + 335232
-6   chromedriver                        0x0000000102e88c38 cxxbridge1$str$ptr + 2512864
-7   chromedriver                        0x0000000102e8bf58 cxxbridge1$str$ptr + 2525952
-8   chromedriver                        0x0000000102e6e578 cxxbridge1$str$ptr + 2404640
-9   chromedriver                        0x0000000102e8c818 cxxbridge1$str$ptr + 2528192
-10  chromedriver                        0x0000000102e5ef2c cxxbridge1$str$ptr + 2341588
-11  chromedriver                        0x0000000102ea8a60 cxxbridge1$str$ptr + 2643464
-12  chromedriver                        0x0000000102ea8be8 cxxbridge1$str$ptr + 2643856
-13  chromedriver                        0x0000000102eb85a8 cxxbridge1$str$ptr + 2707792
-14  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-15  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 17:22:20,678 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
+2025-03-11 18:23:13,691 - INFO - [test_02_login] 
+📌測試結果摘要:
+2025-03-11 18:23:13,691 - INFO - [test_02_login] ✅通過測試數: 0
+2025-03-11 18:23:13,691 - INFO - [test_02_login] ❌失敗測試數: 7
+2025-03-11 18:23:13,691 - INFO - [test_02_login] 📊總測試數: 7
+2025-03-11 18:23:13,691 - INFO - [__main__] 測試運行完成
