@@ -1,4 +1,33 @@
 
+1️⃣ 安裝 Python
+請同事到 Python 官方網站 安裝 Python，並確保 pip 可用：
+
+sh
+python --version
+pip --version
+
+2️⃣ 安裝 Git 並拉取倉庫
+sh
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
+
+3️⃣ 建立虛擬環境並安裝套件
+sh
+python -m venv venv
+source venv/bin/activate  # Windows 用 `venv\Scripts\activate`
+pip install --upgrade pip  # 確保 pip 是最新版本
+pip install -r requirements.txt  # 安裝所需的套件
+
+4️⃣ 安裝 Selenium 需要的 WebDriver
+若測試 Chrome，需安裝 ChromeDriver。
+若測試 Firefox，需安裝 GeckoDriver。
+
+5️⃣ 執行測試
+sh
+python -m unittest discover tests
+或執行 run_tests.py：
+sh
+python run_tests.py
 
 
 

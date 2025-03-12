@@ -2,11 +2,12 @@
 import os
 import unittest
 import logging
-from test_01_registration import registrationPageTest, CleanTextTestResult, CustomTextTestRunner
-from test_02_login import LoginPageTest, CleanTextTestResult, CustomTextTestRunner
-from test_03deposit import DepositTest, CleanTextTestResult, CustomTextTestRunner
-from config import config
 
+from TestScripts.test_01_registration import registrationPageTest,CleanTextTestResult, CustomTextTestRunner
+from TestScripts.test_02_login import LoginPageTest,CleanTextTestResult, CustomTextTestRunner
+from TestScripts.test_03deposit import DepositTest,CleanTextTestResult, CustomTextTestRunner
+from config import config
+    
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
 log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄

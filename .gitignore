@@ -19,6 +19,3 @@ env/
 *.db
 *.pytest_cache/
 
-# 忽略 JSON 檔案
-*.json
-!config_example.json  # 保留範例設定檔
