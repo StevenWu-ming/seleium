@@ -1,0 +1,6 @@
+# 忽略 node_modules 資料夾
+/test
+# 忽略環境設定檔
+.env
+# 忽略日誌檔案
+*.log
