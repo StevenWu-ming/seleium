@@ -14,6 +14,7 @@ import string
 from unittest.runner import TextTestResult
 from config import Config, config  # 導入 Config 和 config
 
+
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
 log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
@@ -88,14 +89,14 @@ class CustomTextTestRunner(unittest.TextTestRunner):
             result.printSummary()
         return result
 
-class LoginPageTest(unittest.TestCase):
+class DepositTest(unittest.TestCase):
     def setUp(self):
         self.delay_seconds = Config.DELAY_SECONDS  # 使用 Config.DELAY_SECONDS
         self.wait_timeout = Config.WAIT_TIMEOUT
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
@@ -199,3 +200,5 @@ class LoginPageTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+

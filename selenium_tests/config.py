@@ -77,19 +77,19 @@ class Config:
     WAIT_TIMEOUT = 10  # WebDriverWait 超時時間
     
     # 直接指定環境（不再依賴環境變數）
-    ENV = "ProdEnv"
+    ENV = "TestEnv"
         
     # 測試環境配置
     class TestEnv:
         BASE_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
         LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
-        VALID_USERNAME = "cooper018"
+        VALID_USERNAME = "cooper005"
         VALID_PASSWORD = "1234Qwer"
         INVALID_USERNAME_PREFIX = generate_random_username()
         INVALID_PHONE_NUMBER = generate_japanese_phone_number()
         INVALID_EMAIL = generate_random_email()
-        PHONE_NUMBER = "13100000029"
+        PHONE_NUMBER = "13100000032"
         EMAIL = "hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
         DP_Amount = '1'
@@ -99,7 +99,7 @@ class Config:
         BASE_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
         LOGIN_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
-        VALID_USERNAME = "dev_cooper007"
+        VALID_USERNAME = "cooper018"
         VALID_PASSWORD = "Dev1234Qwer"
         INVALID_USERNAME_PREFIX = generate_random_username()
         INVALID_PHONE_NUMBER = generate_japanese_phone_number()
@@ -118,7 +118,7 @@ class Config:
         INVALID_USERNAME_PREFIX = generate_random_username()
         INVALID_PHONE_NUMBER = generate_japanese_phone_number()
         INVALID_EMAIL = generate_random_email()           
-        PHONE_NUMBER = "13800000001"
+        PHONE_NUMBER = "13100000029"
         EMAIL = "prod_hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
 

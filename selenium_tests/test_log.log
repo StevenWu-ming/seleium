@@ -1,210 +1,64 @@
-2025-03-11 18:23:02,531 - INFO - [__main__] 開始運行測試，當前環境: https://prod-newplatform.mxsyl.com/zh-cn/login
-2025-03-11 18:23:04,895 - ERROR - [test_02_login] 測試用例錯誤: test_01_01_phonenumber_login - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x00000001028202d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102818934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102379f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001023725f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x000000010236455c cxxbridge1$string$len + 4732
-5   chromedriver                        0x0000000102365f3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x00000001023649c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x0000000102364338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x0000000102364084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x0000000102361d9c chromedriver + 187804
-10  chromedriver                        0x00000001023628c0 chromedriver + 190656
-11  chromedriver                        0x000000010237cf40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x00000001024029b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x0000000102401e80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x00000001023b5060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x00000001027e8c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x00000001027ebf58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x00000001027ce578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x00000001027ec818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x00000001027bef2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x0000000102808a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x0000000102808be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x00000001028185a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:06,470 - ERROR - [test_02_login] 測試用例錯誤: test_01_02_phonenumber__wronglogin - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x00000001028a82d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001028a0934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102401f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001023fa5f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x00000001023ec55c cxxbridge1$string$len + 4732
-5   chromedriver                        0x00000001023edf3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x00000001023ec9c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x00000001023ec338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x00000001023ec084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x00000001023e9d9c chromedriver + 187804
-10  chromedriver                        0x00000001023ea8c0 chromedriver + 190656
-11  chromedriver                        0x0000000102404f40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x000000010248a9b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x0000000102489e80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x000000010243d060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x0000000102870c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x0000000102873f58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x0000000102856578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x0000000102874818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x0000000102846f2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x0000000102890a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x0000000102890be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x00000001028a05a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:07,900 - ERROR - [test_02_login] 測試用例錯誤: test_02_01check_login_button_enabled_after_username_and_password - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x00000001045502d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000104548934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001040a9f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001040a25f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x000000010409455c cxxbridge1$string$len + 4732
-5   chromedriver                        0x0000000104095f3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x00000001040949c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x0000000104094338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x0000000104094084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x0000000104091d9c chromedriver + 187804
-10  chromedriver                        0x00000001040928c0 chromedriver + 190656
-11  chromedriver                        0x00000001040acf40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x00000001041329b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x0000000104131e80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x00000001040e5060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x0000000104518c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x000000010451bf58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x00000001044fe578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x000000010451c818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x00000001044eef2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x0000000104538a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x0000000104538be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x00000001045485a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:09,373 - ERROR - [test_02_login] 測試用例錯誤: test_02_02_successful_login - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x00000001030e02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001030d8934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000102c39f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x0000000102c325f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x0000000102c2455c cxxbridge1$string$len + 4732
-5   chromedriver                        0x0000000102c25f3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x0000000102c249c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x0000000102c24338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x0000000102c24084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x0000000102c21d9c chromedriver + 187804
-10  chromedriver                        0x0000000102c228c0 chromedriver + 190656
-11  chromedriver                        0x0000000102c3cf40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x0000000102cc29b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x0000000102cc1e80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x0000000102c75060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x00000001030a8c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x00000001030abf58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x000000010308e578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x00000001030ac818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x000000010307ef2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x00000001030c8a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x00000001030c8be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x00000001030d85a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:10,858 - ERROR - [test_02_login] 測試用例錯誤: test_02_03_invalid_credentials - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x0000000102ba02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102b98934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001026f9f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001026f25f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x00000001026e455c cxxbridge1$string$len + 4732
-5   chromedriver                        0x00000001026e5f3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x00000001026e49c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x00000001026e4338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x00000001026e4084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x00000001026e1d9c chromedriver + 187804
-10  chromedriver                        0x00000001026e28c0 chromedriver + 190656
-11  chromedriver                        0x00000001026fcf40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x00000001027829b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x0000000102781e80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x0000000102735060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x0000000102b68c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x0000000102b6bf58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x0000000102b4e578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x0000000102b6c818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x0000000102b3ef2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x0000000102b88a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x0000000102b88be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x0000000102b985a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:12,229 - ERROR - [test_02_login] 測試用例錯誤: test_03_01_mail_login - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x000000010298c2d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x0000000102984934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x00000001024e5f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001024de5f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x00000001024d055c cxxbridge1$string$len + 4732
-5   chromedriver                        0x00000001024d1f3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x00000001024d09c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x00000001024d0338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x00000001024d0084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x00000001024cdd9c chromedriver + 187804
-10  chromedriver                        0x00000001024ce8c0 chromedriver + 190656
-11  chromedriver                        0x00000001024e8f40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x000000010256e9b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x000000010256de80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x0000000102521060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x0000000102954c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x0000000102957f58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x000000010293a578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x0000000102958818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x000000010292af2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x0000000102974a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x0000000102974be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x00000001029845a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:13,691 - ERROR - [test_02_login] 測試用例錯誤: test_03_02_mail_wronglogin - 錯誤: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
-  (Session info: chrome=133.0.6943.143)
-Stacktrace:
-0   chromedriver                        0x00000001007e02d4 cxxbridge1$str$ptr + 2739836
-1   chromedriver                        0x00000001007d8934 cxxbridge1$str$ptr + 2708700
-2   chromedriver                        0x0000000100339f90 cxxbridge1$string$len + 93360
-3   chromedriver                        0x00000001003325f4 cxxbridge1$string$len + 62228
-4   chromedriver                        0x000000010032455c cxxbridge1$string$len + 4732
-5   chromedriver                        0x0000000100325f3c cxxbridge1$string$len + 11356
-6   chromedriver                        0x00000001003249c4 cxxbridge1$string$len + 5860
-7   chromedriver                        0x0000000100324338 cxxbridge1$string$len + 4184
-8   chromedriver                        0x0000000100324084 cxxbridge1$string$len + 3492
-9   chromedriver                        0x0000000100321d9c chromedriver + 187804
-10  chromedriver                        0x00000001003228c0 chromedriver + 190656
-11  chromedriver                        0x000000010033cf40 cxxbridge1$string$len + 105568
-12  chromedriver                        0x00000001003c29b4 cxxbridge1$string$len + 653012
-13  chromedriver                        0x00000001003c1e80 cxxbridge1$string$len + 650144
-14  chromedriver                        0x0000000100375060 cxxbridge1$string$len + 335232
-15  chromedriver                        0x00000001007a8c38 cxxbridge1$str$ptr + 2512864
-16  chromedriver                        0x00000001007abf58 cxxbridge1$str$ptr + 2525952
-17  chromedriver                        0x000000010078e578 cxxbridge1$str$ptr + 2404640
-18  chromedriver                        0x00000001007ac818 cxxbridge1$str$ptr + 2528192
-19  chromedriver                        0x000000010077ef2c cxxbridge1$str$ptr + 2341588
-20  chromedriver                        0x00000001007c8a60 cxxbridge1$str$ptr + 2643464
-21  chromedriver                        0x00000001007c8be8 cxxbridge1$str$ptr + 2643856
-22  chromedriver                        0x00000001007d85a8 cxxbridge1$str$ptr + 2707792
-23  libsystem_pthread.dylib             0x000000019af1c2e4 _pthread_start + 136
-24  libsystem_pthread.dylib             0x000000019af170fc thread_start + 8
-
-2025-03-11 18:23:13,691 - INFO - [test_02_login] 
+2025-03-12 09:30:31,887 - INFO - [__main__] 開始運行測試，當前環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:30:34,188 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:30:34,188 - INFO - [test_02_login] 開始測試：手機號碼登入
+2025-03-12 09:30:38,183 - INFO - [test_02_login] 測試用例通過：手機號碼直接登入成功
+2025-03-12 09:30:38,184 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:30:38,281 - INFO - [test_03deposit] 測試用例通過: test_01_01_phonenumber_login
+2025-03-12 09:30:40,115 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:30:40,115 - INFO - [test_02_login] 開始測試：輸入錯誤手機號碼登入
+2025-03-12 09:30:42,833 - INFO - [test_02_login] 測試用例通過：錯誤手機號碼登入測試
+2025-03-12 09:30:42,834 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:30:42,917 - INFO - [test_03deposit] 測試用例通過: test_01_02_phonenumber__wronglogin
+2025-03-12 09:30:44,774 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:30:44,774 - INFO - [test_02_login] 開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用
+2025-03-12 09:30:49,449 - INFO - [test_02_login] 測試用例通過：登入按鈕檢查成功
+2025-03-12 09:30:49,450 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:30:49,541 - INFO - [test_03deposit] 測試用例通過: test_02_01check_login_button_enabled_after_username_and_password
+2025-03-12 09:30:51,461 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:30:51,461 - INFO - [test_02_login] 開始測試：帳號密碼正確登入
+2025-03-12 09:30:55,230 - INFO - [test_02_login] 測試用例通過：帳號密碼正確登入成功
+2025-03-12 09:30:55,230 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:30:55,328 - INFO - [test_03deposit] 測試用例通過: test_02_02_successful_login
+2025-03-12 09:30:56,801 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:30:56,801 - INFO - [test_02_login] 開始測試：帳號密碼錯誤登入
+2025-03-12 09:31:00,013 - INFO - [test_02_login] 測試用例通過：帳號密碼錯誤無法登入成功
+2025-03-12 09:31:00,013 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:31:00,097 - INFO - [test_03deposit] 測試用例通過: test_02_03_invalid_credentials
+2025-03-12 09:31:01,875 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:31:01,875 - INFO - [test_02_login] 開始測試：郵箱登入
+2025-03-12 09:31:05,217 - INFO - [test_02_login] 測試用例通過：郵箱登入成功
+2025-03-12 09:31:05,217 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:31:05,301 - INFO - [test_03deposit] 測試用例通過: test_03_01_mail_login
+2025-03-12 09:31:07,119 - INFO - [test_02_login] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:31:07,119 - INFO - [test_02_login] 開始測試：郵箱登入
+2025-03-12 09:31:10,382 - INFO - [test_02_login] 測試用例通過：錯誤郵箱登入測試
+2025-03-12 09:31:10,383 - INFO - [test_02_login] 測試結束，關閉瀏覽器
+2025-03-12 09:31:10,471 - INFO - [test_03deposit] 測試用例通過: test_03_02_mail_wronglogin
+2025-03-12 09:31:12,399 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
+2025-03-12 09:31:12,399 - INFO - [test_01_registration] 開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用
+2025-03-12 09:31:17,150 - INFO - [test_01_registration] 測試用例通過：登入按鈕檢查成功
+2025-03-12 09:31:17,150 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
+2025-03-12 09:31:17,239 - INFO - [test_03deposit] 測試用例通過: test_01_01check_registration_button_enabled_after_username_and_password
+2025-03-12 09:31:19,116 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
+2025-03-12 09:31:19,116 - INFO - [test_01_registration] 開始測試：帳號密碼正確註冊
+2025-03-12 09:31:22,403 - INFO - [test_01_registration] 測試用例通過：帳號密碼正確登入成功
+2025-03-12 09:31:22,404 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
+2025-03-12 09:31:22,486 - INFO - [test_03deposit] 測試用例通過: test_01_02_registration
+2025-03-12 09:31:24,343 - INFO - [test_01_registration] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/register
+2025-03-12 09:31:24,343 - INFO - [test_01_registration] 開始測試：帳號重複無法註冊
+2025-03-12 09:31:27,618 - INFO - [test_01_registration] 測試用例通過：重複帳號無法註冊
+2025-03-12 09:31:27,618 - INFO - [test_01_registration] 測試結束，關閉瀏覽器
+2025-03-12 09:31:27,704 - INFO - [test_03deposit] 測試用例通過: test_01_03_registration_duplicate
+2025-03-12 09:31:29,611 - INFO - [test_03deposit] 設置測試環境: https://uat-newplatform.mxsyl.com/zh-cn/login
+2025-03-12 09:31:29,611 - INFO - [test_03deposit] 開始測試：充值
+2025-03-12 09:31:55,046 - INFO - [test_03deposit] 輸入框可見: True, 輸入框禁用: None
+2025-03-12 09:32:16,226 - INFO - [test_03deposit] 頁面已完全加載完成
+2025-03-12 09:32:16,240 - INFO - [test_03deposit] 測試用例通過：充值成功提交
+2025-03-12 09:32:16,240 - INFO - [test_03deposit] 測試結束，關閉瀏覽器
+2025-03-12 09:32:16,357 - INFO - [test_03deposit] 測試用例通過: test_01_01_deposit
+2025-03-12 09:32:16,358 - INFO - [test_03deposit] 
 📌測試結果摘要:
-2025-03-11 18:23:13,691 - INFO - [test_02_login] ✅通過測試數: 0
-2025-03-11 18:23:13,691 - INFO - [test_02_login] ❌失敗測試數: 7
-2025-03-11 18:23:13,691 - INFO - [test_02_login] 📊總測試數: 7
-2025-03-11 18:23:13,691 - INFO - [__main__] 測試運行完成
+2025-03-12 09:32:16,358 - INFO - [test_03deposit] ✅通過測試數: 11
+2025-03-12 09:32:16,358 - INFO - [test_03deposit] ❌失敗測試數: 0
+2025-03-12 09:32:16,358 - INFO - [test_03deposit] 📊總測試數: 11
+2025-03-12 09:32:16,358 - INFO - [__main__] 測試運行完成
