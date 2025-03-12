@@ -1,9 +1,13 @@
+
+
+
+
+
 # unittest
 openvpn
 Username: cooper
 Password: rVf75qEX2ffmwiP7gT3lcZ7VwinGXCd8
 
- 
 # 登入自動化 優化
 手機地區號登入
 判斷郵箱是否符合規範
@@ -19,6 +23,11 @@ git push origin main
 
 # 如果你的專案還沒有 Git，可以在 VSCode 的終端 (Terminal) 中執行：
 git init
+# 檢查倉庫狀態：
+git status
+# 檢查遠端連線
+git remote -v
+
 # 創建一個新的分支
 git branch feature-branch
 # 查看所有分支

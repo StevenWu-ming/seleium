@@ -72,7 +72,7 @@ def generate_random_email():
 
 class Config:
     # 通用配置
-    CHROMEDRIVER_PATH = "/Users/steven/deepseek/chromedriver"  # ChromeDriver 路徑，根據需要調整
+    CHROMEDRIVER_PATH = "/Users/steven/deepseek/uninttest/selenium_tests/chormedrive/chromedriver"  # ChromeDriver 路徑，根據需要調整
     DELAY_SECONDS = 2
     WAIT_TIMEOUT = 10  # WebDriverWait 超時時間
     
