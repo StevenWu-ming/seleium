@@ -96,7 +96,7 @@ class DepositTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        chrome_options.add_argument("--headless")
+        #chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH

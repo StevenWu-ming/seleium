@@ -1,5 +1,6 @@
 import random
 import string
+import datetime
 import json
 import os
 
@@ -26,9 +27,10 @@ def save_random_data_to_json(data):
         json.dump(existing_data, f, indent=4, ensure_ascii=False)
     print(f"隨機資料已儲存到: {RANDOM_DATA_JSON_PATH}")
 
-def generate_random_username(length=8):
-    letters_and_digits = string.ascii_lowercase + string.digits
-    random_username = 'A' + ''.join(random.choice(letters_and_digits) for _ in range(length))
+
+def generate_random_username():
+    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    random_username = f"QAM1{timestamp}"
     # 儲存到 JSON
     save_random_data_to_json({"random_username": random_username})
     return random_username
@@ -110,15 +112,15 @@ class Config:
 
     # 生產環境配置
     class ProdEnv:
-        BASE_URL = "https://prod-newplatform.mxsyl.com/zh-cn/login"
-        LOGIN_URL = "https://prod-newplatform.mxsyl.com/zh-cn/login"
-        REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
-        VALID_USERNAME = "prod_cooper005"
-        VALID_PASSWORD = "Prod1234Qwer"
+        BASE_URL = "https://www.lt.com/zh-cn/login"
+        LOGIN_URL = "https://www.lt.com/zh-cn/login"
+        REGISTER_URL = "https://www.lt.com/zh-cn/register"
+        VALID_USERNAME = "QA_M1_02"
+        VALID_PASSWORD = "QA_M1_02"
         INVALID_USERNAME_PREFIX = generate_random_username()
         INVALID_PHONE_NUMBER = generate_japanese_phone_number()
         INVALID_EMAIL = generate_random_email()           
-        PHONE_NUMBER = "13100000029"
+        PHONE_NUMBER = "18700000002"
         EMAIL = "prod_hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
 
