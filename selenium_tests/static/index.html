@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試執行頁面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #result-box {
+            width: 60%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            text-align: left;
+            white-space: pre-line; /* 確保換行符號有效 */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>測試執行面板</h2>
+    <button onclick="runTests()">執行測試</button>
+    
+    <h3>測試結果：</h3>
+    <div id="result-box">尚未執行測試</div>
+
+    <script>
+       // 定義後端 API 的基礎地址
+const API_BASE_URL = "http://192.168.0.202:8000"; // 開發環境下設置為實際地址
+
+async function runTests() {
+    const resultBox = document.getElementById("result-box");
+    const button = document.querySelector("button");
+    button.disabled = true; // 禁用按鈕
+    resultBox.innerText = "測試執行中...";
+
+    // 確保 UI 更新
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/run-tests`);
+        if (!response.ok) {
+            throw new Error(`伺服器回傳錯誤: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        // 檢查資料結構是否符合預期
+        if (!data.summary || !data.failed_tests) {
+            throw new Error("回傳的資料結構不符合預期");
+        }
+
+        let resultText = `✅ 成功數: ${data.summary.pass_count}\n❌ 失敗數: ${data.summary.fail_count}\n\n`;
+        if (data.failed_tests.length > 0) {
+            resultText += "🔴 失敗的測試:\n" + data.failed_tests.join("\n");
+        } else {
+            resultText += "🎉 所有測試通過!";
+        }
+
+        resultBox.innerText = resultText;
+    } catch (error) {
+        resultBox.innerText = `❌ 測試執行失敗：${error.message}\n請檢查伺服器是否運行，或確認 API 回傳格式是否正確`;
+        console.error("錯誤:", error);
+    }
+}
+    </script>
+
+</body>
+</html>

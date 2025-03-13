@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import unittest
+import traceback
 import time
 from unittest.runner import TextTestResult
 from config import Config, config  # 導入 Config 和 config
@@ -21,7 +22,7 @@ logging.basicConfig(
     level=logging.INFO,  # 改為 INFO 級別
     format='%(asctime)s - %(levelname)s - [%(name)s] %(message)s',
     handlers=[
-        logging.FileHandler(log_file),
+        logging.FileHandler(log_file, mode='w'),
         logging.StreamHandler()
     ]
 )
@@ -32,6 +33,7 @@ class CleanTextTestResult(TextTestResult):
         super().__init__(stream, descriptions, verbosity)
         self.pass_count = 0
         self.fail_count = 0
+        self.failed_tests = []  # 用於儲存失敗用例的詳細資訊
 
     def addSuccess(self, test):
         super().addSuccess(test)
@@ -47,6 +49,14 @@ class CleanTextTestResult(TextTestResult):
         if test not in self.failures:
             super().addFailure(test, err)
             self.fail_count += 1
+            # 收集失敗用例的詳細資訊
+            failure_info = {
+                "test_name": test._testMethodName,
+                "error_type": str(err[0].__name__),
+                "error_message": str(err[1]),
+                "stack_trace": ''.join(traceback.format_tb(err[2]))
+            }
+            self.failed_tests.append(failure_info)
         logger.error(f"測試用例失敗: {test._testMethodName} - 錯誤: {str(err[1])}")
         if self.showAll:
             self.stream.write('')
@@ -58,6 +68,14 @@ class CleanTextTestResult(TextTestResult):
         if test not in self.errors:
             super().addError(test, err)
             self.fail_count += 1
+            # 收集錯誤用例的詳細資訊
+            error_info = {
+                "test_name": test._testMethodName,
+                "error_type": str(err[0].__name__),
+                "error_message": str(err[1]),
+                "stack_trace": ''.join(traceback.format_tb(err[2]))
+            }
+            self.failed_tests.append(error_info)
         logger.error(f"測試用例錯誤: {test._testMethodName} - 錯誤: {str(err[1])}")
         if self.showAll:
             self.stream.write('')
@@ -74,6 +92,18 @@ class CleanTextTestResult(TextTestResult):
         logger.info(f"✅通過測試數: {self.pass_count}")
         logger.info(f"❌失敗測試數: {self.fail_count}")
         logger.info(f"📊總測試數: {total}")
+
+    def get_results(self):
+        """返回結構化的測試結果，包括失敗用例"""
+        total = self.pass_count + self.fail_count
+        return {
+            "summary": {
+                "pass_count": self.pass_count,
+                "fail_count": self.fail_count,
+                "total_count": total
+            },
+            "failed_tests": self.failed_tests
+        }
 
 class CustomTextTestRunner(unittest.TextTestRunner):
     def __init__(self, *args, **kwargs):
@@ -209,4 +239,7 @@ class registrationPageTest(unittest.TestCase):
         self.driver.quit()
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    suite = unittest.TestLoader().loadTestsFromTestCase(registrationPageTest)
+    runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=2)
+    result = runner.run(suite)
+    logger.info("測試運行完成")

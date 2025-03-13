@@ -1,4 +1,3 @@
-
 1️⃣ 安裝 Python
 請同事到 Python 官方網站 安裝 Python，並確保 pip 可用：
 
@@ -30,6 +29,15 @@ sh
 python run_tests.py
 
 
+====================================================================================================================================================================
+lsof -i :8000
+kill -9 {PID}}
+
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+curl
+
+python3 -m http.server 8000
+python3 -m http.server 8000 --bind 0.0.0.0
 
 
 # unittest
