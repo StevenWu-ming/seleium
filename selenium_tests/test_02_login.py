@@ -13,6 +13,7 @@ import random
 import string
 from unittest.runner import TextTestResult
 from config import Config, config  # 導入 Config 和 config
+from test_utils import CleanTextTestResult, CustomTextTestRunner
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
@@ -29,83 +30,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class CleanTextTestResult(TextTestResult):
-    def __init__(self, stream, descriptions, verbosity):
-        super().__init__(stream, descriptions, verbosity)
-        self.pass_count = 0
-        self.fail_count = 0
-        self.failed_tests = []  # 用於儲存失敗用例的詳細資訊
-
-    def addSuccess(self, test):
-        super().addSuccess(test)
-        self.pass_count += 1
-        logger.info(f"測試用例通過: {test._testMethodName}")
-        if self.showAll:
-            self.stream.write('')
-        elif self.dots:
-            self.stream.write('')
-            self.stream.flush()
-
-    def addFailure(self, test, err):
-        if test not in self.failures:
-            super().addFailure(test, err)
-            self.fail_count += 1
-            # 收集失敗用例的詳細資訊
-            failure_info = {
-                "test_name": test._testMethodName,
-                "error_type": str(err[0].__name__),
-                "error_message": str(err[1]),
-                "stack_trace": ''.join(traceback.format_tb(err[2]))
-            }
-            self.failed_tests.append(failure_info)
-        logger.error(f"測試用例失敗: {test._testMethodName} - 錯誤: {str(err[1])}")
-        if self.showAll:
-            self.stream.write('')
-        elif self.dots:
-            self.stream.write('')
-            self.stream.flush()
-
-    def addError(self, test, err):
-        if test not in self.errors:
-            super().addError(test, err)
-            self.fail_count += 1
-            # 收集錯誤用例的詳細資訊
-            error_info = {
-                "test_name": test._testMethodName,
-                "error_type": str(err[0].__name__),
-                "error_message": str(err[1]),
-                "stack_trace": ''.join(traceback.format_tb(err[2]))
-            }
-            self.failed_tests.append(error_info)
-        logger.error(f"測試用例錯誤: {test._testMethodName} - 錯誤: {str(err[1])}")
-        if self.showAll:
-            self.stream.write('')
-        elif self.dots:
-            self.stream.write('')
-            self.stream.flush()
-
-    def printErrors(self):
-        pass
-
-    def printSummary(self):
-        total = self.pass_count + self.fail_count
-        logger.info(f"\n📌測試結果摘要:")
-        logger.info(f"✅通過測試數: {self.pass_count}")
-        logger.info(f"❌失敗測試數: {self.fail_count}")
-        logger.info(f"📊總測試數: {total}")
-
-    def get_results(self):
-        """返回結構化的測試結果，包括失敗用例"""
-        total = self.pass_count + self.fail_count
-        return {
-            "summary": {
-                "pass_count": self.pass_count,
-                "fail_count": self.fail_count,
-                "total_count": total
-            },
-            "failed_tests": self.failed_tests
-        }
-    
 class CustomTextTestRunner(unittest.TextTestRunner):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -123,7 +47,7 @@ class LoginPageTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        #chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
@@ -133,6 +57,7 @@ class LoginPageTest(unittest.TestCase):
         logger.info(f"設置測試環境: {config.LOGIN_URL}")
 
     def test_01_01_phonenumber_login(self):
+        """手機號碼登入"""
         try:
             logger.info("開始測試：手機號碼登入")
             print(f"Page title: {self.driver.title}")
@@ -189,6 +114,7 @@ class LoginPageTest(unittest.TestCase):
 
 
     def test_01_02_phonenumber__wronglogin(self):
+        """輸入錯誤手機號碼登入"""
         try:
             logger.info("開始測試：輸入錯誤手機號碼登入")
             print(f"Page title: {self.driver.title}")
@@ -224,6 +150,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
     def test_02_01check_login_button_enabled_after_username_and_password(self):
+        """檢查登入按鈕是否在輸入帳號密碼後啟用"""
         try:
             logger.info("開始測試：檢查登入按鈕是否在輸入帳號密碼後啟用")
             username_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
@@ -259,6 +186,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
     def test_02_02_successful_login(self):
+        """帳號密碼正確登入"""
         try:
             logger.info("開始測試：帳號密碼正確登入")
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
@@ -276,6 +204,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
     def test_02_03_invalid_credentials(self):
+        """帳號密碼錯誤登入"""
         try:
             logger.info("開始測試：帳號密碼錯誤登入")
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
@@ -296,6 +225,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
     def test_03_01_mail_login(self):
+        """郵箱登入"""
         try:
             logger.info("開始測試：郵箱登入")
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")))
@@ -318,6 +248,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
     def test_03_02_mail_wronglogin(self):
+        """郵箱登入"""
         try:
             logger.info("開始測試：郵箱登入")
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")))

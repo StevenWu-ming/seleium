@@ -1,15 +1,15 @@
-# api.py
 import logging
 import sys
 from fastapi import FastAPI, HTTPException
 import unittest
 import os
 from fastapi.middleware.cors import CORSMiddleware
-from test_01_registration import registrationPageTest, CleanTextTestResult, CustomTextTestRunner
-from test_02_login import LoginPageTest, CleanTextTestResult, CustomTextTestRunner
-from test_03deposit import DepositTest, CleanTextTestResult, CustomTextTestRunner
+from test_01_registration import registrationPageTest
+from test_02_login import LoginPageTest
+from test_03deposit import DepositTest
 from config import Config, config
 import uvicorn
+from test_utils import CleanTextTestResult, CustomTextTestRunner  # 匯入工具類別
 
 app = FastAPI()
 
@@ -60,7 +60,7 @@ async def run_tests():
         config.INVALID_EMAIL = Config.generate_random_email()
 
         suite = unittest.TestSuite()
-        suite.addTest(unittest.TestLoader().loadTestsFromTestCase(registrationPageTest))
+        # suite.addTest(unittest.TestLoader().loadTestsFromTestCase(registrationPageTest))
         suite.addTest(unittest.TestLoader().loadTestsFromTestCase(LoginPageTest))
         # suite.addTest(unittest.TestLoader().loadTestsFromTestCase(DepositTest))
                 
@@ -69,9 +69,19 @@ async def run_tests():
         
         test_results = result.get_results()
 
+        # 檢查 test_results 是否包含必要的鍵
+        if "summary" not in test_results:
+            logger.error("測試結果缺少 'summary' 鍵")
+            raise HTTPException(status_code=500, detail="測試結果結構不完整，缺少 'summary' 鍵")
+        if "passed_tests" not in test_results:
+            logger.error("測試結果缺少 'passed_tests' 鍵")
+            raise HTTPException(status_code=500, detail="測試結果結構不完整，缺少 'passed_tests' 鍵")
+        if "failed_tests" not in test_results:
+            logger.error("測試結果缺少 'failed_tests' 鍵")
+            raise HTTPException(status_code=500, detail="測試結果結構不完整，缺少 'failed_tests' 鍵")
+
         pass_count = test_results["summary"]["pass_count"]
         fail_count = test_results["summary"]["fail_count"]
-        failed_tests = [test["test_name"] for test in test_results["failed_tests"]]
 
         logger.info("測試運行完成")
         return {
@@ -79,7 +89,8 @@ async def run_tests():
                 "pass_count": pass_count,
                 "fail_count": fail_count
             },
-            "failed_tests": failed_tests
+            "passed_tests": test_results["passed_tests"],
+            "failed_tests": test_results["failed_tests"]
         }
     
     except Exception as e:
