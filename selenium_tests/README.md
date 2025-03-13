@@ -28,24 +28,6 @@ python -m unittest discover tests
 sh
 python run_tests.py
 
-
-====================================================================================================================================================================
-＃查詢進程
-lsof -i :8000
-＃殺進程
-kill -9 {PID}}
-
-uvicorn api:app --host 0.0.0.0 --port 8000 --reload
-curl http://localhost:8000/run-tests #本地
-curl http://192.168.0.202:8000/run-tests #區域網路IP
-
-
-python3 -m http.server 8000
-python3 -m http.server 8000 --bind 0.0.0.0
-http://localhost:8000/index.html #本地
-http://192.168.0.202:8001/index.html #區域網路IP
-
-
 # unittest
 openvpn
 Username: cooper
@@ -59,6 +41,40 @@ Password: rVf75qEX2ffmwiP7gT3lcZ7VwinGXCd8
 優化增加判斷chackbox取消勾選後 註冊按鈕是否為disabled
 
 
+================================================================================================================================
+# 建立 Docker 映像
+docker build -t my-fastapi-app .
+# 運行容器（將 8000 端口映射到本機）
+docker run -d -p 8000:8000 my-fastapi-app:latest
+# 進入容器
+docker exec -it my-fastapi-app /bin/bash
+# 停止 & 刪除容器
+docker stop my-fastapi-app
+docker rm my-fastapi-app
+# 檢視當前運行中的容器
+docker ps
+# 確保已經成功建立 Docker 映像
+docker images
+# 刪除映像檔
+docker rmi my-fastapi-app:latest
+================================================================================================================================
+＃查詢進程
+lsof -i :8000
+＃殺進程
+kill -9 {PID}}
+
+ifconfig 
+
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+curl http://localhost:8000/run-tests #本地
+curl http://192.168.0.202:8000/run-tests #區域網路IP
+
+python3 -m http.server 8000
+python3 -m http.server 8000 --bind 0.0.0.0
+http://localhost:8000/index.html #本地
+http://192.168.0.202:8001/index.html #區域網路IP
+
+================================================================================================================================
 # git指令
 git add .
 git commit -m "更新內容"
@@ -97,7 +113,7 @@ git push origin --delete feature-branch
 確認你當前在哪個分支 >>> 創建一個新的分支 >>> 切換到新分支 >>> 確認當前分支 >>> 新分支開發並提交變更 >>> 新分支推送到遠端 
 >>> 切換回 main 分支 >>> 合併分支 >>> 沒有衝突,可以直接提交推送到遠端 >>> 有衝突：VSCode 會標記衝突的文件，然後你需要手動編輯這些檔案,解決後重新提交推送
 >>> 刪除已合併的分支
-
+================================================================================================================================
 # 創建虛擬環境
 python3 -m venv 虛擬環境名稱 
 # 啟動虛擬環境
@@ -106,4 +122,5 @@ source 虛擬環境名稱/bin/activate
 deactivate
 # 刪除虛擬環境
 rm -rf 虛擬環境名稱 
+================================================================================================================================
 
