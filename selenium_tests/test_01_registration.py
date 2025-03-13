@@ -56,6 +56,7 @@ class registrationPageTest(unittest.TestCase):
         logger.info(f"設置測試環境: {config.REGISTER_URL}")
 
     def test_01_01check_registration_button_enabled_after_username_and_password(self):
+        """檢查註冊按鈕是否在輸入帳號密碼後啟用"""
         try:
             logger.info("開始測試：檢查註冊按鈕是否在輸入帳號密碼後啟用")
 
@@ -101,6 +102,7 @@ class registrationPageTest(unittest.TestCase):
             self.fail()
 
     def test_01_02_registration(self):
+        """帳號密碼正確註冊"""
         try:
             logger.info("開始測試：帳號密碼正確註冊")
 
@@ -128,6 +130,7 @@ class registrationPageTest(unittest.TestCase):
             self.fail()
 
     def test_01_03_registration_duplicate(self):
+        """帳號重複無法註冊"""
         try:
             logger.info("開始測試：帳號重複無法註冊")
 

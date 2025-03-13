@@ -61,6 +61,7 @@ class DepositTest(unittest.TestCase):
         logger.info(f"設置測試環境: {config.LOGIN_URL}")
 
     def test_01_01_deposit(self):
+        """充值"""
         try:
             logger.info("開始測試：充值")
             
