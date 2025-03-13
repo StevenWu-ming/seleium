@@ -121,7 +121,7 @@ class Config:
         INVALID_PHONE_NUMBER = generate_japanese_phone_number()
         INVALID_EMAIL = generate_random_email()           
         PHONE_NUMBER = "18700000002"
-        EMAIL = "prod_hrtqdwmk@sharklasers.com"
+        EMAIL = "hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
 
 # 在類定義完成後設置 CURRENT_ENV 和 config

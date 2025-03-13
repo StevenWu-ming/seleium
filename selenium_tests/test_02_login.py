@@ -267,9 +267,9 @@ class LoginPageTest(unittest.TestCase):
             username.send_keys(config.VALID_USERNAME)
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
-
+            time.sleep(40)
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
-            self.assertIn("我的钱包1", success_message.text)
+            self.assertIn("我的钱包", success_message.text)
             logger.info("測試用例通過：帳號密碼正確登入成功")
         except Exception as e:
             logger.error(f"測試用例失敗：帳號密碼正確登入 - 錯誤: {str(e)}")

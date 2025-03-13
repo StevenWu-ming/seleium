@@ -1,4 +1,0 @@
-fastapi==0.115.11
-uvicorn==0.34.0
-selenium==4.29.0
-webdriver-manager==4.0.2
