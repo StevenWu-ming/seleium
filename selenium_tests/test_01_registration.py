@@ -192,7 +192,7 @@ class registrationPageTest(unittest.TestCase):
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             registration_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
-            username_input.send_keys(config.INVALID_USERNAME_PREFIX)
+            username_input.send_keys(Config.generate_random_username())
             password.send_keys(config.VALID_PASSWORD)
             registration_button.click()
 

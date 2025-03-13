@@ -203,7 +203,7 @@ class LoginPageTest(unittest.TestCase):
             # 使用無效的手機號碼
             # random_username = self.generate_japanese_phone_number()
             # phonenumber.send_keys(random_username)  
-            phonenumber.send_keys(config.INVALID_PHONE_NUMBER)
+            phonenumber.send_keys(Config.generate_japanese_phone_number())
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
@@ -267,7 +267,7 @@ class LoginPageTest(unittest.TestCase):
             username.send_keys(config.VALID_USERNAME)
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
-            time.sleep(40)
+
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
             logger.info("測試用例通過：帳號密碼正確登入成功")
@@ -282,7 +282,7 @@ class LoginPageTest(unittest.TestCase):
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
             # random_username = self.generate_random_username()
-            username.send_keys(config.INVALID_USERNAME_PREFIX)
+            username.send_keys(Config.generate_random_username())
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
@@ -326,7 +326,7 @@ class LoginPageTest(unittest.TestCase):
             email = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='text']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            email.send_keys(config.INVALID_EMAIL)
+            email.send_keys(Config.generate_random_email())
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
