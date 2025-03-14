@@ -4,13 +4,8 @@ import string
 import datetime
 import json
 import os
+import sys
 
-# 定義儲存隨機資料的 JSON 文件路徑
-RANDOM_DATA_JSON_PATH = "/Users/steven/deepseek/uninttest/selenium_tests/random_data.json"
-RANDOM_DATA_JSON_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\random_data.json"
-
-# 確保目標目錄存在
-os.makedirs(os.path.dirname(RANDOM_DATA_JSON_PATH), exist_ok=True)
 
 def save_random_data_to_json(data):
     """將隨機生成的資料儲存到 JSON 文件中"""
@@ -26,16 +21,32 @@ def save_random_data_to_json(data):
     print(f"隨機資料已儲存到: {RANDOM_DATA_JSON_PATH}")
 
 class Config:
-    # 通用配置
-    CHROMEDRIVER_PATH = "/Users/steven/deepseek/uninttest/selenium_tests/chormedrive/chromedriver"
-    CHROMEDRIVER_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\chormedrive\chromedriver.exe"
+    if sys.platform == "win32":  # Windows 環境
+        CHROMEDRIVER_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\chormedrive\chromedriver.exe"
+        RANDOM_DATA_JSON_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\random_data.json"
+    elif sys.platform == "darwin":  # macOS 環境
+        CHROMEDRIVER_PATH = "/Users/steven/deepseek/uninttest/selenium_tests/chormedrive/chromedriver"
+        RANDOM_DATA_JSON_PATH = "/Users/steven/deepseek/uninttest/selenium_tests/random_data.json"
+    else:
+        raise RuntimeError("Unsupported OS")
+
+    @staticmethod
+    def get_chromedriver_path():
+        return Config.CHROMEDRIVER_PATH
+
+    @staticmethod
+    def get_random_data_json_path():
+        return Config.RANDOM_DATA_JSON_PATH
+
 
     DELAY_SECONDS = 2
     WAIT_TIMEOUT = 10
     
     # 直接指定環境（不再依賴環境變數）
     ENV = "TestEnv"
-        
+
+
+
     # 測試環境配置
     class TestEnv:
         BASE_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
@@ -102,6 +113,9 @@ class Config:
         email = f"{username}@gmail.com"
         save_random_data_to_json({"random_email": email})
         return email
+
+# 確保目標目錄存在
+os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
 
 # 在類定義完成後設置 CURRENT_ENV 和 config
 CURRENT_ENV = getattr(Config, Config.ENV)

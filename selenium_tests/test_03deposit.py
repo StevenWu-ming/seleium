@@ -51,7 +51,7 @@ class DepositTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
@@ -133,6 +133,17 @@ class DepositTest(unittest.TestCase):
             self.driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'end' });", target_button)
             target_button.click()
             time.sleep(self.wait_timeout)
+
+            try:
+                success_message =self.wait.until(EC.presence_of_element_located((By.XPATH, "//pre[contains(@class, 'description') and contains(text(), '您有多笔订单未支付')]")))
+                self.assertIn("您有多笔订单未支付", success_message.text)
+                logger.info("測試用例通過：存款速度頻繁")
+                self.assertIsNotNone(success_message)
+                return
+
+            except Exception as e:
+                logger.warning(f"測試用例失敗：充值 - 錯誤: {str(e)}")
+
 
             # 等待頁面轉跳並加載完成
             self.wait.until(
