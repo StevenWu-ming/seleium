@@ -71,6 +71,7 @@ curl http://192.168.0.202:8000/run-tests #區域網路IP
 
 python3 -m http.server 8000
 python3 -m http.server 8000 --bind 0.0.0.0
+& C:/Users/d1031/AppData/Local/Programs/Python/Python313/python.exe -m http.server 8000 --bind 0.0.0.0
 http://localhost:8000/index.html #本地
 http://192.168.0.202:8001/index.html #區域網路IP
 

@@ -4,12 +4,13 @@ from fastapi import FastAPI, HTTPException
 import unittest
 import os
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from test_01_registration import registrationPageTest
 from test_02_login import LoginPageTest
 from test_03deposit import DepositTest
 from config import Config, config
 import uvicorn
-from test_utils import CleanTextTestResult, CustomTextTestRunner  # 匯入工具類別
+from test_utils import CleanTextTestResult, CustomTextTestRunner
 
 app = FastAPI()
 
@@ -37,14 +38,14 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - [%(name)s] %(message)s",
     handlers=[
-        logging.FileHandler(log_file, mode='w'),
+        logging.FileHandler(log_file, mode='w', encoding='utf-8'),  # 明確指定 UTF-8
         logging.StreamHandler(sys.stdout)
     ]
 )
 
 logger = logging.getLogger("test_logger")
 
-# 確保 Uvicorn 也使用我們的 logging 設定
+# 同步 Uvicorn 的日誌設定
 uvicorn_logger = logging.getLogger("uvicorn")
 uvicorn_logger.handlers = logger.handlers
 uvicorn_logger.setLevel(logging.INFO)
@@ -60,9 +61,9 @@ async def run_tests():
         config.INVALID_EMAIL = Config.generate_random_email()
 
         suite = unittest.TestSuite()
-        # suite.addTest(unittest.TestLoader().loadTestsFromTestCase(registrationPageTest))
+        suite.addTest(unittest.TestLoader().loadTestsFromTestCase(registrationPageTest))
         suite.addTest(unittest.TestLoader().loadTestsFromTestCase(LoginPageTest))
-        # suite.addTest(unittest.TestLoader().loadTestsFromTestCase(DepositTest))
+        suite.addTest(unittest.TestLoader().loadTestsFromTestCase(DepositTest))
                 
         runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=2)
         result = runner.run(suite)
@@ -83,8 +84,7 @@ async def run_tests():
         pass_count = test_results["summary"]["pass_count"]
         fail_count = test_results["summary"]["fail_count"]
 
-        logger.info("測試運行完成")
-        return {
+        response_data = {
             "summary": {
                 "pass_count": pass_count,
                 "fail_count": fail_count
@@ -92,15 +92,25 @@ async def run_tests():
             "passed_tests": test_results["passed_tests"],
             "failed_tests": test_results["failed_tests"]
         }
+
+        logger.info("測試運行完成")
+        # 使用 JSONResponse 明確指定 UTF-8 編碼
+        return JSONResponse(
+            content=response_data,
+            media_type="application/json;charset=utf-8"
+        )
     
     except Exception as e:
         logger.error(f"測試執行過程中發生錯誤: {str(e)}")
         raise HTTPException(status_code=500, detail=f"測試執行過程中發生錯誤: {str(e)}")
-    
+
 @app.get("/test")
 async def test_endpoint():
     logger.info("測試端點被訪問")
-    return {"message": "Test endpoint is working"}
+    return JSONResponse(
+        content={"message": "Test endpoint is working"},
+        media_type="application/json;charset=utf-8"
+    )
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, log_config=None)
