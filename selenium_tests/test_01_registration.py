@@ -96,9 +96,9 @@ class registrationPageTest(unittest.TestCase):
             logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
             self.assertFalse(final_disabled, "輸入用戶名和密碼並同意條款後，註冊按鈕應為 enabled")
 
-            logger.info("測試用例通過：登入按鈕檢查成功")
+            logger.info("測試用例通過：註冊按鈕檢查成功")
         except Exception as e:
-            logger.error(f"測試用例失敗：登入按鈕檢查 - 錯誤: {str(e)}")
+            logger.error(f"測試用例失敗：註冊按鈕檢查 - 錯誤: {str(e)}")
             self.fail()
 
     def test_01_02_registration(self):

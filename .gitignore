@@ -10,8 +10,7 @@ __pycache__/
 *.log
 
 # Python 虛擬環境
-venv/
-env/
+SeleniumUnittest/
 
 # 測試報告與暫存檔案
 *.xml

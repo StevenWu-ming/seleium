@@ -58,17 +58,17 @@ docker images
 # 刪除映像檔
 docker rmi my-fastapi-app:latest
 ================================================================================================================================
-＃查詢進程
+# 查詢進程
 lsof -i :8000
-＃殺進程
+# 殺進程
 kill -9 {PID}}
 
 ifconfig 
-
+# 後端api
 uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 curl http://localhost:8000/run-tests #本地
 curl http://192.168.0.202:8000/run-tests #區域網路IP
-
+# 前端HTML
 python3 -m http.server 8000
 python3 -m http.server 8000 --bind 0.0.0.0
 & C:/Users/d1031/AppData/Local/Programs/Python/Python313/python.exe -m http.server 8000 --bind 0.0.0.0
@@ -119,7 +119,7 @@ git push origin --delete feature-branch
 python3 -m venv 虛擬環境名稱 
 # 啟動虛擬環境
 source 虛擬環境名稱/bin/activate 
-# 啟動虛擬環境
+# 退出虛擬環境
 deactivate
 # 刪除虛擬環境
 rm -rf 虛擬環境名稱 
