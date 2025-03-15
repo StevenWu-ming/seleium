@@ -60,6 +60,8 @@ docker rmi my-fastapi-app:latest
 ================================================================================================================================
 # 查詢進程
 lsof -i :8000
+netstat -aon | findstr :8000 # Windows
+tasklist | findstr 1234
 # 殺進程
 kill -9 {PID}}
 
