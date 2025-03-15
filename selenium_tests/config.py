@@ -9,16 +9,20 @@ import sys
 
 def save_random_data_to_json(data):
     """將隨機生成的資料儲存到 JSON 文件中"""
-    if os.path.exists(RANDOM_DATA_JSON_PATH):
-        with open(RANDOM_DATA_JSON_PATH, 'r') as f:
+    random_data_json_path = Config.get_random_data_json_path()  # ✅ 正確獲取 JSON 文件路徑
+
+    if os.path.exists(random_data_json_path):
+        with open(random_data_json_path, 'r') as f:
             existing_data = json.load(f)
     else:
         existing_data = {}
 
     existing_data.update(data)
-    with open(RANDOM_DATA_JSON_PATH, 'w') as f:
+    with open(random_data_json_path, 'w') as f:
         json.dump(existing_data, f, indent=4, ensure_ascii=False)
-    print(f"隨機資料已儲存到: {RANDOM_DATA_JSON_PATH}")
+    print(f"隨機資料已儲存到: {random_data_json_path}")
+
+
 
 class Config:
     if sys.platform == "win32":  # Windows 環境
@@ -116,6 +120,7 @@ class Config:
 
 # 確保目標目錄存在
 os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
+
 
 # 在類定義完成後設置 CURRENT_ENV 和 config
 CURRENT_ENV = getattr(Config, Config.ENV)
