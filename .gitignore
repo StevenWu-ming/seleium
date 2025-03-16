@@ -19,3 +19,4 @@ SeleniumUnittest/
 *.pytest_cache/
 
 selenium_tests/random_data.json
+mcp.json
