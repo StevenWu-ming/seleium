@@ -1,3 +1,4 @@
+1
 1️⃣ 安裝 Python
 請同事到 Python 官方網站 安裝 Python，並確保 pip 可用：
 
