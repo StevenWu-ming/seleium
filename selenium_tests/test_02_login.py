@@ -61,8 +61,7 @@ class LoginPageTest(unittest.TestCase):
         """手機號碼登入"""
         try:
             logger.info("開始測試：手機號碼登入")
-            print(f"Page title: {self.driver.title}")
-
+            
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
             logger.debug("Found phone tab, clicking...")
             phone_tab.click()
@@ -280,27 +279,10 @@ class LoginPageTest(unittest.TestCase):
         logger.info("測試結束，關閉瀏覽器")
         self.driver.quit()
     
-def run_test(test_method):
-    suite = unittest.TestSuite()
-    suite.addTest(LoginPageTest(test_method))
-    runner = unittest.TextTestRunner(verbosity=2)
-    runner.run(suite)
+
 
 if __name__ == "__main__":
-    test_cases = ["test_01_01_phonenumber_login",
-                     "test_01_02_phonenumber__wronglogin",
-                     "test_02_01check_login_button_enabled_after_username_and_password",
-                     "test_02_02_successful_login",
-                     "test_02_03_invalid_credentials",
-                     "test_03_01_mail_login",
-                     "test_03_02_mail_wronglogin"]  # 测试方法名称
-    with ThreadPoolExecutor(max_workers=16) as executor:
-        executor.map(run_test, test_cases)
+    suite = unittest.TestLoader().loadTestsFromTestCase(LoginPageTest)
+    runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=2)
+    result = runner.run(suite)
     logger.info("測試運行完成")
-
-
-# if __name__ == "__main__":
-#     suite = unittest.TestLoader().loadTestsFromTestCase(LoginPageTest)
-#     runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=2)
-#     result = runner.run(suite)
-#     logger.info("測試運行完成")
