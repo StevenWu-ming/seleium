@@ -153,9 +153,15 @@ class DepositTest(unittest.TestCase):
 
 
             # 等待并点击银行下拉框
-            bank_dropdown = WebDriverWait(self.driver, 2).until(EC.element_to_be_clickable((
-                By.XPATH, "(//div[contains(@class, 'select-container')]//div[contains(@class, 'row-line') and .//i[contains(@class, 'icon-drop-down')]])[2]")))
-            bank_dropdown.click()
+            bank_dropdown = WebDriverWait(self.driver, 5) .until(EC.presence_of_element_located((
+                By.XPATH, "(//div[contains(@class, 'select-container')]//div[contains(@class, 'row-line') and .//i[contains(@class, 'icon-drop-down')]])[2]"
+            )))
+
+            # 確保元素可見並滾動到可點擊範圍
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", bank_dropdown)
+
+            # 使用 ActionChains 避免點擊失敗
+            ActionChains(self.driver).move_to_element(bank_dropdown).click().perform()
             # 等待并选择“中国民生银行”选项
             bank_option = WebDriverWait(self.driver,2).until(
                 EC.element_to_be_clickable((
@@ -171,7 +177,7 @@ class DepositTest(unittest.TestCase):
 
             #有多筆訂單未確認 會跳入這判斷 一樣判斷存款成功     
             try:
-                success_message =self.wait.until(EC.presence_of_element_located((By.XPATH, "//pre[contains(@class, 'description') and contains(text(), '您有多笔订单未支付')]")))
+                success_message =WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//pre[contains(@class, 'description') and contains(text(), '您有多笔订单未支付')]")))
                 self.assertIn("您有多笔订单未支付", success_message.text)
                 logger.info("測試用例通過：存款速度頻繁")
                 self.assertIsNotNone(success_message)
