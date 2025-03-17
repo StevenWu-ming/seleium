@@ -294,7 +294,7 @@ if __name__ == "__main__":
                      "test_02_03_invalid_credentials",
                      "test_03_01_mail_login",
                      "test_03_02_mail_wronglogin"]  # 测试方法名称
-    with ThreadPoolExecutor(max_workers=8) as executor:
+    with ThreadPoolExecutor(max_workers=16) as executor:
         executor.map(run_test, test_cases)
     logger.info("測試運行完成")
 
