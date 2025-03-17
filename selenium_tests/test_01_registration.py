@@ -13,6 +13,7 @@ import time
 from unittest.runner import TextTestResult
 from config import Config, config  # 導入 Config 和 config
 from test_utils import CleanTextTestResult, CustomTextTestRunner
+from concurrent.futures import ThreadPoolExecutor
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
@@ -160,13 +161,21 @@ class registrationPageTest(unittest.TestCase):
             self.fail()
 
 
-
     def tearDown(self):
         logger.info("測試結束，關閉瀏覽器")
         self.driver.quit()
 
+def run_test(test_method):
+    suite = unittest.TestSuite()
+    suite.addTest(registrationPageTest(test_method))
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite)
+
+
 if __name__ == "__main__":
-    suite = unittest.TestLoader().loadTestsFromTestCase(registrationPageTest)
-    runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=2)
-    result = runner.run(suite)
+    test_cases = ["test_01_01check_registration_button_enabled_after_username_and_password",
+                     "test_01_02_registration",
+                     "test_01_03_registration_duplicate"]  # 测试方法名称
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        executor.map(run_test, test_cases)
     logger.info("測試運行完成")

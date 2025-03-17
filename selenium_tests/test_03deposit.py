@@ -51,7 +51,7 @@ class DepositTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        #chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
@@ -129,7 +129,7 @@ class DepositTest(unittest.TestCase):
             )
             bank_option.click()
             amount_input.send_keys(config.DP_Amount)
-            time.sleep(self.wait_timeout)
+            time.sleep(10)
             self.driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'end' });", target_button)
             target_button.click()
             time.sleep(self.wait_timeout)
