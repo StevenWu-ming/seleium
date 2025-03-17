@@ -80,9 +80,9 @@ class registrationPageTest(unittest.TestCase):
 
             username = "cooper001"
             username_input.send_keys(username)
-            time.sleep(self.delay_seconds)
+            # time.sleep(self.delay_seconds)
 
-            mid_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '注册')]")))
+            # mid_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '注册')]")))
             mid_disabled = "disabled" in registration_button.get_attribute("class")
             logger.debug(f"僅輸入帳號: {'disabled' if mid_disabled else 'enabled'}")
             self.assertTrue(mid_disabled, "僅輸入用戶名後，註冊按鈕應仍為 disabled")
@@ -91,7 +91,7 @@ class registrationPageTest(unittest.TestCase):
             password_input.send_keys(password)
             time.sleep(self.delay_seconds)
 
-            final_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '注册')]")))
+            # final_disabled = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '注册')]")))
             final_disabled = "disabled" in registration_button.get_attribute("class")
             logger.debug(f"全部輸入: {'disabled' if final_disabled else 'enabled'}")
             self.assertFalse(final_disabled, "輸入用戶名和密碼並同意條款後，註冊按鈕應為 enabled")

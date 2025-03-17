@@ -43,8 +43,8 @@ class Config:
         return Config.RANDOM_DATA_JSON_PATH
 
 
-    DELAY_SECONDS = 2
-    WAIT_TIMEOUT = 10
+    DELAY_SECONDS = 0.5
+    WAIT_TIMEOUT = 5
     
     # 直接指定環境（不再依賴環境變數）
     ENV = "TestEnv"
