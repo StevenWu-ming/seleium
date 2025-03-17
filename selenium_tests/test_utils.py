@@ -70,11 +70,8 @@ class CleanTextTestResult(TextTestResult):
         pass
 
     def printSummary(self):
-        total = self.pass_count + self.fail_count
-        logger.info(f"\n📌測試結果摘要:")
-        logger.info(f"✅通過測試數: {self.pass_count}")
-        logger.info(f"❌失敗測試數: {self.fail_count}")
-        logger.info(f"📊總測試數: {total}")
+        # 不再直接打印，而是由主進程負責打印
+        pass
 
     def get_results(self):
         """返回結構化的測試結果，包括成功和失敗用例"""
@@ -96,6 +93,5 @@ class CustomTextTestRunner(unittest.TextTestRunner):
 
     def run(self, test):
         result = super().run(test)
-        if hasattr(result, 'printSummary'):
-            result.printSummary()
+        # 不再調用 printSummary，由主進程負責打印總結
         return result
