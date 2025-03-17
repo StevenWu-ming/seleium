@@ -153,8 +153,7 @@ class DepositTest(unittest.TestCase):
 
 
             # 等待并点击银行下拉框
-            bank_dropdown = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((
+            bank_dropdown = WebDriverWait(self.driver, 2).until(EC.element_to_be_clickable((
                 By.XPATH, "(//div[contains(@class, 'select-container')]//div[contains(@class, 'row-line') and .//i[contains(@class, 'icon-drop-down')]])[2]")))
             bank_dropdown.click()
             # 等待并选择“中国民生银行”选项

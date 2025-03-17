@@ -136,7 +136,7 @@ class LoginPageTest(unittest.TestCase):
 
             # 等待錯誤訊息出現
             error_message = self.wait.until(EC.presence_of_element_located(
-                (By.XPATH, "//div[contains(text(), '您输入的密码不正确')]")
+                (By.XPATH, "//*[contains(text(), '您输入的密码不正确')]")
             ))
             logger.debug("Found error message for invalid phone number")
             
