@@ -65,7 +65,7 @@ class DepositTest(unittest.TestCase):
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
         
         # 如果需要以無頭模式運行 Chrome，可以取消註解以下行
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         
         # Selenium 只會等待 DOM 加載完成，而不會等待所有資源（如圖片）加載完成。
         chrome_options.page_load_strategy = "eager"
