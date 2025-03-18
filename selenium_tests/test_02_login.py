@@ -123,7 +123,7 @@ class LoginPageTest(unittest.TestCase):
             logger.debug("Found phone tab, clicking...")
             phone_tab.click()
 
-            phonenumber = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='number']")))
+            phonenumber = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='number']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
             # 使用無效的手機號碼
@@ -135,7 +135,7 @@ class LoginPageTest(unittest.TestCase):
 
 
             # 等待錯誤訊息出現
-            error_message = self.wait.until(EC.presence_of_element_located(
+            error_message = self.wait.until(EC.visibility_of_element_located(
                 (By.XPATH, "//*[contains(text(), '您输入的密码不正确')]")
             ))
             logger.debug("Found error message for invalid phone number")

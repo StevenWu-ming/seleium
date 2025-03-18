@@ -80,31 +80,32 @@ def run_test_in_process(test_class, shared_results):
 async def run_tests():
     try:
         logger.info(f"開始運行測試，當前環境: {config.BASE_URL}")
-        
+
         # 每次請求時生成隨機值並更新 config
         config.INVALID_USERNAME_PREFIX = Config.generate_random_username()
         config.INVALID_PHONE_NUMBER = Config.generate_japanese_phone_number()
         config.INVALID_EMAIL = Config.generate_random_email()
 
-        # 準備測試類（不再指定單一測試方法）
-        test_classes = [
-            registrationPageTest,
-            LoginPageTest,
-            DepositTest,
-        ]
+        # **指定測試類別**
+        multi_process_tests = [registrationPageTest, DepositTest]  # 這些使用多進程
+        single_process_tests = [LoginPageTest]  # 這些單獨執行
 
         # 使用 Manager 來共享結果
         manager = Manager()
         shared_results = manager.dict()
 
-        # 使用多進程運行測試
-        with Pool(processes=4) as pool:  # 設置進程數，可根據 CPU 核心數調整
+        # **多進程執行測試**
+        with Pool(processes=4) as pool:
             pool.starmap(
                 partial(run_test_in_process, shared_results=shared_results),
-                [(test_class,) for test_class in test_classes]
+                [(test_class,) for test_class in multi_process_tests]
             )
 
-        # 合併測試結果
+        # **單獨執行的測試**
+        for test_class in single_process_tests:
+            run_test_in_process(test_class, shared_results)
+
+        # **合併測試結果**
         pass_count = 0
         fail_count = 0
         passed_tests = []
@@ -114,24 +115,18 @@ async def run_tests():
             if "summary" not in test_results:
                 logger.error(f"測試類 {test_class_name} 結果缺少 'summary' 鍵")
                 raise HTTPException(status_code=500, detail=f"測試類 {test_class_name} 結果結構不完整，缺少 'summary' 鍵")
-            if "passed_tests" not in test_results:
-                logger.error(f"測試類 {test_class_name} 結果缺少 'passed_tests' 鍵")
-                raise HTTPException(status_code=500, detail=f"測試類 {test_class_name} 結果結構不完整，缺少 'passed_tests' 鍵")
-            if "failed_tests" not in test_results:
-                logger.error(f"測試類 {test_class_name} 結果缺少 'failed_tests' 鍵")
-                raise HTTPException(status_code=500, detail=f"測試類 {test_class_name} 結果結構不完整，缺少 'failed_tests' 鍵")
 
             pass_count += test_results["summary"]["pass_count"]
             fail_count += test_results["summary"]["fail_count"]
             passed_tests.extend(test_results["passed_tests"])
             failed_tests.extend(test_results["failed_tests"])
 
-        # 打印總結（只在主進程中打印）
+        # **總結**
         total_count = pass_count + fail_count
         logger.info("\n📌測試結果摘要:")
-        logger.info(f"^^通過測試數: {pass_count}")
-        logger.info(f"❌失敗測試數: {fail_count}")
-        logger.info(f"📊總測試數: {total_count}")
+        logger.info(f"✅ 通過測試數: {pass_count}")
+        logger.info(f"❌ 失敗測試數: {fail_count}")
+        logger.info(f"📊 總測試數: {total_count}")
 
         response_data = {
             "summary": {
@@ -147,18 +142,12 @@ async def run_tests():
             content=response_data,
             media_type="application/json;charset=utf-8"
         )
-    
+
     except Exception as e:
         logger.error(f"測試執行過程中發生錯誤: {str(e)}")
         raise HTTPException(status_code=500, detail=f"測試執行過程中發生錯誤: {str(e)}")
 
-@app.get("/test")
-async def test_endpoint():
-    logger.info("測試端點被訪問")
-    return JSONResponse(
-        content={"message": "Test endpoint is working"},
-        media_type="application/json;charset=utf-8"
-    )
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, log_config=None)

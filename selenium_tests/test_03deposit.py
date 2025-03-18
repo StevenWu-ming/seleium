@@ -140,11 +140,24 @@ class DepositTest(unittest.TestCase):
                 By.XPATH, "//div[contains(@class, 'method-item') and .//span[contains(@class, 'color-20') and contains(text(), '网银转账')]]"))).click()
 
             # 等待并移動到“确认”按钮
-            target_button = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
-                (By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and contains(@class, 'disabled') and contains(., '确认')]")
-            ))            
-            ActionChains(self.driver).move_to_element(target_button).perform()
+            # target_button = WebDriverWait(self.driver, 10).until(
+            #     EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and not(contains(@class, 'disabled')) and text()='确认']"))
+            # )      
+            # ActionChains(self.driver).move_to_element(target_button).perform()
             
+            try:
+                target_button = WebDriverWait(self.driver, 15).until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and contains(., '确认')]")
+                    )
+                )
+                ActionChains(self.driver).move_to_element(target_button).perform()
+            except TimeoutException:
+                print("TimeoutException: Failed to locate the button")
+                print(self.driver.page_source)  # 打印頁面源代碼以幫助調試
+                raise
+
+
             # 等待金额输入框可点击
             amount_input = self.wait.until(EC.element_to_be_clickable((
                     By.XPATH, "//input[@type='number' and contains(@class, 'ng-untouched') and contains(@class, 'ng-pristine') "
@@ -172,7 +185,12 @@ class DepositTest(unittest.TestCase):
             #     EC.element_to_be_clickable((
             #     By.XPATH, "//li[contains(text(), '中国民生银行')]")))
             # bank_option.click() 
-            bank_option = self.driver.find_element(By.XPATH, "//li[contains(text(), '中国民生银行')]")
+            # 等待元素出現並確保它可被點擊
+            bank_option = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//li[contains(text(), '中国民生银行')]"))
+            )
+
+            # 使用 JavaScript 點擊
             self.driver.execute_script("arguments[0].click();", bank_option)
 
 

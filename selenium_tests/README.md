@@ -79,7 +79,7 @@ uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
 
 curl http://localhost:8000/run-tests #本地
-curl http://192.168.0.202:8000/run-tests #區域網路IP
+tests #區域網路IP
 # 前端HTML
 python3 -m http.server 8000
 python3 -m http.server 8000 --bind 0.0.0.0
