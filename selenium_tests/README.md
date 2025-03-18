@@ -67,11 +67,15 @@ lsof -i :8000
 netstat -aon | findstr :8000 # Windows
 tasklist | findstr 1234
 # 殺進程
-kill -9 {PID}}
+kill -9 {PID}
+pkill -9 -f python
+
 
 ifconfig 
 # 後端api
 uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
+
 curl http://localhost:8000/run-tests #本地
 curl http://192.168.0.202:8000/run-tests #區域網路IP
 # 前端HTML
