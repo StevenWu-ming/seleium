@@ -248,7 +248,7 @@ class LoginPageTest(unittest.TestCase):
             self.fail()
 
     def test_03_02_mail_wronglogin(self):
-        """郵箱登入"""
+        """錯誤郵箱登入"""
         try:
             logger.info("開始測試：郵箱登入")
             phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")))

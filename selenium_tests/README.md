@@ -65,7 +65,9 @@ docker rmi my-fastapi-app:latest
 # 查詢進程
 lsof -i :8000
 netstat -aon | findstr :8000 # Windows
-tasklist | findstr 1234
+taskkill /IM 進程名稱 /F
+taskkill /IM python.exe /F
+
 # 殺進程
 kill -9 {PID}
 pkill -9 -f python
