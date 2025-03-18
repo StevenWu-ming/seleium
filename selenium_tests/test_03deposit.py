@@ -168,10 +168,13 @@ class DepositTest(unittest.TestCase):
             # 使用 ActionChains 避免點擊失敗
             ActionChains(self.driver).move_to_element(bank_dropdown).click().perform()
             # 等待并选择“中国民生银行”选项
-            bank_option = WebDriverWait(self.driver,2).until(
-                EC.element_to_be_clickable((
-                By.XPATH, "//li[contains(text(), '中国民生银行')]")))
-            bank_option.click() 
+            # bank_option = WebDriverWait(self.driver,5).until(
+            #     EC.element_to_be_clickable((
+            #     By.XPATH, "//li[contains(text(), '中国民生银行')]")))
+            # bank_option.click() 
+            bank_option = self.driver.find_element(By.XPATH, "//li[contains(text(), '中国民生银行')]")
+            self.driver.execute_script("arguments[0].click();", bank_option)
+
 
             # 定位優惠卷下拉選單 主要輸入金額後要判斷他已經出現才可以點確認 所以他會定位但不會用到他
             selected_row = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((
@@ -194,12 +197,12 @@ class DepositTest(unittest.TestCase):
                 logger.warning(f"檢測沒有多筆訂單可繼續存款")
 
             # 等待頁面轉跳並加載完成
-            self.wait.until(
+            WebDriverWait(self.driver, 15).until(
                 EC.presence_of_element_located((
                 By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
 
             #  判斷成功訊息
-            success_message = WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
+            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
             self.assertIn("请在有效期内完成", success_message.text)
             logger.info("測試用例通過：充值成功提交")
         except Exception as e:
