@@ -65,7 +65,7 @@ class DepositTest(unittest.TestCase):
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
         
         # 如果需要以無頭模式運行 Chrome，可以取消註解以下行
-        chrome_options.add_argument("--headless")
+        #chrome_options.add_argument("--headless")
         
         # Selenium 只會等待 DOM 加載完成，而不會等待所有資源（如圖片）加載完成。
         chrome_options.page_load_strategy = "eager"
@@ -125,7 +125,7 @@ class DepositTest(unittest.TestCase):
                 By.XPATH, "//div[contains(@class, 'toggle') and .//span[contains(@class, 'toggle-wallet') and contains(text(), '充值')]]"))).click()
 
 
-        # 等待并点击“网银转账”按钮
+            # 等待并点击“网银转账”按钮
             WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((
                 By.XPATH, "//div[contains(@class, 'method-item') and .//span[contains(@class, 'color-20') and contains(text(), '网银转账'"")]]"))).click()
@@ -137,9 +137,11 @@ class DepositTest(unittest.TestCase):
                 By.XPATH, "//div[contains(@class, 'method-item') and .//span[contains(@class, 'color-20') and contains(text(), '网银转账')]]"))).click()
 
             # 等待并移動到“确认”按钮
-            target_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and contains(@class, 'disabled') and contains(text(), '确认')]")))
+            target_button = self.wait.until(EC.visibility_of_element_located(
+                (By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and contains(@class, 'disabled') and contains(., '确认')]")
+            ))            
             ActionChains(self.driver).move_to_element(target_button).perform()
-        
+            
             # 等待金额输入框可点击
             amount_input = self.wait.until(EC.element_to_be_clickable((
                     By.XPATH, "//input[@type='number' and contains(@class, 'ng-untouched') and contains(@class, 'ng-pristine') "
@@ -184,7 +186,7 @@ class DepositTest(unittest.TestCase):
                 return
 
             except Exception as e:
-                logger.warning(f"測試用例失敗：充值 - 錯誤: {str(e)}")
+                logger.warning(f"檢測沒有多筆訂單可繼續存款")
 
             # 等待頁面轉跳並加載完成
             self.wait.until(

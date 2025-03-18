@@ -33,6 +33,9 @@ python run_tests.py
 openvpn
 Username: cooper
 Password: rVf75qEX2ffmwiP7gT3lcZ7VwinGXCd8
+cooper-ios	MG1NWtJb8tMOIWhPPTdBD0BOL0Spz+bY
+cooper-android	Ws4oBNPCEvH%I9Ry5P5LbJ0Y6wkKonQh
+cooper-tao	Lb5CxnOkWXCxF9+r5nFS6ACHwalqU9Ql
 
 # 登入自動化 優化
 手機地區號登入
