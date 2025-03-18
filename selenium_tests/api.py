@@ -98,7 +98,7 @@ async def run_tests():
         shared_results = manager.dict()
 
         # 使用多進程運行測試
-        with Pool(processes=4) as pool:  # 設置進程數，可根據 CPU 核心數調整
+        with Pool(processes=2) as pool:  # 設置進程數，可根據 CPU 核心數調整
             pool.starmap(
                 partial(run_test_in_process, shared_results=shared_results),
                 [(test_class,) for test_class in test_classes]

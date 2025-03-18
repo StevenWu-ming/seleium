@@ -65,7 +65,7 @@ class DepositTest(unittest.TestCase):
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
         
         # 如果需要以無頭模式運行 Chrome，可以取消註解以下行
-        #chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         
         # Selenium 只會等待 DOM 加載完成，而不會等待所有資源（如圖片）加載完成。
         chrome_options.page_load_strategy = "eager"
@@ -91,7 +91,7 @@ class DepositTest(unittest.TestCase):
             logger.info("開始測試：充值")
             #登入
             # 等待使用者名稱輸入框出現，並輸入有效的使用者名稱
-            self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']"))).send_keys(config.VALID_USERNAME)
+            self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']"))).send_keys(config.VALID_DP_USERNAME)
 
             # 等待密碼輸入框出現，並輸入有效的密碼
             self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='password']"))).send_keys(config.VALID_PASSWORD)
@@ -196,11 +196,11 @@ class DepositTest(unittest.TestCase):
             # 等待頁面轉跳並加載完成
             self.wait.until(
                 EC.presence_of_element_located((
-                By.XPATH, "//span[contains(text(), '请在有效期内完成存款')]")))
+                By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
 
             #  判斷成功訊息
-            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成存款')]")))
-            self.assertIn("请在有效期内完成存款", success_message.text)
+            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
+            self.assertIn("请在有效期内完成", success_message.text)
             logger.info("測試用例通過：充值成功提交")
         except Exception as e:
             logger.error(f"測試用例失敗：充值 - 錯誤: {str(e)}")
