@@ -56,12 +56,12 @@ class Config:
         BASE_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
         LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
-        VALID_USERNAME = "cooper006"
+        VALID_USERNAME = "cooper005"
         VALID_PASSWORD = "1234Qwer"
         INVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
         INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
         INVALID_EMAIL = None            # 初始化為 None，動態生成
-        PHONE_NUMBER = "13100000033"
+        PHONE_NUMBER = "13100000032"
         EMAIL = "hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
         DP_Amount = '100'

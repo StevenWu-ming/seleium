@@ -119,7 +119,10 @@ class DepositTest(unittest.TestCase):
                 except Exception as TimeoutException:
                     # 如果在等待過程中發生超時（即未找到關閉按鈕），則跳出循環
                     break
-                            
+            # 等待遮罩層消失
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop"))
+            )                
             # 等待充值按鈕出現並可點擊，然後點擊它
             WebDriverWait(self.driver, 3).until(EC.element_to_be_clickable((
                 By.XPATH, "//div[contains(@class, 'toggle') and .//span[contains(@class, 'toggle-wallet') and contains(text(), '充值')]]"))).click()
@@ -179,7 +182,9 @@ class DepositTest(unittest.TestCase):
 
             #有多筆訂單未確認 會跳入這判斷 一樣判斷存款成功     
             try:
-                success_message =WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//pre[contains(@class, 'description') and contains(text(), '您有多笔订单未支付')]")))
+                success_message = WebDriverWait(self.driver, 15).until(
+                    EC.visibility_of_element_located((By.XPATH, "//pre[contains(@class, 'description') and contains(normalize-space(text()), '您有多笔订单未支付')]"))
+                )
                 self.assertIn("您有多笔订单未支付", success_message.text)
                 logger.info("測試用例通過：存款速度頻繁")
                 self.assertIsNotNone(success_message)
