@@ -140,7 +140,7 @@ class DepositTest(unittest.TestCase):
                 By.XPATH, "//div[contains(@class, 'method-item') and .//span[contains(@class, 'color-20') and contains(text(), '网银转账')]]"))).click()
 
             # 等待并移動到“确认”按钮
-            target_button = self.wait.until(EC.visibility_of_element_located(
+            target_button = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
                 (By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and contains(@class, 'disabled') and contains(., '确认')]")
             ))            
             ActionChains(self.driver).move_to_element(target_button).perform()
@@ -199,7 +199,7 @@ class DepositTest(unittest.TestCase):
                 By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
 
             #  判斷成功訊息
-            success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
+            success_message = WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
             self.assertIn("请在有效期内完成", success_message.text)
             logger.info("測試用例通過：充值成功提交")
         except Exception as e:
