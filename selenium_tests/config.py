@@ -58,7 +58,7 @@ class Config:
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
         VALID_USERNAME = "cooper005"
         VALID_PASSWORD = "1234Qwer"
-        VALID_DP_USERNAME = "cooper006"
+        VALID_DP_USERNAME = "cooper005"
         INVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
         INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
         INVALID_EMAIL = None            # 初始化為 None，動態生成
