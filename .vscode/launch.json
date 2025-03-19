@@ -11,6 +11,14 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+            
+        },
+        {
+            "name": "Repeat Unittest Until Error",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/repeat_unittest_until_error.py",
+            "console": "integratedTerminal"
         }
     ]
 }

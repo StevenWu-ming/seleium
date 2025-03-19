@@ -15,6 +15,8 @@ from unittest.runner import TextTestResult
 from config import Config, config  # 導入 Config 和 config
 from test_utils import CleanTextTestResult, CustomTextTestRunner
 from concurrent.futures import ThreadPoolExecutor
+from selenium.common.exceptions import TimeoutException
+
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
@@ -70,8 +72,9 @@ class LoginPageTest(unittest.TestCase):
             logger.debug("Found phone dropdown, clicking...")
             phone_dropdown.click()
 
-            search_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='搜索' or contains(@class, 'search')]")))
+            search_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@placeholder='搜索' or contains(@class, 'search')]")))
             search_input.send_keys("+86")
+
             china_option = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '+86')] | //li[contains(text(), '+86')]")))
             logger.debug("Found '+86' option, clicking...")
             china_option.click()
@@ -117,37 +120,42 @@ class LoginPageTest(unittest.TestCase):
         """輸入錯誤手機號碼登入"""
         try:
             logger.info("開始測試：輸入錯誤手機號碼登入")
-            print(f"Page title: {self.driver.title}")
-
-            phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
-            logger.debug("Found phone tab, clicking...")
+            phone_tab = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
             phone_tab.click()
 
             phonenumber = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='number']")))
-            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
-            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
+            password = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='password']")))
+            login_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), '登录')]")))
+
             # 使用無效的手機號碼
-            # random_username = self.generate_japanese_phone_number()
-            # phonenumber.send_keys(random_username)  
-            phonenumber.send_keys(Config.generate_japanese_phone_number())
+            phonenumber.send_keys(Config.generate_japanese_phone_number())  
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
-
             # 等待錯誤訊息出現
-            error_message = self.wait.until(EC.visibility_of_element_located(
-                (By.XPATH, "//*[contains(text(), '您输入的密码不正确')]")
-            ))
-            logger.debug("Found error message for invalid phone number")
+            try:
+                error_message = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(
+                    (By.XPATH, "//div[contains(@class, 'error-info') and contains(text(), '您输入的密码不正确')]")
+                ))
+                logger.debug(f"錯誤訊息內容: {error_message.text}")
+                self.assertIn("您输入的密码不正确", error_message.text)  # 根據實際的錯誤訊息文字調整
+            except TimeoutException as e:
+                # Take screenshot on error
+                timestamp = time.strftime("%Y%m%d_%H%M%S")
+                screenshot_path = f"error_screenshot_{timestamp}.png"
+                self.driver.save_screenshot(screenshot_path)
+                logger.error(f"錯誤訊息未能找到: {str(e)}")
+                logger.debug(f"Page source: {self.driver.page_source}")
+                logger.info(f"Screenshot saved at {screenshot_path}")
+                self.fail(f"錯誤訊息未能在預定時間內出現")
             
-            # 驗證錯誤訊息
-            self.assertIn("您输入的密码不正确", error_message.text)  # 根據實際的錯誤訊息文字調整
             logger.info("測試用例通過：錯誤手機號碼登入測試")
-            self.assertIsNotNone(error_message)
 
         except Exception as e:
             logger.error(f"測試用例失敗：錯誤手機號碼登入測試 - 錯誤: {str(e)}")
             self.fail()
+
+
 
     def test_02_01check_login_button_enabled_after_username_and_password(self):
         """檢查登入按鈕是否在輸入帳號密碼後啟用"""

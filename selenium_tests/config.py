@@ -44,7 +44,7 @@ class Config:
 
 
     DELAY_SECONDS = 0.5
-    WAIT_TIMEOUT = 5
+    WAIT_TIMEOUT = 10
     
     # 直接指定環境（不再依賴環境變數）
     ENV = "TestEnv"
@@ -107,7 +107,7 @@ class Config:
     def generate_japanese_phone_number():
         prefixes = ['070', '080', '090']
         prefix = random.choice(prefixes)
-        remaining_digits = ''.join([str(random.randint(0, 9)) for _ in range(8)])
+        remaining_digits = ''.join([str(random.randint(1, 9)) for _ in range(8)])
         japanese_phone = prefix + remaining_digits
         save_random_data_to_json({"japanese_phone_number": japanese_phone})
         return japanese_phone
