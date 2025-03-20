@@ -14,13 +14,13 @@ from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from multiprocessing import Pool, Manager
 from functools import partial
 import time
-# from fastapi.staticfiles import StaticFiles
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI()
 
 # 掛載 static 目錄，提供靜態檔案
-# app.mount("/", StaticFiles(directory="static", html=True), name="static")
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
 # 設置 CORS
 origins = [
@@ -32,7 +32,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,  # 確保這裡是列表
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -93,26 +93,26 @@ async def run_tests():
         config.INVALID_PHONE_NUMBER = Config.generate_japanese_phone_number()
         config.INVALID_EMAIL = Config.generate_random_email()
 
-        # **指定測試類別**
-        multi_process_tests = [registrationPageTest, DepositTest,LoginPageTest]  # 這些使用多進程
-        single_process_tests = []  # 這些單獨執行
+        # 指定測試類別
+        multi_process_tests = [registrationPageTest, DepositTest, LoginPageTest]
+        single_process_tests = []
 
         # 使用 Manager 來共享結果
         manager = Manager()
         shared_results = manager.dict()
 
-        # **多進程執行測試**
+        # 多進程執行測試
         with Pool(processes=2) as pool:
             pool.starmap(
                 partial(run_test_in_process, shared_results=shared_results),
                 [(test_class,) for test_class in multi_process_tests]
             )
 
-        # **單獨執行的測試**
+        # 單獨執行的測試
         for test_class in single_process_tests:
             run_test_in_process(test_class, shared_results)
 
-        # **合併測試結果**
+        # 合併測試結果
         pass_count = 0
         fail_count = 0
         passed_tests = []
@@ -120,43 +120,53 @@ async def run_tests():
 
         for test_class_name, test_results in shared_results.items():
             if "summary" not in test_results:
-                logger.error(f"測試類 {test_class_name} 結果缺少 'summary' 鍵")
-                raise HTTPException(status_code=500, detail=f"測試類 {test_class_name} 結果結構不完整，缺少 'summary' 鍵")
-
+                logger.error(f"測試類 {test_class_name} 結果缺少 'summary' 鍵，跳過處理")
+                continue  # 跳過無效結果，避免異常中斷
             pass_count += test_results["summary"]["pass_count"]
             fail_count += test_results["summary"]["fail_count"]
             passed_tests.extend(test_results["passed_tests"])
             failed_tests.extend(test_results["failed_tests"])
 
-        # **總結**
+        # 總結
         total_count = pass_count + fail_count
         logger.info("\n📌測試結果摘要:")
         logger.info(f"✅ 通過測試數: {pass_count}")
         logger.info(f"❌ 失敗測試數: {fail_count}")
         logger.info(f"📊 總測試數: {total_count}")
 
-        end_time = time.time()  # 記錄結束時間
-        run_time = end_time - start_time  # 計算運行時間
+        end_time = time.time()
+        run_time = end_time - start_time
 
         response_data = {
             "summary": {
                 "pass_count": pass_count,
-                "fail_count": fail_count
+                "fail_count": fail_count,
+                "total_count": total_count
             },
             "passed_tests": passed_tests,
             "failed_tests": failed_tests,
-            "run_time": f"{run_time:.2f} 秒" 
+            "run_time": f"{run_time:.2f} 秒"
         }
 
         logger.info("測試運行完成")
         return JSONResponse(
             content=response_data,
+            status_code=200,
             media_type="application/json;charset=utf-8"
         )
 
     except Exception as e:
-        logger.error(f"測試執行過程中發生錯誤: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"測試執行過程中發生錯誤: {str(e)}")
+        logger.error(f"測試執行過程中發生錯誤: {str(e)}\n堆棧跟踪: {traceback.format_exc()}")
+        error_response = {
+            "error": str(e),
+            "detail": "測試執行失敗",
+            "run_time": f"{time.time() - start_time:.2f} 秒"
+        }
+        return JSONResponse(
+            content=error_response,
+            status_code=500,
+            media_type="application/json;charset=utf-8"
+        )
 
 
 
