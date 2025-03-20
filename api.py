@@ -5,14 +5,15 @@ import unittest
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from test_01_registration import registrationPageTest
-from test_02_login import LoginPageTest
-from test_03deposit import DepositTest
-from config import Config, config
+from tests.test_01_registration import registrationPageTest
+from tests.test_02_login import LoginPageTest
+from tests.test_03deposit import DepositTest
+from config.config import Config, config
 import uvicorn
-from test_utils import CleanTextTestResult, CustomTextTestRunner
+from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from multiprocessing import Pool, Manager
 from functools import partial
+import time
 
 app = FastAPI()
 
@@ -78,6 +79,7 @@ def run_test_in_process(test_class, shared_results):
 
 @app.get("/run-tests")
 async def run_tests():
+    start_time = time.time()
     try:
         logger.info(f"開始運行測試，當前環境: {config.BASE_URL}")
 
@@ -87,8 +89,8 @@ async def run_tests():
         config.INVALID_EMAIL = Config.generate_random_email()
 
         # **指定測試類別**
-        multi_process_tests = [registrationPageTest, DepositTest]  # 這些使用多進程
-        single_process_tests = [LoginPageTest]  # 這些單獨執行
+        multi_process_tests = [registrationPageTest, DepositTest,LoginPageTest]  # 這些使用多進程
+        single_process_tests = []  # 這些單獨執行
 
         # 使用 Manager 來共享結果
         manager = Manager()
@@ -128,13 +130,17 @@ async def run_tests():
         logger.info(f"❌ 失敗測試數: {fail_count}")
         logger.info(f"📊 總測試數: {total_count}")
 
+        end_time = time.time()  # 記錄結束時間
+        run_time = end_time - start_time  # 計算運行時間
+
         response_data = {
             "summary": {
                 "pass_count": pass_count,
                 "fail_count": fail_count
             },
             "passed_tests": passed_tests,
-            "failed_tests": failed_tests
+            "failed_tests": failed_tests,
+            "run_time": f"{run_time:.2f} 秒" 
         }
 
         logger.info("測試運行完成")

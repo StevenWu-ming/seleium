@@ -1,4 +1,7 @@
 import os
+import sys
+# 添加項目根目錄到 sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
 import time  # 添加時間模塊導入
 from selenium import webdriver
@@ -11,8 +14,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import unittest
 from unittest.runner import TextTestResult
-from config import Config, config
-from test_utils import CleanTextTestResult, CustomTextTestRunner
+from config.config import Config, config
+from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
 from selenium.webdriver.common.keys import Keys
 
@@ -47,7 +50,7 @@ class DepositTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.page_load_strategy = "eager"
         self.driver = webdriver.Chrome(
             options=chrome_options,
@@ -183,7 +186,7 @@ class DepositTest(unittest.TestCase):
                 logger.warning("檢測沒有多筆訂單可繼續存款")
 
             # 等待頁面跳轉並檢查成功訊息
-            success_message = WebDriverWait(self.driver, 10).until(
+            success_message = WebDriverWait(self.driver, 15).until(
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
             self.assertIn("请在有效期内完成", success_message.text)
             logger.info("測試用例通過：充值成功提交")

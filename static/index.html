@@ -36,7 +36,7 @@
 
     <h2>測試執行面板</h2>
     <button onclick="runTests()">執行測試</button>
-    
+
     <h3>測試結果：</h3>
     <div id="result-box">尚未執行測試</div>
 
@@ -53,7 +53,7 @@
 
             // 確保 UI 更新
             await new Promise(resolve => requestAnimationFrame(resolve));
-            
+
             try {
                 const response = await fetch(`${API_BASE_URL}/run-tests`);
                 if (!response.ok) {
@@ -62,12 +62,12 @@
                 const data = await response.json();
 
                 // 檢查資料結構是否符合預期
-                if (!data.summary || !data.passed_tests || !data.failed_tests) {
+                if (!data.summary || !data.passed_tests || !data.failed_tests || !data.run_time) {
                     throw new Error("回傳的資料結構不符合預期，缺少必要的鍵");
                 }
 
                 // 構建結果文字
-                let resultText = `✅ 成功數: ${data.summary.pass_count}\n❌ 失敗數: ${data.summary.fail_count}\n\n`;
+                let resultText = `✅ 成功數: ${data.summary.pass_count}\n❌ 失敗數: ${data.summary.fail_count}\n⏱️ 執行時間: ${data.run_time}\n\n`;
 
                 // 顯示成功的測試用例
                 if (data.passed_tests.length > 0) {

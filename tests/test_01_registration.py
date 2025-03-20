@@ -1,5 +1,8 @@
 # selenium_tests/test_registration.py
 import os
+import sys
+# 添加項目根目錄到 sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -8,12 +11,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import unittest
-import traceback
 import time
 from unittest.runner import TextTestResult
-from config import Config, config  # 導入 Config 和 config
-from test_utils import CleanTextTestResult, CustomTextTestRunner
+from config.config import Config, config  # 導入 Config 和 config
+from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from concurrent.futures import ThreadPoolExecutor
+
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)

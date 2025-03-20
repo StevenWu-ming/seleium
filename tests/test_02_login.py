@@ -1,5 +1,8 @@
 # selenium_tests/test_login.py
 import os
+import sys
+# 添加項目根目錄到 sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,11 +12,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import unittest
 import time
-import random
-import string
 from unittest.runner import TextTestResult
-from config import Config, config  # 導入 Config 和 config
-from test_utils import CleanTextTestResult, CustomTextTestRunner
+from config.config import Config, config  # 導入 Config 和 config
+from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from concurrent.futures import ThreadPoolExecutor
 from selenium.common.exceptions import TimeoutException
 

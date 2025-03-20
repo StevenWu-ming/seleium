@@ -29,8 +29,8 @@ class Config:
         CHROMEDRIVER_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\chormedrive\chromedriver.exe"
         RANDOM_DATA_JSON_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\random_data.json"
     elif sys.platform == "darwin":  # macOS 環境
-        CHROMEDRIVER_PATH = "/Users/steven/deepseek/seleium/selenium_tests/chormedrive/chromedriver"
-        RANDOM_DATA_JSON_PATH = "/Users/steven/deepseek/seleium/selenium_tests/random_data.json"
+        CHROMEDRIVER_PATH = "/Users/steven/deepseek/seleium/chormedrive/chromedriver"
+        RANDOM_DATA_JSON_PATH = "/Users/steven/deepseek/seleium/config/random_data.json"
     else:
         raise RuntimeError("Unsupported OS")
 
@@ -58,7 +58,7 @@ class Config:
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
         VALID_USERNAME = "cooper005"
         VALID_PASSWORD = "1234Qwer"
-        VALID_DP_USERNAME = "cooper005"
+        VALID_DP_USERNAME = "cooper006"
         INVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
         INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
         INVALID_EMAIL = None            # 初始化為 None，動態生成
