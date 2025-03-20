@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  selenium_tests:
+    build: .
+    container_name: selenium_test_container
+    platform: linux/amd64  # 強制使用 x86_64
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+    shm_size: '2gb'

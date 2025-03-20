@@ -25,12 +25,16 @@ def save_random_data_to_json(data):
 
 
 class Config:
+    # 定義類屬性
     if sys.platform == "win32":  # Windows 環境
         CHROMEDRIVER_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\chormedrive\chromedriver.exe"
         RANDOM_DATA_JSON_PATH = r"C:\Users\d1031\新增資料夾\unittest\selenium_tests\random_data.json"
     elif sys.platform == "darwin":  # macOS 環境
         CHROMEDRIVER_PATH = "/Users/steven/deepseek/seleium/chormedrive/chromedriver"
         RANDOM_DATA_JSON_PATH = "/Users/steven/deepseek/seleium/config/random_data.json"
+    elif sys.platform == "linux":  # Linux 環境（Docker 容器）
+        CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
+        RANDOM_DATA_JSON_PATH = "/app/config/random_data.json"
     else:
         raise RuntimeError("Unsupported OS")
 
@@ -121,7 +125,8 @@ class Config:
 
 # 確保目標目錄存在
 os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
-
+# 實例化 Config（如果其他地方需要使用實例）
+config = Config()
 
 # 在類定義完成後設置 CURRENT_ENV 和 config
 CURRENT_ENV = getattr(Config, Config.ENV)

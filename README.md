@@ -77,6 +77,8 @@ ifconfig
 # 後端api
 uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
+python -m uvicorn api:app --host 0.0.0.0 --port 8000 --workers 2
+
 
 curl http://localhost:8000/run-tests #本地
 tests #區域網路IP

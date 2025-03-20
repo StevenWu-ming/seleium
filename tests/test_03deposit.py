@@ -52,6 +52,8 @@ class DepositTest(unittest.TestCase):
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
         chrome_options.add_argument("--headless")
         chrome_options.page_load_strategy = "eager"
+        chrome_options.add_argument("--no-sandbox")# 禁用沙盒模式（Docker 環境中必須）
+        chrome_options.add_argument("--disable-dev-shm-usage")# 避免共享記憶體問題
         self.driver = webdriver.Chrome(
             options=chrome_options,
             service=Service(Config.CHROMEDRIVER_PATH)

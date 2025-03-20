@@ -14,8 +14,13 @@ from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from multiprocessing import Pool, Manager
 from functools import partial
 import time
+# from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
+
+# 掛載 static 目錄，提供靜態檔案
+# app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 # 設置 CORS
 origins = [
