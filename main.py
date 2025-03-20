@@ -8,7 +8,7 @@ from tests.test_03deposit import DepositTest,CleanTextTestResult, CustomTextTest
 from config.config import config
     
 # 設置日誌文件路徑為 selenium_tests/test_log.log
-log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
+log_dir = '/Users/steven/deepseek/seleium/tests'
 log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
 
 # 配置日誌，調整級別為 INFO

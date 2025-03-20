@@ -12,6 +12,7 @@ __pycache__/
 # Python 虛擬環境
 SeleniumUnittest/
 selenium/
+test1/
 
 # 測試報告與暫存檔案
 *.xml
