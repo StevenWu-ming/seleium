@@ -20,5 +20,5 @@ test1/
 *.db
 *.pytest_cache/
 
-selenium_tests/random_data.json
+/config/random_data.json
 mcp.json
