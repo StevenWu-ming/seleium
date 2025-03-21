@@ -27,6 +27,7 @@ sortedcontainers==2.4.0
 starlette==0.46.1
 tomli==2.2.1
 trio==0.29.0
+gunicorn==23.0.0
 trio-websocket==0.12.2
 typing_extensions==4.12.2
 urllib3==2.3.0

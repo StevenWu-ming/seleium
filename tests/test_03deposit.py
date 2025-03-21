@@ -195,10 +195,10 @@ class DepositTest(unittest.TestCase):
             
         except TimeoutException as e:
             logger.error(f"測試超時: {str(e)}")
-            self.fail(f"充值測試超時: {str(e)}")
+            self.fail()
         except Exception as e:
             logger.error(f"測試失敗: {str(e)}")
-            self.fail(f"充值測試失敗: {str(e)}")
+            self.fail()
 
     def tearDown(self):
         logger.info("測試結束，關閉瀏覽器")
