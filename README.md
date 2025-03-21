@@ -123,7 +123,7 @@ git push origin main
 git branch -d feature-branch
 # 如果远程也要删除：
 git push origin --delete feature-branch
-
+1
 # 流程
 確認你當前在哪個分支 >>> 創建一個新的分支 >>> 切換到新分支 >>> 確認當前分支 >>> 新分支開發並提交變更 >>> 新分支推送到遠端 
 >>> 切換回 main 分支 >>> 合併分支 >>> 沒有衝突,可以直接提交推送到遠端 >>> 有衝突：VSCode 會標記衝突的文件，然後你需要手動編輯這些檔案,解決後重新提交推送
