@@ -12,7 +12,7 @@ import time
 from config.config import Config,config  
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import TimeoutException
-from .BaseTest import BaseTest
+from config.BaseTest import BaseTest
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
@@ -69,8 +69,8 @@ class LoginPageTest(BaseTest):
             phonenumber = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='number']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            phonenumber.send_keys(Config.PHONE_NUMBER)
-            password.send_keys(Config.VALID_PASSWORD)
+            phonenumber.send_keys(config.PHONE_NUMBER)
+            password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
             try:
@@ -187,8 +187,8 @@ class LoginPageTest(BaseTest):
             username = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            username.send_keys(Config.VALID_USERNAME)
-            password.send_keys(Config.VALID_PASSWORD)
+            username.send_keys(config.VALID_USERNAME)
+            password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))

@@ -15,11 +15,7 @@ import time
 from fastapi.staticfiles import StaticFiles
 import sys
 import os
-# 獲取 api.py 所在的目錄
-current_dir = os.path.dirname(os.path.abspath(__file__))
-# 將 tests 目錄添加到 sys.path
-sys.path.append(os.path.join(current_dir, "tests"))
-from tests.BaseTest import BaseTest  # 正確導入 BaseTest
+
 
 
 

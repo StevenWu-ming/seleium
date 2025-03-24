@@ -9,11 +9,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import time
-from config.config import config  # 導入 Config 和 config
+from config.config import Config , config  # 導入 Config 和 config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
-from .BaseTest import BaseTest
+from config.BaseTest import BaseTest
 
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
@@ -114,7 +114,7 @@ class registrationPageTest(BaseTest):
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             registration_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
-            username_input.send_keys(config.generate_random_username())
+            username_input.send_keys(Config.generate_random_username())
             password.send_keys(config.VALID_PASSWORD)
             registration_button.click()
 
