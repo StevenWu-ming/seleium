@@ -12,12 +12,11 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import unittest
 import time
-from unittest.runner import TextTestResult
-from config.config import Config, config  # 導入 Config 和 config
+from config.config import config  # 導入 Config 和 config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
-from concurrent.futures import ThreadPoolExecutor
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
+from BaseTest import BaseTest
 
 
 
@@ -47,23 +46,12 @@ class CustomTextTestRunner(unittest.TextTestRunner):
             result.printSummary()
         return result
 
-class registrationPageTest(unittest.TestCase):
+class registrationPageTest(BaseTest):
     def setUp(self):
-        self.delay_seconds = Config.DELAY_SECONDS  # 使用 Config.DELAY_SECONDS
-        chrome_options = Options()
-        chrome_options.add_argument("--log-level=3")
-        chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")# 禁用沙盒模式（Docker 環境中必須）
-        chrome_options.add_argument("--disable-dev-shm-usage")# 避免共享記憶體問題
-        # chrome_options.binary_location = "/usr/bin/google-chrome" # 指定 Chrome 二進位檔案路徑
-        self.driver = webdriver.Chrome(
-            options=chrome_options,
-            service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
-        )
-        self.driver.get(config.REGISTER_URL)  # 使用 config.BASE_URL
-        self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
-        logger.info(f"設置測試環境: {config.REGISTER_URL}")
+        self.url = config.REGISTER_URL  # 指定註冊頁面
+        print(f"設定的測試 URL: {self.url}")
+        super().setUp()  # 調用 BaseTest 的 setUp()
+
 
     def test_01_01check_registration_button_enabled_after_username_and_password(self):
         """檢查註冊按鈕是否在輸入帳號密碼後啟用"""
@@ -130,7 +118,7 @@ class registrationPageTest(unittest.TestCase):
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             registration_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
-            username_input.send_keys(Config.generate_random_username())
+            username_input.send_keys(config.generate_random_username())
             password.send_keys(config.VALID_PASSWORD)
             registration_button.click()
 
@@ -174,9 +162,6 @@ class registrationPageTest(unittest.TestCase):
             self.fail()
 
 
-    def tearDown(self):
-        logger.info("測試結束，關閉瀏覽器")
-        self.driver.quit()
 
 
 if __name__ == "__main__":

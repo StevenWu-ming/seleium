@@ -4,25 +4,20 @@ import sys
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 import unittest
 import time
-from unittest.runner import TextTestResult
-from config.config import Config, config  # 導入 Config 和 config
+from config.config import config  
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
-from concurrent.futures import ThreadPoolExecutor
 from selenium.common.exceptions import TimeoutException
+from BaseTest import BaseTest
 
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
 log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
-
 # 配置日誌，調整級別為 INFO
 logging.basicConfig(
     level=logging.INFO,  # 改為 INFO 級別
@@ -45,22 +40,12 @@ class CustomTextTestRunner(unittest.TextTestRunner):
             result.printSummary()
         return result
 
-class LoginPageTest(unittest.TestCase):
+class LoginPageTest(BaseTest):
     def setUp(self):
-        self.delay_seconds = Config.DELAY_SECONDS  # 使用 Config.DELAY_SECONDS
-        chrome_options = Options()
-        chrome_options.add_argument("--log-level=3")
-        chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")# 禁用沙盒模式（Docker 環境中必須）
-        chrome_options.add_argument("--disable-dev-shm-usage")# 避免共享記憶體問題
-        self.driver = webdriver.Chrome(
-            options=chrome_options,
-            service=Service(Config.CHROMEDRIVER_PATH)  # 使用 Config.CHROMEDRIVER_PATH
-        )
-        self.driver.get(config.LOGIN_URL)  # 使用 config.BASE_URL
-        self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 使用 Config.WAIT_TIMEOUT
-        logger.info(f"設置測試環境: {config.LOGIN_URL}")
+        self.url = config.LOGIN_URL  # 指定註冊頁面
+        print(f"設定的測試 URL: {self.url}")
+        super().setUp()  # 調用 BaseTest 的 setUp()
+
 
     def test_01_01_phonenumber_login(self):
         """手機號碼登入"""
@@ -131,7 +116,7 @@ class LoginPageTest(unittest.TestCase):
             login_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), '登录')]")))
 
             # 使用無效的手機號碼
-            phonenumber.send_keys(Config.generate_japanese_phone_number())  
+            phonenumber.send_keys(config.generate_japanese_phone_number())  
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
@@ -222,7 +207,7 @@ class LoginPageTest(unittest.TestCase):
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
             # random_username = self.generate_random_username()
-            username.send_keys(Config.generate_random_username())
+            username.send_keys(config.generate_random_username())
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
@@ -268,7 +253,7 @@ class LoginPageTest(unittest.TestCase):
             email = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='text']")))
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            email.send_keys(Config.generate_random_email())
+            email.send_keys(config.generate_random_email())
             password.send_keys(config.VALID_PASSWORD)
             login_button.click()
 
@@ -285,10 +270,6 @@ class LoginPageTest(unittest.TestCase):
         except Exception as e:
             logger.error(f"測試用例失敗：錯誤郵箱登入測試 - 錯誤: {str(e)}")
             self.fail()
-    
-    def tearDown(self):
-        logger.info("測試結束，關閉瀏覽器")
-        self.driver.quit()
     
 
 

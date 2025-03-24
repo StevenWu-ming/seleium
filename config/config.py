@@ -1,30 +1,17 @@
 # config.py
 import random
-import string
 import datetime
 import json
 import os
 import sys
 
-
-def save_random_data_to_json(data):
-    """將隨機生成的資料儲存到 JSON 文件中"""
-    random_data_json_path = Config.get_random_data_json_path()  # ✅ 正確獲取 JSON 文件路徑
-
-    if os.path.exists(random_data_json_path):
-        with open(random_data_json_path, 'r') as f:
-            existing_data = json.load(f)
-    else:
-        existing_data = {}
-
-    existing_data.update(data)
-    with open(random_data_json_path, 'w') as f:
-        json.dump(existing_data, f, indent=4, ensure_ascii=False)
-    print(f"隨機資料已儲存到: {random_data_json_path}")
-
-
-
 class Config:
+    # 直接指定環境
+    ENV = "TestEnv"
+    
+    DELAY_SECONDS = 0.5
+    WAIT_TIMEOUT = 10
+
     # 定義類屬性
     if sys.platform == "win32":  # Windows 環境
         CHROMEDRIVER_PATH = r"C:\Users\d1031\新增資料夾\unittest\chormedrive\chromedriver.exe"
@@ -45,14 +32,6 @@ class Config:
     @staticmethod
     def get_random_data_json_path():
         return Config.RANDOM_DATA_JSON_PATH
-
-
-    DELAY_SECONDS = 0.5
-    WAIT_TIMEOUT = 10
-    
-    # 直接指定環境（不再依賴環境變數）
-    ENV = "TestEnv"
-
 
 
     # 測試環境配置
@@ -123,6 +102,22 @@ class Config:
         save_random_data_to_json({"random_email": email})
         return email
 
+def save_random_data_to_json(data):
+    """將隨機生成的資料儲存到 JSON 文件中"""
+    random_data_json_path = Config.get_random_data_json_path()  # 正確獲取 JSON 文件路徑
+
+    if os.path.exists(random_data_json_path):
+        with open(random_data_json_path, 'r') as f:
+            existing_data = json.load(f)
+    else:
+        existing_data = {}
+
+    existing_data.update(data)
+    with open(random_data_json_path, 'w') as f:
+        json.dump(existing_data, f, indent=4, ensure_ascii=False)
+    print(f"隨機資料已儲存到: {random_data_json_path}")
+
+
 # 確保目標目錄存在
 os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
 # 實例化 Config（如果其他地方需要使用實例）
@@ -137,3 +132,4 @@ if __name__ == "__main__":
     print(f"BASE_URL: {config.BASE_URL}")
     print(f"LOGIN_URL: {config.LOGIN_URL}")
     print(f"VALID_USERNAME: {config.VALID_USERNAME}")
+    print(f"VALID_DP_USERNAME: {config.VALID_DP_USERNAME}")

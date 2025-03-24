@@ -4,20 +4,17 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
 import time  # 添加時間模塊導入
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import unittest
-from unittest.runner import TextTestResult
-from config.config import Config, config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
-from selenium.webdriver.common.keys import Keys
+from BaseTest import BaseTest
+from config.config import config
+
 
 # 設置日誌文件路徑
 log_dir = os.path.dirname(__file__)
@@ -43,27 +40,15 @@ class CustomTextTestRunner(unittest.TextTestRunner):
             result.printSummary()
         return result
 
-class DepositTest(unittest.TestCase):
+class DepositTest(BaseTest):
     def setUp(self):
-        self.delay_seconds = Config.DELAY_SECONDS
-        self.wait_timeout = Config.WAIT_TIMEOUT
-        chrome_options = Options()
-        chrome_options.add_argument("--log-level=3")
-        chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        chrome_options.add_argument("--headless")
-        chrome_options.page_load_strategy = "eager"
-        chrome_options.add_argument("--no-sandbox")# 禁用沙盒模式（Docker 環境中必須）
-        chrome_options.add_argument("--disable-dev-shm-usage")# 避免共享記憶體問題
-        self.driver = webdriver.Chrome(
-            options=chrome_options,
-            service=Service(Config.CHROMEDRIVER_PATH)
-        )
-        self.driver.get(config.LOGIN_URL)
-        self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)
-        logger.info(f"設置測試環境: {config.LOGIN_URL}")
-
+        self.url = config.LOGIN_URL  # 指定註冊頁面
+        print(f"設定的測試 URL: {self.url}")
+        super().setUp()  # 調用 BaseTest 的 setUp()
+    
     def test_01_01_deposit(self):
         """充值"""
+        
         try:
             logger.info("開始測試：充值")
             # 登入
@@ -200,9 +185,7 @@ class DepositTest(unittest.TestCase):
             logger.error(f"測試失敗: {str(e)}")
             self.fail()
 
-    def tearDown(self):
-        logger.info("測試結束，關閉瀏覽器")
-        self.driver.quit()
+
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(DepositTest)
