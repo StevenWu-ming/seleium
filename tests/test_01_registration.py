@@ -6,18 +6,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 import unittest
 import time
 from config.config import config  # 導入 Config 和 config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
-from BaseTest import BaseTest
-
+from .BaseTest import BaseTest
 
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log

@@ -12,8 +12,7 @@ import time
 from config.config import Config,config  
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import TimeoutException
-from BaseTest import BaseTest
-
+from .BaseTest import BaseTest
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)

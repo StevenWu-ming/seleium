@@ -1,11 +1,9 @@
 import logging
-import sys
 from fastapi import FastAPI, HTTPException
 import unittest
-import os
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from tests.test_01_registration import registrationPageTest
+from tests.test_01_registration import registrationPageTest 
 from tests.test_02_login import LoginPageTest
 from tests.test_03deposit import DepositTest
 from config.config import Config, config
@@ -15,6 +13,14 @@ from multiprocessing import Pool, Manager
 from functools import partial
 import time
 from fastapi.staticfiles import StaticFiles
+import sys
+import os
+# 獲取 api.py 所在的目錄
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 將 tests 目錄添加到 sys.path
+sys.path.append(os.path.join(current_dir, "tests"))
+from tests.BaseTest import BaseTest  # 正確導入 BaseTest
+
 
 
 app = FastAPI()

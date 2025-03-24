@@ -12,8 +12,8 @@ from selenium.common.exceptions import TimeoutException
 import unittest
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
-from BaseTest import BaseTest
-from config.config import config
+from .BaseTest import BaseTest
+from config.config import Config,config
 
 
 # 設置日誌文件路徑
