@@ -16,6 +16,9 @@ from unittest.runner import TextTestResult
 from config.config import Config, config  # 導入 Config 和 config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 from concurrent.futures import ThreadPoolExecutor
+from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
+
 
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
@@ -113,14 +116,16 @@ class registrationPageTest(unittest.TestCase):
         try:
             logger.info("開始測試：帳號密碼正確註冊")
 
-            close_button = self.wait.until(EC.element_to_be_clickable(
-                (By.XPATH, "//i[contains(@class, 'close-btn')]")
-            ))
-            if close_button:
-                close_button.click()
-                print("彈出窗口已關閉")
-            else:
-                print("未找到關閉按鈕")
+            while True:
+                try:
+                    close_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//i[contains(@class, 'close-btn')]")))
+                    if close_button:
+                        # 使用 JavaScript 點擊，避免 StaleElementReferenceException
+                        self.driver.execute_script("arguments[0].click();", close_button)
+                    else:
+                        break
+                except (TimeoutException, StaleElementReferenceException):
+                    break  # 如果超時或元素過期，則退出循環
 
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
