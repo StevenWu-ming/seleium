@@ -72,7 +72,7 @@ taskkill /IM python.exe /F
 kill -9 {PID}
 pkill -9 -f python
 
-
+1
 ifconfig 
 # 後端api
 uvicorn api:app --host 0.0.0.0 --port 8000 --reload
@@ -132,10 +132,10 @@ git push origin --delete feature-branch
 # 創建虛擬環境
 python3 -m venv 虛擬環境名稱 
 # 啟動虛擬環境
-source 虛擬環境名稱/bin/activate 
+source test1/bin/activate 
 # 退出虛擬環境
 deactivate
 # 刪除虛擬環境
-rm -rf 虛擬環境名稱 
+rm -rf test1 
 ================================================================================================================================
 

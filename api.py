@@ -102,7 +102,7 @@ async def run_tests():
         shared_results = manager.dict()
 
         # 多進程執行測試
-        with Pool(processes=2) as pool:
+        with Pool(processes=1) as pool:
             pool.starmap(
                 partial(run_test_in_process, shared_results=shared_results),
                 [(test_class,) for test_class in multi_process_tests]
