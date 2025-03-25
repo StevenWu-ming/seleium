@@ -36,7 +36,7 @@ class Config:
 
     # 測試環境配置
     class TestEnv:
-        BASE_SC_URL = "http://uat.newplatformadmin.mxsyl.com:5012"
+        BASE_SC_URL = "http://uat-admin-api.mxsyl.com:5012"
         BASE_URL = "https://uat-newplatform.mxsyl.com"
         LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"

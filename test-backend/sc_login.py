@@ -13,10 +13,17 @@ from config.config import Config, config  # 導入 Config 和 config
 file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
 
 
+def load_encrypt_key(json_path: str = file_path) -> tuple[str, str]:
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        return data["key"], data["encrypted"]
+
+
+
 class AdminAPIClient:
     """用於處理管理員API請求的類別"""
     
-    def __init__(self, base_url="http://uat-admin-api.mxsyl.com:5012"):
+    def __init__(self, base_url=config.BASE_SC_URL):
         """初始化API客戶端
         
         Args:
@@ -28,9 +35,10 @@ class AdminAPIClient:
             'Content-Type': 'application/json'
         }
 
-    def login(self, username="QA006", 
-             password="7FZY2ALzoTxlNGMAfGX4Wg==", 
-             password_key="eda8ac3b97a947cc96863548cba26004"):
+    def login(self, username=config.SC_USERNAME, 
+             password=load_encrypt_key()[1], 
+             password_key=load_encrypt_key()[0]
+             ):
         """執行管理員登錄
         
         Args:

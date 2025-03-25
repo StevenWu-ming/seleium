@@ -9,14 +9,32 @@ from config.config import Config , config  # 導入 Config 和 config
 
 
 file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
-
+# 定義 token 為全局變數
+token = None
+# 讀取 token
+try:
+    with open(file_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        
+    # 提取 token 值
+    token = data.get("token")
+    if not token:
+        raise ValueError("JSON 檔案中缺少 'token' 字段")
+    
+    # print("authorization:", authorization)  # 確認 token 是否正確提取
+except FileNotFoundError:
+    print(f"錯誤：找不到檔案 {file_path}")
+except json.JSONDecodeError:
+    print("錯誤：JSON 檔案格式無效")
+except Exception as e:
+    print(f"發生錯誤：{str(e)}")
 
 class login_api():
     def login():
         url = urljoin(config.BASE_URL,config.LOGIN_API)
         
         headers = {
-            "authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJubyI6Ijg3ZTI4ZTYxOTA3MzE0MThmNmZhOWRiMDQ0M2IxMmRjIiwidmUiOiIiLCJsYSI6InpoLWNuIiwidGkiOiIxIiwidWEiOiJmSzNyMUJ2OU1nbjMyTXFUY1Y5cGl5ZE96ekxnSWJUeWNjSVk2UFJrZkt5N3Y0REkrMnN2YVJaR1FWZ2ZZcnJ6eUpBZlVBcGdLVm9GS2NWNHF3dGF6ZVpGdHYvQWh0VERteU1kSk5pblpBbmI0dFpjdTVUdlorQU1KZVZQd2wzSGhSdDBHOC9oWHRnOXNIbU1RSk5DL0tJMnpiMWQyVWltSStZT1JzY2JlT29VWkZRVHREbU9LMmhnNDRqOHhORTUiLCJpYXQiOiIxNzQyODY2OTU0IiwiZG8iOiJ1YXQtbmV3cGxhdGZvcm0ubXhzeWwuY29tIiwicmUiOiIxNzQ1NDg3NzU0IiwibmJmIjoxNzQyODY2OTU0LCJleHAiOjE3NDI4OTU3NTQsImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCJ9.-7Xge578GvrIODaQ1iNAwgaGDYA-8Mh2e5kqezDDA6A",
+            "authorization":f"Bearer {token}",
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0"
             }
         payload = {
