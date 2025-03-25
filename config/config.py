@@ -36,26 +36,45 @@ class Config:
 
     # 測試環境配置
     class TestEnv:
+        BASE_SC_URL = "http://uat.newplatformadmin.mxsyl.com:5012"
         BASE_URL = "https://uat-newplatform.mxsyl.com"
         LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
+
+        SC_LOGIN_API = "/api/v1/admin/auth/login"
+        AES_KEY_API = "/api/v1/admin/auth/getpasswordencryptkey"
         LOGIN_API = "/v1/member/auth/loginbyname"
         DEPOSIT_API = "/v1/asset/deposit/currency"
+
+        SC_USERNAME = "QA006"
+        SC_PASSWORD = "QA006"
+
         VALID_USERNAME = "cooper005"
+        VALID_DP_USERNAME = "cooper006"
         VALID_PASSWORD = "1234Qwer"
         VALID_PASSWORD_MD5="WERahMvgOqe6vwk4HCaiSDhb7mBEjKL/SfnfS31/1wXJSv/tKoTe+4hsO1tUMUCDbryA8Vg3LqE9QFLYhHjpU0NllYZnBPjYUZmhLp0IBskd//KSwYZGfvBs6i355aQxM9eMsMwEXXR8efv6/0sJQ1qkJ0cYVyUvs41K0Xdhu/mlUvSjxOvKzEAl/NLindpBkhTOuhdDYZ4Y2KGvWgytlkTKSk9DX9YkPksYwB1XhljOHidmTteppgEGeFfzByKgLad1gAStDiC5NWeUMTNcnS/g12yC69qJiiV+3j/bYaHK5s99QFiSkEjeUw7BxenS6Y8ey6ZhvRo7EgWkAi2GDQ=="
-        VALID_DP_USERNAME = "cooper006"
-        INVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
+        
+        NVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
         INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
         INVALID_EMAIL = None            # 初始化為 None，動態生成
+
         PHONE_NUMBER = "13100000032"
+
         EMAIL = "hrtqdwmk@sharklasers.com"
+
         VERIFY_CODE = "123456"
+
         DP_Amount = '100'
+
+
+
+
+
 
     # 開發環境配置
     class DevEnv:
-        BASE_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
+        BASE_URL = "https://dev-newplatform.mxsyl.com"
+        BASE_SC_URL = "http://uat.newplatformadmin.mxsyl.com/"
         LOGIN_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
         VALID_USERNAME = "cooper018"

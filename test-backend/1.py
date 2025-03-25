@@ -1,6 +1,7 @@
-from login_api import login_api
-from deposit_api import deposit_api
+from sc_login_aeskey_api import aes_key_api
+from aes import encrypt_by_ae
 
-# 正確調用導入的函數
-login_api()
-deposit_api()
+
+
+aes_key_api()
+encrypt_by_ae()
