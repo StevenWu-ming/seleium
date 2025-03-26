@@ -130,9 +130,6 @@ class DepositTest(BaseTest):
                 self.driver.execute_script("arguments[0].click();", bank_option)
                 logger.info("已選擇 '中国民生银行'")
             except TimeoutException as e:
-                screenshot_path = os.path.join(log_dir, f"screenshot_bank_option_failure_{int(time.time())}.png")
-                self.driver.save_screenshot(screenshot_path)
-                logger.error(f"无法找到银行选项: {str(e)}，截圖已保存至: {screenshot_path}")
                 self.fail(f"充值测试失败: 无法找到 '中国民生银行' 选项")
 
             # 移動到“确认”按鈕

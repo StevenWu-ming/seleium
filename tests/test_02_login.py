@@ -91,7 +91,7 @@ class LoginPageTest(BaseTest):
             logger.debug("Verification code sent successfully")
 
             verify_code_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']")))
-            verify_code_input.send_keys(Config.VERIFY_CODE)
+            verify_code_input.send_keys(config.VERIFY_CODE)
 
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
@@ -128,12 +128,7 @@ class LoginPageTest(BaseTest):
                 self.assertIn("您输入的密码不正确", error_message.text)  # 根據實際的錯誤訊息文字調整
             except TimeoutException as e:
                 # Take screenshot on error
-                timestamp = time.strftime("%Y%m%d_%H%M%S")
-                screenshot_path = f"error_screenshot_{timestamp}.png"
-                self.driver.save_screenshot(screenshot_path)
                 logger.error(f"錯誤訊息未能找到: {str(e)}")
-                logger.debug(f"Page source: {self.driver.page_source}")
-                logger.info(f"Screenshot saved at {screenshot_path}")
                 self.fail(f"錯誤訊息未能在預定時間內出現")
             
             logger.info("測試用例通過：錯誤手機號碼登入測試")

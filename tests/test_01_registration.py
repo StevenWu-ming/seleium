@@ -4,7 +4,6 @@ import sys
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import unittest
@@ -31,16 +30,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class CustomTextTestRunner(unittest.TextTestRunner):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.verbosity = 0
-
-    def run(self, test):
-        result = super().run(test)
-        if hasattr(result, 'printSummary'):
-            result.printSummary()
-        return result
+CustomTextTestRunner(unittest.TextTestRunner)
 
 class registrationPageTest(BaseTest):
     def setUp(self):
@@ -114,6 +104,7 @@ class registrationPageTest(BaseTest):
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
             registration_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '注册')]")
+            
             username_input.send_keys(Config.generate_random_username())
             password.send_keys(config.VALID_PASSWORD)
             registration_button.click()
@@ -122,8 +113,6 @@ class registrationPageTest(BaseTest):
             self.assertIn("我的钱包", success_message.text)
             logger.info("測試用例通過：帳號密碼正確註冊成功")
         except Exception as e:
-            screenshot_path = os.path.join(log_dir, f"screenshot_bank_option_failure_{int(time.time())}.png")
-            self.driver.save_screenshot(screenshot_path)
             logger.error(f"測試用例失敗：帳號密碼正確註冊 - 錯誤: {str(e)}")
             self.fail()
 
@@ -132,14 +121,16 @@ class registrationPageTest(BaseTest):
         try:
             logger.info("開始測試：帳號重複無法註冊")
 
-            close_button = self.wait.until(EC.element_to_be_clickable(
-                (By.XPATH, "//i[contains(@class, 'close-btn')]")
-            ))
-            if close_button:
-                close_button.click()
-                print("彈出窗口已關閉")
-            else:
-                print("未找到關閉按鈕")
+            while True:
+                try:
+                    close_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//i[contains(@class, 'close-btn')]")))
+                    if close_button:
+                        # 使用 JavaScript 點擊，避免 StaleElementReferenceException
+                        self.driver.execute_script("arguments[0].click();", close_button)
+                    else:
+                        break
+                except (TimeoutException, StaleElementReferenceException):
+                    break  # 如果超時或元素過期，則退出循環
 
             username_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']")))            
             password = self.driver.find_element(By.XPATH, "//input[@type='password']")
@@ -156,7 +147,6 @@ class registrationPageTest(BaseTest):
         except Exception as e:
             logger.error(f"測試用例失敗：重複帳號註冊 - 錯誤: {str(e)}")
             self.fail()
-
 
 
 

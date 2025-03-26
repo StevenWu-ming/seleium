@@ -30,13 +30,27 @@ class CleanTextTestResult(TextTestResult):
         if test not in self.failures:
             super().addFailure(test, err)
             self.fail_count += 1
+            
+            #截圖處理
+            if hasattr(test, 'driver'):
+                timestamp = time.strftime("%Y%m%d_%H%M%S")
+                screenshot_name = f"screenshot_{test._testMethodName}_{timestamp}.png"
+                screenshot_dir = "screenshots"
+                os.makedirs(screenshot_dir, exist_ok=True)
+                screenshot_path = os.path.join(screenshot_dir, screenshot_name)
+                test.driver.save_screenshot(screenshot_path)
+            else:
+                screenshot_path = "無法取得 driver 截圖"
+
+
             # 使用 docstring（如果有）或測試方法名稱來生成失敗訊息
             failure_msg = f"測試用例失敗：{test._testMethodDoc or test._testMethodName} - 錯誤: {str(err[1])}"
             failure_info = {
                 "test_name": failure_msg,
                 "error_type": str(err[0].__name__),
                 "error_message": str(err[1]),
-                "stack_trace": ''.join(traceback.format_tb(err[2]))
+                "stack_trace": ''.join(traceback.format_tb(err[2])),
+                "screenshot": screenshot_path
             }
             self.failed_tests.append(failure_info)
         logger.error(f"測試用例失敗: {test._testMethodName} - 錯誤: {str(err[1])}")
@@ -50,13 +64,26 @@ class CleanTextTestResult(TextTestResult):
         if test not in self.errors:
             super().addError(test, err)
             self.fail_count += 1
+
+            # 截圖處理
+            if hasattr(test, 'driver'):
+                timestamp = time.strftime("%Y%m%d_%H%M%S")
+                screenshot_name = f"screenshot_{test._testMethodName}_{timestamp}.png"
+                screenshot_dir = "screenshots"
+                os.makedirs(screenshot_dir, exist_ok=True)
+                screenshot_path = os.path.join(screenshot_dir, screenshot_name)
+                test.driver.save_screenshot(screenshot_path)
+            else:
+                screenshot_path = "無法取得 driver 截圖"
+
             # 使用 docstring（如果有）或測試方法名稱來生成錯誤訊息
             error_msg = f"測試用例錯誤：{test._testMethodDoc or test._testMethodName} - 錯誤: {str(err[1])}"
             error_info = {
                 "test_name": error_msg,
                 "error_type": str(err[0].__name__),
                 "error_message": str(err[1]),
-                "stack_trace": ''.join(traceback.format_tb(err[2]))
+                "stack_trace": ''.join(traceback.format_tb(err[2])),
+                "screenshot": screenshot_path  # ←✨ 加這行
             }
             self.failed_tests.append(error_info)
         logger.error(f"測試用例錯誤: {test._testMethodName} - 錯誤: {str(err[1])}")
