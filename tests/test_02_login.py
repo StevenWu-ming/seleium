@@ -10,13 +10,14 @@ from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import time
 from config.config import Config,config  
-from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
+from utils.test_utils import CleanTextTestResult, CustomTextTestRunner, log_and_fail_on_exception
 from selenium.common.exceptions import TimeoutException
 from config.BaseTest import BaseTest
 
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
 log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
+
 # 配置日誌，調整級別為 INFO
 logging.basicConfig(
     level=logging.INFO,  # 改為 INFO 級別
@@ -28,79 +29,63 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class CustomTextTestRunner(unittest.TextTestRunner):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.verbosity = 0
-
-    def run(self, test):
-        result = super().run(test)
-        if hasattr(result, 'printSummary'):
-            result.printSummary()
-        return result
-
+CustomTextTestRunner(unittest.TextTestRunner)
+    
 class LoginPageTest(BaseTest):
     def setUp(self):
         self.url = config.LOGIN_URL  # 指定註冊頁面
         print(f"設定的測試 URL: {self.url}")
         super().setUp()  # 調用 BaseTest 的 setUp()
 
-
+    @log_and_fail_on_exception
     def test_01_01_phonenumber_login(self):
         """手機號碼登入"""
+        phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
+        logger.debug("Found phone tab, clicking...")
+        phone_tab.click()
+
+        phone_dropdown = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'phone-box')]//button[contains(@class, 'select-btn')]")))
+        logger.debug("Found phone dropdown, clicking...")
+        phone_dropdown.click()
+
+        search_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@placeholder='搜索' or contains(@class, 'search')]")))
+        search_input.send_keys("+86")
+
+        china_option = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '+86')] | //li[contains(text(), '+86')]")))
+        logger.debug("Found '+86' option, clicking...")
+        china_option.click()
+
+        phonenumber = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='number']")))
+        password = self.driver.find_element(By.XPATH, "//input[@type='password']")
+        login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
+        phonenumber.send_keys(config.PHONE_NUMBER)
+        password.send_keys(config.VALID_PASSWORD)
+        login_button.click()
+
         try:
-            logger.info("開始測試：手機號碼登入")
-            
-            phone_tab = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
-            logger.debug("Found phone tab, clicking...")
-            phone_tab.click()
-
-            phone_dropdown = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'phone-box')]//button[contains(@class, 'select-btn')]")))
-            logger.debug("Found phone dropdown, clicking...")
-            phone_dropdown.click()
-
-            search_input = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@placeholder='搜索' or contains(@class, 'search')]")))
-            search_input.send_keys("+86")
-
-            china_option = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '+86')] | //li[contains(text(), '+86')]")))
-            logger.debug("Found '+86' option, clicking...")
-            china_option.click()
-
-            phonenumber = self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='number']")))
-            password = self.driver.find_element(By.XPATH, "//input[@type='password']")
-            login_button = self.driver.find_element(By.XPATH, "//button[contains(text(), '登录')]")
-            phonenumber.send_keys(config.PHONE_NUMBER)
-            password.send_keys(config.VALID_PASSWORD)
-            login_button.click()
-
-            try:
-                success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
-                self.assertIn("我的钱包", success_message.text)
-                logger.info("測試用例通過：手機號碼直接登入成功")
-                self.assertIsNotNone(success_message)
-                return
-
-            except Exception as direct_login_error:
-                logger.warning(f"直接登入失敗，可能需要驗證碼: {str(direct_login_error)}")
-
-            get_code_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")))
-            logger.debug("Clicking get code button...")
-            get_code_button.click()
-
-            success_toast = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'toast-text')]//p[contains(text(), '成功')]")))
-            logger.debug("Verification code sent successfully")
-
-            verify_code_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']")))
-            verify_code_input.send_keys(config.VERIFY_CODE)
-
             success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
             self.assertIn("我的钱包", success_message.text)
-            logger.info("測試用例通過：手機號碼經由驗證碼登入成功")
+            logger.info("測試用例通過：手機號碼直接登入成功")
             self.assertIsNotNone(success_message)
+            return
 
-        except Exception as e:
-            logger.error(f"測試用例失敗：手機號碼登入 - 錯誤: {str(e)}")
-            self.fail()
+        except Exception as direct_login_error:
+            logger.warning(f"直接登入失敗，可能需要驗證碼: {str(direct_login_error)}")
+
+        get_code_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")))
+        logger.debug("Clicking get code button...")
+        get_code_button.click()
+
+        success_toast = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'toast-text')]//p[contains(text(), '成功')]")))
+        logger.debug("Verification code sent successfully")
+
+        verify_code_input = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']")))
+        verify_code_input.send_keys(config.VERIFY_CODE)
+
+        success_message = self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '我的钱包')]")))
+        self.assertIn("我的钱包", success_message.text)
+        logger.info("測試用例通過：手機號碼經由驗證碼登入成功")
+        self.assertIsNotNone(success_message)
 
 
     def test_01_02_phonenumber__wronglogin(self):

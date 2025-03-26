@@ -17,7 +17,9 @@ def run_tests():
         suite = loader.loadTestsFromName('test_01_registration.registrationPageTest.test_01_02_registration')
         
         # 執行測試
-        runner = unittest.TextTestRunner(stream=buffer, verbosity=2)
+        # runner = unittest.TextTestRunner(stream=buffer, verbosity=2)
+        runner = CustomTextTestRunner(stream=buffer, resultclass=CleanTextTestResult, verbosity=2)
+
         result = runner.run(suite)
         
         # 恢復 stdout 並印出結果

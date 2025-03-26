@@ -1,11 +1,26 @@
-import logging
-import traceback
-from unittest.runner import TextTestResult
-import unittest
 import os
 import time
+import logging
+import unittest
+import traceback
+from functools import wraps
+from unittest.runner import TextTestResult
+
 
 logger = logging.getLogger(__name__)
+
+def log_and_fail_on_exception(test_func):
+    @wraps(test_func)
+    def wrapper(self, *args, **kwargs):
+        display_name = test_func.__doc__ or test_func.__name__
+        try:
+            logger.info(f"開始測試：{display_name}")
+            return test_func(self, *args, **kwargs)
+        except Exception as e:
+            logger.error(f"測試失敗：{display_name} - 錯誤: {str(e)}")
+            self.fail()
+    return wrapper
+
 
 class CleanTextTestResult(TextTestResult):
     def __init__(self, stream, descriptions, verbosity):
