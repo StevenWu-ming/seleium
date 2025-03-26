@@ -58,7 +58,7 @@ class Config:
         INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
         INVALID_EMAIL = None            # 初始化為 None，動態生成
 
-        PHONE_NUMBER = "13100000032"
+        PHONE_NUMBER = "13100000021"
 
         EMAIL = "hrtqdwmk@sharklasers.com"
 
