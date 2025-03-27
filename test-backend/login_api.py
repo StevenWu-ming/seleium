@@ -52,7 +52,7 @@ class login_api():
 
     # Example usage
     result = login()
-    if result.get("success"):
+    if result is not None and result.get("success"):
         new_token = result["data"].get("token", "")
 
         # 讀取現有 JSON 檔案
@@ -76,3 +76,7 @@ class login_api():
         print(f"🔹 Token updated in: {file_path}")
     else:
         print("❌ Login failed!")
+        if result:
+            print(f"Error details: {result}")
+        else:
+            print("No valid response received.")

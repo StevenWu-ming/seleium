@@ -109,6 +109,8 @@ class LoginPageTest(BaseTest):
     @log_and_fail_on_exception
     def test_01_02_phonenumber__wronglogin(self):
         """輸入錯誤手機號碼登入"""
+
+        
         phone_tab = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'tab') and contains(text(), '手机')]")))
         phone_tab.click()
 
