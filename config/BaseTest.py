@@ -23,6 +23,7 @@ class BaseTest(unittest.TestCase):
             service=Service(Config.CHROMEDRIVER_PATH)
         )
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)
+        self.driver.set_window_position(2000, 100)
 
         if hasattr(self, "url") and self.url:  # 只有在子類別有設定 `self.url` 才會載入
             self.driver.get(self.url)
