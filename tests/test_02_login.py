@@ -169,45 +169,60 @@ class LoginPageTest(BaseTest):
 
         # 重複斷言確認按鈕啟用狀態，並提供英文錯誤信息
         self.assertFalse(final_disabled, "Login button should be enabled after username and password input")
-        # 記錄成功日誌，表示登入按鈕狀態檢查測試通過
+        
         logger.info("測試用例通過：登入按鈕檢查成功")
 
     @log_and_fail_on_exception
     def test_02_02_successful_login(self):
         """帳號密碼正確登入"""
+        # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
         input_text(self.driver, self.wait, "//input[@maxlength='18']", (config.VALID_USERNAME))
+        # 輸入密碼到密碼輸入框
         input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        # 點擊包含“登录”文字的按鈕來提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
-
+        # 等待成功訊息出現，並檢查是否包含“我的钱包”文字
         success_message = wait_for_success_message(self.wait, "我的钱包")
+        # 斷言檢查成功訊息中包含“我的钱包”，驗證登入成功
         self.assertIn("我的钱包", success_message)
+        # 記錄測試用例通過的日誌訊息
         logger.info("測試用例通過：帳號密碼正確登入成功")
 
-#####優化到這裡下面沒優化
     @log_and_fail_on_exception
     def test_02_03_invalid_credentials(self):
         """帳號密碼錯誤登入"""
+        # 輸入隨機生成的使用者名稱到指定輸入框（最大長度為18個字元）
         input_text(self.driver, self.wait, "//input[@maxlength='18']", (Config.generate_random_username()))
+        # 輸入有效的密碼到密碼輸入框
         input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        # 點擊包含“登录”文字的按鈕來提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
-
+        # 等待錯誤訊息出現，並檢查是否包含“您输入的密码不正确”文字
         error_message = wait_for_err_message(self.wait, "您输入的密码不正确")
 
+        # 斷言檢查錯誤訊息中包含“您输入的密码不正确”，驗證登入失敗
         self.assertIn("您输入的密码不正确", error_message)
+        # 記錄測試用例通過的日誌訊息，表示帳號密碼錯誤無法登入
         logger.info("測試用例通過：帳號密碼錯誤無法登入成功")
 
     @log_and_fail_on_exception
     def test_03_01_mail_login(self):
-        """郵箱登入"""
-
+        """郵箱登入"""  
+        # 點擊選項卡，切換到「 邮箱 」登入方式
+        # 利用 XPath 定位 class 包含 "tab" 且文本包含 " 邮箱 " 的元素
         click_element(self.driver, self.wait, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")
 
+        # 在文本輸入框中輸入郵箱地址，郵箱地址從配置文件中取得
         input_text(self.driver, self.wait, "//input[@type='text']", (config.EMAIL))
+        # 在密碼輸入框中輸入密碼，密碼從配置文件中取得
         input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        # 點擊包含「登录」文字的按鈕，提交登入請求
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
+        # 等待並捕獲登入成功後返回的提示訊息，預期訊息中包含「我的钱包」
         success_message = wait_for_success_message(self.wait, "我的钱包")
+        # 斷言檢查：確保成功訊息不為 None，以進一步確認提示信息有效
         self.assertIn("我的钱包", success_message)
         logger.info("測試用例通過：郵箱登入成功")
         self.assertIsNotNone(success_message)

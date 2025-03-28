@@ -15,6 +15,7 @@ from config.BaseTest import BaseTest
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
 from config.selenium_helpers import close_popup, perform_login, wait_for_success_message
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner, log_and_fail_on_exception
+from config.selenium_helpers import close_popup, perform_login, wait_for_success_message, wait_for_err_message, input_text, click_element
 
 
 
@@ -45,25 +46,23 @@ class DepositTest(BaseTest):
     @log_and_fail_on_exception
     def test_01_01_deposit(self):
         """充值"""
-        # 登入
-        self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@maxlength='18']"))).send_keys(config.VALID_DP_USERNAME)
-        self.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='password']"))).send_keys(config.VALID_PASSWORD)
-        self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]"))).click()
+        # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
+        input_text(self.driver, self.wait, "//input[@maxlength='18']", (config.VALID_USERNAME))
+        # 輸入密碼到密碼輸入框
+        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        # 點擊包含“登录”文字的按鈕來提交登入表單
+        click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
         #關閉公告彈窗
         close_popup(self.driver, self.wait)
 
         # 等待遮罩層消失
         WebDriverWait(self.driver, 5).until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop"))
-        )
-        
+            EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop")))
+    
         # 點擊充值按鈕
         # WebDriverWait(self.driver, 1).until(EC.element_to_be_clickable((
         #     By.XPATH, "//div[contains(@class, 'toggle') and .//span[contains(@class, 'toggle-wallet') and contains(text(), '充值')]]"))).click()
-
-        element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.toggle")))
-        self.driver.execute_script("arguments[0].click();", element)
 
         # 點擊“网银转账”
         # WebDriverWait(self.driver, 5).until(
@@ -72,10 +71,12 @@ class DepositTest(BaseTest):
         #     ))
         # ).click()
 
+        element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.toggle")))
+        self.driver.execute_script("arguments[0].click();", element)
+
         # 等待遮罩層消失
         WebDriverWait(self.driver, 5).until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop"))
-        )
+            EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop")))
         
         element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.method-item")))
         self.driver.execute_script("arguments[0].click();", element)
@@ -89,11 +90,12 @@ class DepositTest(BaseTest):
 
 
         # 點擊銀行下拉框
+        
         bank_dropdown = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((
                 By.XPATH, "(//div[contains(@class, 'select-container')]//div[contains(@class, 'row-line') and .//i[contains(@class, 'icon-drop-down')]])[2]"
-            ))
-        )
+            )))
+        
         #快速滾動
         # self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", bank_dropdown)
         #緩慢滾動
@@ -105,11 +107,10 @@ class DepositTest(BaseTest):
         self.driver.execute_script("arguments[0].scrollIntoView(true);", bank_dropdown)
         logger.info("已點擊銀行下拉框")
 
-        # 選擇“中国民生银行”（添加截圖功能）
+        # 選擇“中国民生银行”
         try:
             bank_option = WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, "//li[contains(text(), '中国民生银行')]"))
-            )
+                EC.visibility_of_element_located((By.XPATH, "//li[contains(text(), '中国民生银行')]")))
             self.driver.execute_script("arguments[0].scrollIntoView(true);", bank_option)
             self.driver.execute_script("arguments[0].click();", bank_option)
             logger.info("已選擇 '中国民生银行'")
@@ -121,8 +122,7 @@ class DepositTest(BaseTest):
             target_button = WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//button[contains(@class, 'customize-button') and contains(@class, 'large') and contains(@class, 'primary') and contains(., '确认')]")
-                )
-            )
+                ))
             print("找到目标按钮:", target_button.text)
             # ActionChains(self.driver).move_to_element(target_button).perform()
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'end'});", target_button)
@@ -132,15 +132,12 @@ class DepositTest(BaseTest):
             print("页面源代码:", self.driver.page_source)
             self.fail("无法找到确认按钮")
 
-        
-
         # 定位優惠券下拉選單
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((
             By.XPATH, "//div[contains(@class, 'select-container')]//div[contains(@class, 'input-container')]//div[contains(@class, 'selected-row')]")))
 
         # 點擊確認
         ActionChains(self.driver).move_to_element(target_button).click().perform()
-
 
         # 檢查是否有未支付訂單
         try:

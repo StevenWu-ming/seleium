@@ -1,25 +1,25 @@
-# config.py
-import random
 import datetime
 import json
 import os
+import random
 import sys
 
+
 class Config:
-    # 直接指定環境
+    """全域配置，包含環境參數與隨機資料生成方法"""
+
     ENV = "TestEnv"
-    
     DELAY_SECONDS = 0.5
     WAIT_TIMEOUT = 10
 
-    # 定義類屬性
-    if sys.platform == "win32":  # Windows 環境
+    # 根據作業系統設定路徑
+    if sys.platform == "win32":
         CHROMEDRIVER_PATH = r"C:\Users\d1031\新增資料夾\unittest\chormedrive\chromedriver.exe"
         RANDOM_DATA_JSON_PATH = r"C:\Users\d1031\新增資料夾\unittest\config\random_data.json"
-    elif sys.platform == "darwin":  # macOS 環境
+    elif sys.platform == "darwin":
         CHROMEDRIVER_PATH = "/Users/steven/deepseek/seleium/chormedrive/chromedriver"
         RANDOM_DATA_JSON_PATH = "/Users/steven/deepseek/seleium/config/random_data.json"
-    elif sys.platform == "linux":  # Linux 環境（Docker 容器）
+    elif sys.platform == "linux":
         CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
         RANDOM_DATA_JSON_PATH = "/app/config/random_data.json"
     else:
@@ -33,8 +33,6 @@ class Config:
     def get_random_data_json_path():
         return Config.RANDOM_DATA_JSON_PATH
 
-
-    # 測試環境配置
     class TestEnv:
         BASE_SC_URL = "http://uat-admin-api.mxsyl.com:5012"
         BASE_URL = "https://uat-newplatform.mxsyl.com"
@@ -52,57 +50,56 @@ class Config:
         VALID_USERNAME = "cooper005"
         VALID_DP_USERNAME = "cooper006"
         VALID_PASSWORD = "1234Qwer"
-        VALID_PASSWORD_MD5="sDU34ZeaABRD77WOcpBQVNg5Am8h0a8nKKNiu6LASXY5yitfJx6DUAHh8OIXS9cKeU/O4ZwIkpJFglz/oeEEiUsSjTuJxVXsaKOtq8Yu0e0iiIEFlucnlzRPHFISgz0wTYk/+kzkFUuciDPYt8hWkR99D+PiMQSX+iCNLXhxnsvjw2/gkXF9IC827hwWiKqhcc5JqBSGvDUmLzih5QlzYchzpCQrnheACEaPT9m2GNL7OYWhaZtZA42aX02iOBvtfgegrORepatpjcRowVRT77B7Nst97x13vkbRZ983rFEki1yZFWD24OutSgr4bB8X1mtXstJ2C495OA3GdZNkQQ=="
-        
-        NVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
-        INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
-        INVALID_EMAIL = None            # 初始化為 None，動態生成
+        VALID_PASSWORD_MD5 = (
+            "sDU34ZeaABRD77WOcpBQVNg5Am8h0a8nKKNiu6LASXY5yitfJx6DUAHh8OIXS9cKeU/O4ZwIkpJFglz/"
+            "oeEEiUsSjTuJxVXsaKOtq8Yu0e0iiIEFlucnlzRPHFISgz0wTYk/+kzkFUuciDPYt8hWkR99D+PiMQSX+iC"
+            "NLXhxnsvjw2/gkXF9IC827hwWiKqhcc5JqBSGvDUmLzih5QlzYchzpCQrnheACEaPT9m2GNL7OYWhaZtZA42a"
+            "X02iOBvtfgegrORepatpjcRowVRT77B7Nst97x13vkbRZ983rFEki1yZFWD24OutSgr4bB8X1mtXstJ2C495OA3GdZNkQQ=="
+        )
+
+        NVALID_USERNAME_PREFIX = None  # 動態生成
+        INVALID_PHONE_NUMBER = None    # 動態生成
+        INVALID_EMAIL = None           # 動態生成
 
         PHONE_NUMBER = "13100000021"
-
         EMAIL = "hrtqdwmk@sharklasers.com"
-
         VERIFY_CODE = "123456"
-
         DP_Amount = '100'
 
-
-
-
-
-
-    # 開發環境配置
     class DevEnv:
         BASE_URL = "https://dev-newplatform.mxsyl.com"
         BASE_SC_URL = "http://uat.newplatformadmin.mxsyl.com/"
         LOGIN_URL = "https://dev-newplatform.mxsyl.com/zh-cn/login"
         REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register"
+
         VALID_USERNAME = "cooper018"
         VALID_PASSWORD = "Dev1234Qwer"
-        INVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
-        INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
-        INVALID_EMAIL = None            # 初始化為 None，動態生成
+        INVALID_USERNAME_PREFIX = None  # 動態生成
+        INVALID_PHONE_NUMBER = None     # 動態生成
+        INVALID_EMAIL = None            # 動態生成
+
         PHONE_NUMBER = "13900000001"
         EMAIL = "dev_hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
 
-    # 生產環境配置
     class ProdEnv:
         BASE_URL = "https://www.lt.com/zh-cn/login"
         LOGIN_URL = "https://www.lt.com/zh-cn/login"
         REGISTER_URL = "https://www.lt.com/zh-cn/register"
+
         VALID_USERNAME = "QA_M1_02"
         VALID_PASSWORD = "QA_M1_02"
-        INVALID_USERNAME_PREFIX = None  # 初始化為 None，動態生成
-        INVALID_PHONE_NUMBER = None     # 初始化為 None，動態生成
-        INVALID_EMAIL = None            # 初始化為 None，動態生成
+        INVALID_USERNAME_PREFIX = None  # 動態生成
+        INVALID_PHONE_NUMBER = None     # 動態生成
+        INVALID_EMAIL = None            # 動態生成
+
         PHONE_NUMBER = "18700000002"
         EMAIL = "hrtqdwmk@sharklasers.com"
         VERIFY_CODE = "123456"
 
-    # 隨機生成方法
     @staticmethod
     def generate_random_username():
+        """根據當前時間生成隨機使用者名稱"""
         timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         random_username = f"QAM1{timestamp}"
         save_random_data_to_json({"random_username": random_username})
@@ -110,42 +107,42 @@ class Config:
 
     @staticmethod
     def generate_japanese_phone_number():
+        """生成隨機日本手機號碼"""
         prefixes = ['070', '080', '090']
         prefix = random.choice(prefixes)
-        remaining_digits = ''.join([str(random.randint(1, 9)) for _ in range(8)])
+        remaining_digits = ''.join(str(random.randint(1, 9)) for _ in range(8))
         japanese_phone = prefix + remaining_digits
         save_random_data_to_json({"japanese_phone_number": japanese_phone})
         return japanese_phone
 
     @staticmethod
     def generate_random_email():
+        """使用隨機使用者名稱生成隨機 email"""
         username = Config.generate_random_username()
         email = f"{username}@gmail.com"
         save_random_data_to_json({"random_email": email})
         return email
 
+
 def save_random_data_to_json(data):
     """將隨機生成的資料儲存到 JSON 文件中"""
-    random_data_json_path = Config.get_random_data_json_path()  # 正確獲取 JSON 文件路徑
-
-    if os.path.exists(random_data_json_path):
-        with open(random_data_json_path, 'r') as f:
+    json_path = Config.get_random_data_json_path()
+    if os.path.exists(json_path):
+        with open(json_path, 'r') as f:
             existing_data = json.load(f)
     else:
         existing_data = {}
 
     existing_data.update(data)
-    with open(random_data_json_path, 'w') as f:
+    with open(json_path, 'w') as f:
         json.dump(existing_data, f, indent=4, ensure_ascii=False)
-    print(f"隨機資料已儲存到: {random_data_json_path}")
+    print(f"隨機資料已儲存到: {json_path}")
 
 
 # 確保目標目錄存在
 os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
-# 實例化 Config（如果其他地方需要使用實例）
-config = Config()
 
-# 在類定義完成後設置 CURRENT_ENV 和 config
+# 根據配置環境取得對應環境設定
 CURRENT_ENV = getattr(Config, Config.ENV)
 config = CURRENT_ENV
 
