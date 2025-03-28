@@ -42,7 +42,7 @@ class deposit_api():
 
         headers = {
             "authorization": authorization,
-            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0"
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
         }
         payload = {
             "amount": 100,
@@ -56,6 +56,8 @@ class deposit_api():
         
         try:
             response = requests.post(url, json=payload, headers=headers)
+            # print(authorization)
+            print(url)
             print(f"Response status code: {response.status_code}")  # 打印狀態碼
             if response.status_code == 200:
                 result = response.json()

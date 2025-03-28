@@ -52,7 +52,7 @@ class AdminAPIClient:
         Raises:
             RequestException: 當請求失敗時拋出
         """
-        endpoint = "/api/v1/admin/auth/login"
+        endpoint = config.SC_LOGIN_API
         url = urljoin(self.base_url, endpoint)
         
         payload = {
