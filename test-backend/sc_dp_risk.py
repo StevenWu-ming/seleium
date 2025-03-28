@@ -31,6 +31,7 @@ except json.JSONDecodeError:
 except Exception as e:
     print(f"發生錯誤：{str(e)}")
 
+
 class deposit_api():
     def deposit():
         if token is None:
