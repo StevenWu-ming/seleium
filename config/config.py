@@ -46,8 +46,8 @@ class Config:
             LOGIN_API = "/v1/member/auth/loginbyname"
             DEPOSIT_API = "/v1/asset/deposit/currency"
             # 後台帳密
-            SC_USERNAME = "QA006"
-            SC_PASSWORD = "QA006"
+            SC_USERNAME = "QA002"
+            SC_PASSWORD = "QA002"
             # 驗證碼與金額
             VERIFY_CODE = "123456"
             DP_Amount = '100'

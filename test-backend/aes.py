@@ -66,7 +66,14 @@ class encrypt_by_ae:
 
         # 將密文轉為 Base64 編碼
         ciphertext_base64 = base64.b64encode(ciphertext_bytes).decode('utf-8')
-
+        # 打印結果
+        print(f"明文: {PLAINTEXT}")
+        print(f"密鑰: {KEY}")
+        print(f"密文: {encrypted}")
+        
+        # 將密文存入 JSON 文件
+        save_encrypted_to_json(JSON_PATH, encrypted)
+        print(f"密文已存入 {JSON_PATH}")
         return ciphertext_base64
 
 
@@ -76,11 +83,3 @@ class encrypt_by_ae:
     # 加密明文
     encrypted = encrypt_by_aes(PLAINTEXT, KEY)
     
-    # 打印結果
-    print(f"明文: {PLAINTEXT}")
-    print(f"密鑰: {KEY}")
-    print(f"密文: {encrypted}")
-    
-    # 將密文存入 JSON 文件
-    save_encrypted_to_json(JSON_PATH, encrypted)
-    print(f"密文已存入 {JSON_PATH}")
