@@ -108,15 +108,15 @@ class Config:
     class ProdEnv:
         class MerchantBase:
             # 後台相關
-            BASE_SC_URL = "http://uat-admin-api.mxsyl.com:5012"
+            BASE_SC_URL = "https://www.gobackend.xyz/"
             SC_LOGIN_API = "/api/v1/admin/auth/login"
             AES_KEY_API = "/api/v1/admin/auth/getpasswordencryptkey"
             # 前台API
             LOGIN_API = "/v1/member/auth/loginbyname"
             DEPOSIT_API = "/api/v1/asset/deposit/currency"
             # 後台帳密
-            SC_USERNAME = "QA006"
-            SC_PASSWORD = "QA006"
+            SC_USERNAME = "Tech_QA_Tester"
+            SC_PASSWORD = "123@Tech_QA_Tester"
             # 驗證碼與金額
             VERIFY_CODE = "123456"
             DP_Amount = '100'

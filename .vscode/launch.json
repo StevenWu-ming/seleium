@@ -19,6 +19,13 @@
             "request": "launch",
             "program": "${workspaceFolder}/repeat_unittest_until_error.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Resource Monitor",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
         }
     ]
 }

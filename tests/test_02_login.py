@@ -181,7 +181,7 @@ class LoginPageTest(BaseTest):
         input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
         # 點擊包含“登录”文字的按鈕來提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
-        # 等待成功訊息出現，並檢查是否包含“我的钱包”文字
+        # 等待成功訊息出現，並檢查是否包含“我的ㄓ钱包”文字
         success_message = wait_for_success_message(self.wait, "我的钱包")
         # 斷言檢查成功訊息中包含“我的钱包”，驗證登入成功
         self.assertIn("我的钱包", success_message)

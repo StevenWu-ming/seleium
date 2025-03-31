@@ -30,7 +30,9 @@ PLAINTEXT = config.SC_PASSWORD  # 從 config.py 獲取明文
 class aes_key_api:
     @staticmethod
     def aes_key():
-        url = "http://uat-admin-api.mxsyl.com:5012/api/v1/admin/auth/getpasswordencryptkey"
+        endpoint = "/api/v1/admin/auth/getpasswordencryptkey"
+        url = urljoin(config.BASE_SC_URL, endpoint)
+        # url = "http://uat-admin-api.mxsyl.com:5012/api/v1/admin/auth/getpasswordencryptkey"
         
         try:
             print(f"Requesting URL: {url}")
