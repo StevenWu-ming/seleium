@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import sys
+from login_api import LoginAPI
 from urllib.parse import urljoin
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -49,7 +50,7 @@ class deposit_api():
             "currency": "CNY",
             "paymentCode": "C2CBankTransfer",
             "actionType": 1,
-            "userName": "小明",
+            "userName": config.VALID_DP_NAME,
             "bankCode": "CMBC",
             "activityNo": "2607512053222021"
         }
@@ -90,5 +91,7 @@ class deposit_api():
             print(f"網路請求失敗：{str(e)}")
             return None
 
-    # 執行並檢查結果
-    result = deposit()
+if __name__ == "__main__":
+    # LoginAPI.run_setup_api()
+    # LoginAPI.login()
+    deposit_api.deposit()

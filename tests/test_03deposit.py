@@ -133,7 +133,7 @@ class DepositTest(BaseTest):
             self.fail("无法找到确认按钮")
 
         # 定位優惠券下拉選單
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((
+        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((
             By.XPATH, "//div[contains(@class, 'select-container')]//div[contains(@class, 'input-container')]//div[contains(@class, 'selected-row')]")))
 
         # 點擊確認

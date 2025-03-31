@@ -136,7 +136,9 @@ class LoginAPI:
             else:
                 print("No valid response received.")
         
-        return result
+        return new_token  # ✅ 只回傳字串，不要整包 result
+
+        
 
 
 # Example usage
