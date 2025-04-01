@@ -7,8 +7,6 @@ from Crypto.Util.Padding import pad
 import base64
 from urllib.parse import urljoin
 from requests.exceptions import RequestException
-
-
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config, config  # 導入 Config 和 config
@@ -96,7 +94,6 @@ class encrypt_by_ae:
         ciphertext_base64 = base64.b64encode(ciphertext_bytes).decode('utf-8')
         return ciphertext_base64
 
-
 class AdminAPIClient:
     """用於處理管理員API請求的類別"""
     
@@ -162,35 +159,34 @@ class AdminAPIClient:
         self.session.close()
 
 
-
-if __name__ == "__main__":
-    # 先呼叫 aes_key_api.aes_key()，更新 JSON 檔案中的密鑰資料
+def run_admin_login_workflow():
+    """執行整體管理員登入流程，包括取得密鑰、加密密碼、登入並存儲 token"""
+    # 1. 取得 AES 密鑰
     aes_key_api.aes_key()
-    
-    # 重新讀取最新的密鑰
+
+    # 2. 使用新的 key 對密碼加密
     KEY = load_encrypt_key(file_path)
-    
-    # 使用更新後的 KEY 進行加密
     encrypted = encrypt_by_ae.encrypt_by_aes(PLAINTEXT, KEY)
+
     print(f"明文: {PLAINTEXT}")
     print(f"密鑰: {KEY}")
     print(f"密文: {encrypted}")
-    
+
+    # 3. 存儲加密密碼到 JSON
     save_encrypted_to_json(file_path, encrypted)
     print(f"密文已存入 {file_path}")
 
-
+    # 4. 使用 Admin API 登入並儲存 token
     client = AdminAPIClient()
     try:
         result = client.login()
         print(f"Status Code: {result['status_code']}")
         print(f"Response: {result['response']}")
-        
-        # 取得回傳的 token，並存入 random_data.json，儲存名稱為 sc_token
+
+        # 儲存 token 到 JSON
         if isinstance(result.get("response"), dict):
             token_value = result["response"].get("token")
             if token_value:
-                # 讀取現有的 JSON 檔案
                 if os.path.exists(file_path):
                     with open(file_path, "r", encoding="utf-8") as f:
                         try:
@@ -199,14 +195,18 @@ if __name__ == "__main__":
                             existing_data = {}
                 else:
                     existing_data = {}
-                # 更新 sc_token 欄位
+
                 existing_data["sc_token"] = token_value
-                # 將更新後的資料寫回 JSON 檔案
+
                 with open(file_path, "w", encoding="utf-8") as f:
                     json.dump(existing_data, f, indent=4, ensure_ascii=False)
+
                 print(f"sc_token 已儲存: {token_value}")
             else:
                 print("回傳結果中無 token")
     except RequestException as e:
         print(f"An error occurred: {e}")
 
+
+if __name__ == "__main__":
+    run_admin_login_workflow()

@@ -59,8 +59,8 @@ class Config:
             PHONE_NUMBER = "13100000021"
             EMAIL = "hrtqdwmk@sharklasers.com"
             VALID_USERNAME = "cooper005"
-            VALID_DP_USERNAME = "cooper006"
-            VALID_DP_NAME = "小明"
+            VALID_DP_USERNAME = "cooper024"
+            VALID_DP_NAME = "测试"
             VALID_PASSWORD = "1234Qwer"
             VALID_PASSWORD_MD5 = (
                 "J+qUZNvIJnsQ91KG1wDjBxnvIA3w+98epcCr8jN9u03wwEVytx57ScGfoeySN0nex4jiIzG2qfUfRXnSTtsULjPEvtgpTOdEXEH3SKSR1GJEENUxOo7uezgpKrpxobKLJQehXQEeXivDZla7tNe6EDBT6qKsCgmBYMZGNNRaJdmZSG0HkZnZWcJ34/rhQQxEPeU1ZseiK+q3H9Q9RSyB6+fn2wyQtoU4o4BdzjvrapRtLwrIwobiaOH1PeaeIcUKgCX30FQCuYHtOMnKwEBoz4IwuS5z+XFT1XIbdkRMm+FXoZZOQ7BeLCYGgWOEWMhnOQzAKaYkJvI1KYq4OFEraA=="
