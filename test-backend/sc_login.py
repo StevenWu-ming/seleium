@@ -9,12 +9,14 @@ from requests.exceptions import RequestException
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config, config  # 導入 Config 和 config
 
-json_file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
 
-def load_encrypt_key(json_path: str = json_file_path) -> tuple[str, str]:
+def load_encrypt_key_ted(json_path: str = file_path) -> tuple[str, str]:
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
         return data["key"], data["encrypted"]
+
+
 
 class AdminAPIClient:
     """用於處理管理員API請求的類別"""
@@ -32,8 +34,8 @@ class AdminAPIClient:
         }
 
     def login(self, username=config.SC_USERNAME, 
-             password=load_encrypt_key()[1], 
-             password_key=load_encrypt_key()[0]
+             password=load_encrypt_key_ted()[1], 
+             password_key=load_encrypt_key_ted()[0]
              ):
         """執行管理員登錄
         
@@ -92,8 +94,8 @@ if __name__ == "__main__":
             token_value = result["response"].get("token")
             if token_value:
                 # 讀取現有的 JSON 檔案
-                if os.path.exists(json_file_path):
-                    with open(json_file_path, "r", encoding="utf-8") as f:
+                if os.path.exists(file_path):
+                    with open(file_path, "r", encoding="utf-8") as f:
                         try:
                             existing_data = json.load(f)
                         except json.JSONDecodeError:
@@ -103,7 +105,7 @@ if __name__ == "__main__":
                 # 更新 sc_token 欄位
                 existing_data["sc_token"] = token_value
                 # 將更新後的資料寫回 JSON 檔案
-                with open(json_file_path, "w", encoding="utf-8") as f:
+                with open(file_path, "w", encoding="utf-8") as f:
                     json.dump(existing_data, f, indent=4, ensure_ascii=False)
                 print(f"sc_token 已儲存: {token_value}")
             else:
