@@ -71,6 +71,16 @@ async def set_env(env: str = Body(..., embed=True)):
     logger.info(f"✅ 環境變更為: {Config.ENV}")
     return {"message": f"成功切換到環境: {env}"}
 
+@app.post("/set-merchant")
+async def set_merchant(merchant: str = Body(..., embed=True)):
+    valid_merchants = ["Merchant1", "Merchant2", "Merchant5", "Merchant7"]
+    if merchant not in valid_merchants:
+        raise HTTPException(status_code=400, detail=f"無效的商戶，請使用: {valid_merchants}")
+    Config.MERCHANT = merchant
+    logger.info(f"✅ 商戶變更為: {Config.MERCHANT}")
+    return {"message": f"成功切換到商戶: {merchant}"}
+
+
 # 測試執行函數
 def run_test_in_process(test_class, shared_results):
     process_id = os.getpid()
