@@ -1,30 +1,28 @@
 <template>
   <div class="container">
-    <!-- 環境切換區域 -->
-    <div class="env-switch">
-      <label>選擇環境：</label>
-      <div class="switch-wrapper">
-        <span :class="{ active: selectedEnv === 'TestEnv' }">TestEnv</span>
-        <label class="switch">
-          <input type="checkbox" v-model="isProdEnv" @change="switchEnv" />
-          <span class="slider"></span>
-        </label>
-        <span :class="{ active: selectedEnv === 'ProdEnv' }">ProdEnv</span>
+    <!-- 左上控制區 -->
+    <div class="top-bar">
+      <div class="env-switch">
+        <label>選擇環境：</label>
+        <div class="switch-wrapper">
+          <span :class="{ active: selectedEnv === 'TestEnv' }">TestEnv</span>
+          <label class="switch">
+            <input type="checkbox" v-model="isProdEnv" @change="switchEnv" />
+            <span class="slider"></span>
+          </label>
+          <span :class="{ active: selectedEnv === 'ProdEnv' }">ProdEnv</span>
+        </div>
+      </div>
+
+      <div class="test-button">
+        <button :disabled="isRunning" @click="runTests">執行測試</button>
       </div>
     </div>
 
-    <!-- 左欄：操作區域 -->
-    <div class="left-panel">
-      <h2>執行按鈕</h2>
-      <button :disabled="isRunning" @click="runTests">執行測試</button>
-    </div>
-
-    <!-- 右欄：結果區域 -->
-    <div class="right-panel">
+    <!-- 測試結果輸出 -->
+    <div class="result-panel" :class="{ success: !error, failure: error }">
       <h3>測試結果：</h3>
-      <div id="result-box" :class="{ success: !error, failure: error }">
-        {{ resultText }}
-      </div>
+      <div id="result-box">{{ resultText }}</div>
     </div>
   </div>
 </template>
@@ -38,7 +36,7 @@ export default {
   setup() {
     const selectedEnv = ref('TestEnv');
     const isProdEnv = ref(false);
-
+    const API_BASE = `http://${window.location.hostname}:8000`
     const resultText = ref('尚未執行測試');
     const isRunning = ref(false);
     const error = ref(false);
@@ -46,7 +44,8 @@ export default {
     const switchEnv = async () => {
       selectedEnv.value = isProdEnv.value ? 'ProdEnv' : 'TestEnv';
       try {
-        await axios.post('http://127.0.0.1:8000/set-env', { env: selectedEnv.value });
+        // await axios.post('http://127.0.0.1:8000/set-env', { env: selectedEnv.value });
+        await axios.post(`${API_BASE}/set-env`, { env: selectedEnv.value });
         resultText.value = `已切換到 ${selectedEnv.value} 環境\n請重新執行測試`;
         error.value = false;
       } catch (err) {
@@ -61,7 +60,8 @@ export default {
       error.value = false;
 
       try {
-        const response = await fetch(`http://127.0.0.1:8000/run-tests`);
+        // const response = await fetch(`http://127.0.0.1:8000/run-tests`);
+        const response = await fetch(`${API_BASE}/run-tests`);
         if (!response.ok) {
           throw new Error(`伺服器回傳錯誤: ${response.status} ${response.statusText}`);
         }
@@ -108,134 +108,127 @@ export default {
   }
 };
 </script>
-  
-  <style scoped>
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* 環境切換區域 */
-  .env-switch {
-    width: 100%;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .switch-wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .switch-wrapper span {
-    font-size: 16px;
-    color: #666;
-  }
-  
-  .switch-wrapper span.active {
-    color: #000;
-    font-weight: bold;
-  }
-  
-  /* 切換按鈕樣式 */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 34px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background-color: #2196f3;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(26px);
-  }
-  
-  /* 左欄：操作區域 */
-  .left-panel {
-    width: 30%;
-    text-align: center;
-  }
-  
-  .left-panel h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .left-panel button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .left-panel button:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-  
-  /* 右欄：結果區域 */
-  .right-panel {
-    width: 65%;
-  }
-  
-  .right-panel h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  #result-box {
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    text-align: left;
-    white-space: pre-line;
-    min-height: 100px;
-  }
-  
-  .success {
-    color: green;
-  }
-  
-  .failure {
-    color: red;
-  }
-  </style>
+
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* 上方控制區 */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+/* 環境切換樣式 */
+.env-switch label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+.switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.switch-wrapper span {
+  font-size: 14px;
+  color: #777;
+}
+.switch-wrapper span.active {
+  color: #000;
+  font-weight: bold;
+}
+
+/* 切換開關 */
+.switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 26px;
+  transition: 0.4s;
+}
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+input:checked + .slider {
+  background-color: #2196f3;
+}
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* 按鈕樣式 */
+.test-button button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: 1px solid #aaa;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.test-button button:hover {
+  background-color: #e0e0e0;
+}
+.test-button button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 測試結果輸出區 */
+.result-panel {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+#result-box {
+  padding: 16px;
+  background-color: #ffffff;
+  border-left: 4px solid #ccc;
+  border-radius: 4px;
+  white-space: pre-line;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  min-height: 300px;
+}
+
+/* 成功／失敗配色 */
+.success #result-box {
+  border-left-color: #4caf50;
+}
+.failure #result-box {
+  border-left-color: #f44336;
+  color: #c62828;
+}
+</style>

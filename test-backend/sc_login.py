@@ -7,9 +7,11 @@ from requests.exceptions import RequestException
 
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config.config import Config, config  # 導入 Config 和 config
+from config.config import Config  # 導入 Config 和 config
 
 file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+config = Config.get_current_config()
+
 
 def load_encrypt_key_ted(json_path: str = file_path) -> tuple[str, str]:
     with open(json_path, 'r', encoding='utf-8') as f:

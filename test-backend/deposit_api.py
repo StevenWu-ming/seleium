@@ -6,7 +6,10 @@ from login_api import LoginAPI
 from urllib.parse import urljoin
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config.config import Config , config  # 導入 Config 和 config
+from config.config import Config  # 導入 Config 和 config
+
+config = Config.get_current_config()
+
 
 class deposit_api():
     def deposit():

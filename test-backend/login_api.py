@@ -6,9 +6,10 @@ from urllib.parse import urljoin
 
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config.config import Config, config  # 導入 Config 和 config
+from config.config import Config  # 導入 Config 和 config
 
 file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+config = Config.get_current_config()
 
 # 讀取原始 token（可選：在發送請求前讀取當前 token）
 token = None

@@ -6,9 +6,10 @@ from urllib.parse import urljoin
 
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config.config import config
+from config.config import Config
 
 json_file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+config = Config.get_current_config()
 
 class DepositRiskProcessor:
     def __init__(self, json_path=json_file_path):
