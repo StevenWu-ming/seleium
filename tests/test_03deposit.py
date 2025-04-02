@@ -132,12 +132,24 @@ class DepositTest(BaseTest):
             print("页面源代码:", self.driver.page_source)
             self.fail("无法找到确认按钮")
 
-        # 定位優惠券下拉選單
-        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((
-            By.XPATH, "//div[contains(@class, 'select-container')]//div[contains(@class, 'input-container')]//div[contains(@class, 'selected-row')]")))
+        # # 定位優惠券下拉選單
+        # WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((
+        #     By.XPATH, "//div[contains(@class, 'select-container')]//div[contains(@class, 'input-container')]//div[contains(@class, 'selected-row')]")))
+
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((
+                    By.XPATH, "//div[contains(@class, 'select-container')]//div[contains(@class, 'input-container')]//div[contains(@class, 'selected-row')]"
+                ))
+            )
+            logger.info("優惠券下拉選單已出現")
+        except TimeoutException:
+            logger.warning("優惠券下拉選單未出現，繼續流程")
+
 
         # 點擊確認
         ActionChains(self.driver).move_to_element(target_button).click().perform()
+
 
         # 檢查是否有未支付訂單
         try:

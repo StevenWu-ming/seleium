@@ -14,7 +14,7 @@ class BaseTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--log-level=3")
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
@@ -23,7 +23,7 @@ class BaseTest(unittest.TestCase):
             service=Service(Config.CHROMEDRIVER_PATH)
         )
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)
-        self.driver.set_window_position(2000, 100)
+        # self.driver.set_window_position(2000, 100)
 
         if hasattr(self, "url") and self.url:  # 只有在子類別有設定 `self.url` 才會載入
             self.driver.get(self.url)
