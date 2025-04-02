@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import time
 import logging
 import unittest
-from config.config import Config,config
+from config.config import Config
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
@@ -36,10 +36,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# config = Config.get_current_config()  # 每次動態取得當前環境設定
+
 
 class DepositTest(BaseTest):
     def setUp(self):
-        self.url = config.LOGIN_URL  # 指定註冊頁面
+        self.config = Config.get_current_config() 
+        self.url = self.config.LOGIN_URL  # 指定註冊頁面
         print(f"設定的測試 URL: {self.url}")
         super().setUp()  # 調用 BaseTest 的 setUp()
         
@@ -47,9 +50,9 @@ class DepositTest(BaseTest):
     def test_01_01_deposit(self):
         """充值"""
         # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
-        input_text(self.driver, self.wait, "//input[@maxlength='18']", (config.VALID_USERNAME))
+        input_text(self.driver, self.wait, "//input[@maxlength='18']", (self.config.VALID_USERNAME))
         # 輸入密碼到密碼輸入框
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含“登录”文字的按鈕來提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
@@ -85,7 +88,7 @@ class DepositTest(BaseTest):
         # 輸入金額
         amount_input = self.wait.until(EC.presence_of_element_located((
             By.XPATH, "//input[@type='number' and contains(@class, 'ng-untouched') and contains(@class, 'ng-pristine') and contains(@class, 'ng-valid')]")))
-        self.driver.execute_script("arguments[0].value = arguments[1];", amount_input, config.DP_Amount)
+        self.driver.execute_script("arguments[0].value = arguments[1];", amount_input, self.config.DP_Amount)
         self.driver.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", amount_input)
 
 

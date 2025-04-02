@@ -223,7 +223,7 @@ def save_random_data_to_json(data):
 os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
 
 # 自動取得目前設定的環境與商戶配置
-config = Config.get_current_config()
+# config = Config.get_current_config()
 
 if __name__ == "__main__":
     print(f"當前環境: {Config.ENV}")

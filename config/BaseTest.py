@@ -3,10 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-from config.config import Config, config  # 導入 Config 和 config
+from config.config import Config  # 導入 Config 和 config
 import logging
 
 logger = logging.getLogger(__name__)
+config = Config.get_current_config()  # 每次動態取得當前環境設定
 
 class BaseTest(unittest.TestCase):
     def setUp(self):

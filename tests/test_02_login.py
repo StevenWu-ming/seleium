@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import time
 import logging
 import unittest
-from config.config import Config,config  
+from config.config import Config  
 from config.BaseTest import BaseTest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -33,10 +33,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# config = Config.get_current_config()  # 每次動態取得當前環境設定
+
     
 class LoginPageTest(BaseTest):
     def setUp(self):
-        self.url = config.LOGIN_URL  # 指定註冊頁面
+        self.config = Config.get_current_config() 
+        self.url = self.config.LOGIN_URL  # 指定註冊頁面
         print(f"設定的測試 URL: {self.url}")
         super().setUp()  # 調用 BaseTest 的 setUp()
 
@@ -58,9 +61,9 @@ class LoginPageTest(BaseTest):
         # china_option.click()
 
         #定位手機號碼欄位 輸入手機號碼
-        input_text(self.driver, self.wait, "//input[@type='number']", (config.PHONE_NUMBER))
+        input_text(self.driver, self.wait, "//input[@type='number']", (self.config.PHONE_NUMBER))
         #定位密碼欄位 輸入密碼
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         #定位登入按鈕 並且點擊
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
@@ -94,7 +97,7 @@ class LoginPageTest(BaseTest):
         # 在輸入框中填入驗證碼
         # 此輸入框為數字類型並限制最大長度為6位，通常用於輸入驗證碼
         # 使用 config.VERIFY_CODE 中的測試驗證碼進行填入
-        input_text(self.driver, self.wait, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']", (config.VERIFY_CODE))
+        input_text(self.driver, self.wait, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']", (self.config.VERIFY_CODE))
         # 等待並獲取包含「我的钱包」字樣的成功訊息，表示登入流程成功
         success_message = wait_for_success_message(self.wait, "我的钱包")
         # 斷言：檢查返回的成功訊息中是否包含「我的钱包」這個關鍵字
@@ -113,7 +116,7 @@ class LoginPageTest(BaseTest):
         # 在數字類型的輸入框中輸入生成的日本手機號碼，用於測試手機號碼格式
         input_text(self.driver, self.wait, "//input[@type='number']", (Config.generate_japanese_phone_number()))
         # 在密碼輸入框中輸入有效的密碼，這裡使用從配置文件中獲取的有效密碼
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含 "登录" 文字的按鈕，提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")        
 
@@ -176,9 +179,9 @@ class LoginPageTest(BaseTest):
     def test_02_02_successful_login(self):
         """帳號密碼正確登入"""
         # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
-        input_text(self.driver, self.wait, "//input[@maxlength='18']", (config.VALID_USERNAME))
+        input_text(self.driver, self.wait, "//input[@maxlength='18']", (self.config.VALID_USERNAME))
         # 輸入密碼到密碼輸入框
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含“登录”文字的按鈕來提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
         # 等待成功訊息出現，並檢查是否包含“我的ㄓ钱包”文字
@@ -194,7 +197,7 @@ class LoginPageTest(BaseTest):
         # 輸入隨機生成的使用者名稱到指定輸入框（最大長度為18個字元）
         input_text(self.driver, self.wait, "//input[@maxlength='18']", (Config.generate_random_username()))
         # 輸入有效的密碼到密碼輸入框
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含“登录”文字的按鈕來提交登入表單
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
@@ -214,9 +217,9 @@ class LoginPageTest(BaseTest):
         click_element(self.driver, self.wait, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")
 
         # 在文本輸入框中輸入郵箱地址，郵箱地址從配置文件中取得
-        input_text(self.driver, self.wait, "//input[@type='text']", (config.EMAIL))
+        input_text(self.driver, self.wait, "//input[@type='text']", (self.config.EMAIL))
         # 在密碼輸入框中輸入密碼，密碼從配置文件中取得
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含「登录」文字的按鈕，提交登入請求
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
@@ -233,7 +236,7 @@ class LoginPageTest(BaseTest):
         click_element(self.driver, self.wait, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")
 
         input_text(self.driver, self.wait, "//input[@type='text']", (Config.generate_random_email()))
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
         error_message = wait_for_err_message(self.wait, "邮箱与密码不匹")

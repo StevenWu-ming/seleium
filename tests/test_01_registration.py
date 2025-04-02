@@ -8,7 +8,7 @@ import time
 import logging
 import unittest
 from config.BaseTest import BaseTest
-from config.config import Config , config 
+from config.config import Config 
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
@@ -31,10 +31,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# config = Config.get_current_config()  # 每次動態取得當前環境設定
+
 
 class registrationPageTest(BaseTest):
     def setUp(self):
-        self.url = config.REGISTER_URL  # 指定註冊頁面
+        self.config = Config.get_current_config() 
+        self.url = self.config.REGISTER_URL  # 指定註冊頁面
         print(f"設定的測試 URL: {self.url}")
         super().setUp()  # 調用 BaseTest 的 setUp()
 
@@ -85,7 +88,7 @@ class registrationPageTest(BaseTest):
         #定位帳號輸入欄位 並且輸入 隨機帳號
         input_text(self.driver, self.wait, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']", (Config.generate_random_username()))
         #定位密碼輸入欄位 並且輸入 
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         click_element(self.driver, self.wait, "//button[contains(text(), '注册')]")
         #判斷是否登入成功 拿到我的錢包字串
         success_message = wait_for_success_message(self.wait, "我的钱包")
@@ -99,9 +102,9 @@ class registrationPageTest(BaseTest):
         #關閉公告彈窗
         close_popup(self.driver, self.wait)
         #定位帳號輸入欄位 並且輸入 
-        input_text(self.driver, self.wait, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']", (config.VALID_USERNAME))
+        input_text(self.driver, self.wait, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']", (self.config.VALID_USERNAME))
         #定位密碼輸入欄位 並且輸入
-        input_text(self.driver, self.wait, "//input[@type='password']", (config.VALID_PASSWORD))
+        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         click_element(self.driver, self.wait, "//button[contains(text(), '注册')]")
         #判斷是否登入失敗 拿到该用户名已存在字串
         error_message = wait_for_err_message(self.wait, "该用户名已存在")
