@@ -151,7 +151,13 @@ class DepositTest(BaseTest):
 
 
         # 點擊確認
+        # 等到按鈕 class 不含 disabled（視為可互動）
+        WebDriverWait(self.driver, 10).until(
+            lambda d: 'disabled' not in target_button.get_attribute('class')
+        )
+        logger.info("✅ 確認按鈕現在可以點擊")
         ActionChains(self.driver).move_to_element(target_button).click().perform()
+        # 保險做法：滾動到中央 + 強制 click
 
 
         # 檢查是否有未支付訂單
