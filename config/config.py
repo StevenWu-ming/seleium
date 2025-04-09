@@ -126,13 +126,14 @@ class Config:
             LOGIN_URL = "https://www.lt.com/zh-cn/login"
             REGISTER_URL = "https://www.lt.com/zh-cn/register"
 
-            PHONE_NUMBER = ""
+            PHONE_NUMBER = "18700000005"
             EMAIL = ""
-            VALID_USERNAME = ""
-            VALID_DP_USERNAME = ""
-            VALID_PASSWORD = ""
+            VALID_DP_NAME = "测试"
+            VALID_USERNAME = "QA_M1_05"
+            VALID_DP_USERNAME = "QA_M1_05"
+            VALID_PASSWORD = "QA_M1_05"
             VALID_PASSWORD_MD5 = (
-                ""
+                "lcuX0yzXBtLR3oEP9Uf4kLmP+zg9IXwq63PnpDwWAPk1x9TbJCFoov0bIUHXIaJsmRkGnJfpshHdTUZeWhs1Lr9Uq1W3DemXoDeOGjMZXdkwyJiol5VRe29tSKzcxHeailQ4BbYE7LC3cIWaOgRKMFcyrbtaehxRb3py+kA513FVMA0ywfjS9B61cgWUwo/NU3F5csERXapGIuPovE9g4ip1ZSq92+9f712PXP5feIp4oDw1XTmtfoUK1aaF9648/rlAeK1RZWc6hiU9vyDs8acK9hkXYpYdbTcE1daL+f+MCL68emCQFZAob73Ke1B3rix36jsRn7Ma1UE+V+jB1A=="
                 )
         class Merchant2(MerchantBase):
             BASE_URL = "https://www.mrcatgo.com"
