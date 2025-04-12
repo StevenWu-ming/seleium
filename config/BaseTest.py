@@ -28,7 +28,7 @@ class BaseTest(unittest.TestCase): # 定義基礎測試類別，繼承自 unitte
             service=Service(Config.CHROMEDRIVER_PATH) # 指定 ChromeDriver 可執行文件的路
         )
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)  # 初始化 WebDriverWait 對象，用於等待網頁元素載入完成，超時時間從配置中獲取
-        self.driver.set_window_position(-1500, -500)  # 設置瀏覽器窗口位置
+        #self.driver.set_window_position(-1500, -500)  # 設置瀏覽器窗口位置
 
         # 檢查子類別是否定義了 self.url，如果有則載入該網址
         if hasattr(self, "url") and self.url:  # 只有在子類別有設定 `self.url` 才會載入
