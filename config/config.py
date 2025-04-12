@@ -68,9 +68,7 @@ class Config:
             VALID_DP_USERNAME = "cooper024" # 存款測試用戶名
             VALID_DP_NAME = "测试" # 存款測試名稱
             VALID_PASSWORD = "1234Qwer" # 測試密碼
-            VALID_PASSWORD_MD5 = ( # 加密後的測試密碼（MD5 格式）
-                "f0BAxelH+nLRPIKHeoaCftTTkiqoCwRyttWy96FZ7AkwrpPUgQcnycC5jjrvkYUmoVTlC37j27QfT7GTxmKhmTOq1cTp52VE2BkEC72USZWhB7j2KJJ6d73hvt3mYrhuvdnyPuTwgJNVuWMLPpfhO4SlEfC6c6IRni2GyZhXMlHEJ5DJlKgdK5aaOg0S4zLZhPpjBRIluh0Lop/PeqigwSIPo97M+fe7WdJs1DUgl2NM2NZX7Xhf9+xQQFO/fv1zgknV2mU9i63Sr9BOily7rqffSxCTVw6F6ybPpsphYBnfgSbvO0JBuGSZnsobMgdBl24X1gW8FCF7kEjoV/zOZA=="
-                )
+
         class Merchant2(MerchantBase):
             BASE_URL = "https://uat2-newplatform.mxsyl.com/"
             LOGIN_URL = "https://uat2-newplatform.mxsyl.com/zh-cn/login"
@@ -81,10 +79,9 @@ class Config:
             VALID_USERNAME = ""
             VALID_DP_USERNAME = ""
             VALID_PASSWORD = ""
-            VALID_PASSWORD_MD5 = (
-                ""
-                  )
+
         class Merchant5(MerchantBase):
+
             BASE_URL = "https://uat5-newplatform.mxsyl"
             LOGIN_URL = "https://uat5-newplatform.mxsyl/zh-cn/login"
             REGISTER_URL = "https://uat5-newplatform.mxsyl/zh-cn/register"
@@ -94,9 +91,7 @@ class Config:
             VALID_USERNAME = ""
             VALID_DP_USERNAME = ""
             VALID_PASSWORD = ""
-            VALID_PASSWORD_MD5 = (
-                ""
-                )
+  
         class Merchant7(MerchantBase):
             BASE_URL = "https://uat7-newplatform.mxsyl.com"
             LOGIN_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/login"
@@ -107,10 +102,7 @@ class Config:
             VALID_USERNAME = ""
             VALID_DP_USERNAME = ""
             VALID_PASSWORD = ""
-            VALID_PASSWORD_MD5 = (
-                ""
-                )
-
+        
     # 正式環境配置：拆分為 4 個商戶
     class ProdEnv:
         class MerchantBase:
@@ -142,9 +134,7 @@ class Config:
             VALID_USERNAME = "QA_M1_05" # 有效測試用戶名
             VALID_DP_USERNAME = "QA_M1_05" # 存款測試用戶名
             VALID_PASSWORD = "QA_M1_05" # 測試密碼
-            VALID_PASSWORD_MD5 = ( # 加密後的測試密碼（MD5 格式）
-                "lcuX0yzXBtLR3oEP9Uf4kLmP+zg9IXwq63PnpDwWAPk1x9TbJCFoov0bIUHXIaJsmRkGnJfpshHdTUZeWhs1Lr9Uq1W3DemXoDeOGjMZXdkwyJiol5VRe29tSKzcxHeailQ4BbYE7LC3cIWaOgRKMFcyrbtaehxRb3py+kA513FVMA0ywfjS9B61cgWUwo/NU3F5csERXapGIuPovE9g4ip1ZSq92+9f712PXP5feIp4oDw1XTmtfoUK1aaF9648/rlAeK1RZWc6hiU9vyDs8acK9hkXYpYdbTcE1daL+f+MCL68emCQFZAob73Ke1B3rix36jsRn7Ma1UE+V+jB1A=="
-                )
+
         class Merchant2(MerchantBase):
             BASE_URL = "https://www.mrcatgo.com"
             LOGIN_URL = "https://www.mrcatgo.com/zh-cn/login"
@@ -155,9 +145,7 @@ class Config:
             VALID_USERNAME = ""
             VALID_DP_USERNAME = ""
             VALID_PASSWORD = ""
-            VALID_PASSWORD_MD5 = (
-                ""
-                )
+
         class Merchant5(MerchantBase):
             BASE_URL = "https://www.letou1.vip"
             LOGIN_URL = "https://www.letou1.vip/zh-cn#login"
@@ -168,9 +156,7 @@ class Config:
             VALID_USERNAME = ""
             VALID_DP_USERNAME = ""
             VALID_PASSWORD = ""
-            VALID_PASSWORD_MD5 = (
-                ""
-                )
+
         class Merchant7(MerchantBase):
             BASE_URL = "https://vwin158.com"
             LOGIN_URL = "https://vwin158.com/zh-cn/login"
@@ -181,10 +167,6 @@ class Config:
             VALID_USERNAME = ""
             VALID_DP_USERNAME = ""
             VALID_PASSWORD = ""
-            VALID_PASSWORD_MD5 = (
-                ""
-                )
-
 
 
     @classmethod
@@ -237,8 +219,7 @@ def save_random_data_to_json(data):
 # 確保隨機資料 JSON 檔案的目標目錄存在，若不存在則創建
 os.makedirs(os.path.dirname(Config.get_random_data_json_path()), exist_ok=True)
 
-# 自動取得目前設定的環境與商戶配置
-# config = Config.get_current_config()
+
 
 if __name__ == "__main__":
     config = Config.get_current_config()  

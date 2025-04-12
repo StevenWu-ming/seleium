@@ -5,7 +5,7 @@ import logging
 from tests.test_01_registration import registrationPageTest,CleanTextTestResult, CustomTextTestRunner
 from tests.test_02_login import LoginPageTest,CleanTextTestResult, CustomTextTestRunner
 from tests.test_03deposit import DepositTest,CleanTextTestResult, CustomTextTestRunner
-from config.config import config
+from config.config import Config
     
 # 設置日誌文件路徑為 selenium_tests/test_log.log
 log_dir = '/Users/steven/deepseek/seleium/tests'
@@ -24,6 +24,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
+    config = Config.get_current_config() 
     logger.info(f"開始運行測試，當前環境: {config.BASE_URL}")
     suite = unittest.TestLoader().loadTestsFromTestCase(LoginPageTest)
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(registrationPageTest))

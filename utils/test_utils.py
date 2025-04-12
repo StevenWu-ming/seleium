@@ -1,36 +1,59 @@
-import os
-import time
-import logging
-import unittest
-import traceback
-from functools import wraps
-from unittest.runner import TextTestResult
+import os # 導入 os 模組，用於處理檔案路徑和目錄操作
+import time # 導入 time 模組，用於生成時間戳記
+import logging # 導入 logging 模組，用於記錄測試過程中的訊息
+import unittest # 導入 unittest 模組，提供測試框架
+import traceback # 導入 traceback 模組，用於格式化異常堆疊追蹤
+from functools import wraps # 導入 wraps，用於保留被裝飾函數的元數據
+from unittest.runner import TextTestResult # 導入 TextTestResult，作為自定義結果類的基類
 
-
+# 設置日誌記錄器，名稱為當前模組名稱 (__name__)
 logger = logging.getLogger(__name__)
 
 def log_and_fail_on_exception(test_func):
+    """
+    裝飾器：為測試方法添加日誌記錄和異常處理
+    Args:
+        test_func: 要裝飾的測試方法
+    Returns:
+        wrapper: 包裝後的函數，記錄測試開始並捕獲異常
+    """
     @wraps(test_func)
     def wrapper(self, *args, **kwargs):
-        display_name = test_func.__doc__ or test_func.__name__
+        display_name = test_func.__doc__ or test_func.__name__ # 使用測試方法的 docstring 或名稱作為顯示名稱
         try:
-            logger.info(f"開始測試：{display_name}")
-            return test_func(self, *args, **kwargs)
+            logger.info(f"開始測試：{display_name}") # 記錄測試開始
+            return test_func(self, *args, **kwargs) # 執行原始測試方法
         except Exception as e:
-            logger.error(f"測試失敗：{display_name} - 錯誤: {str(e)}")
-            self.fail()
+            logger.error(f"測試失敗：{display_name} - 錯誤: {str(e)}") # 記錄測試失敗和錯誤訊息
+            self.fail() # 標記測試為失敗
     return wrapper
 
 
 class CleanTextTestResult(TextTestResult):
+    """
+    自定義測試結果類，增強 unittest 的結果處理功能
+    記錄成功/失敗次數、詳細失敗資訊，並在失敗時保存截圖
+    """
     def __init__(self, stream, descriptions, verbosity):
+        """
+        初始化自定義測試結果
+        Args:
+            stream: 輸出流（通常為 sys.stderr）
+            descriptions: 是否顯示測試描述
+            verbosity: 詳細程度（控制輸出格式）
+        """
         super().__init__(stream, descriptions, verbosity)
-        self.pass_count = 0
-        self.fail_count = 0
+        self.pass_count = 0 # 成功測試用例計數
+        self.fail_count = 0 # 失敗/錯誤測試用例計數
         self.passed_tests = []  # 用於儲存成功的測試用例訊息
         self.failed_tests = []  # 用於儲存失敗用例的詳細資訊
 
     def addSuccess(self, test):
+        """
+        處理成功測試用例
+        Args:
+            test: 當前測試用例對象
+        """
         super().addSuccess(test)
         self.pass_count += 1
         # 使用 docstring（如果有）或測試方法名稱來生成成功訊息
