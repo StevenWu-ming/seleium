@@ -14,6 +14,7 @@ from fastapi.staticfiles import StaticFiles
 import sys
 import os
 import traceback
+import threading
 
 app = FastAPI()
 
@@ -62,26 +63,12 @@ uvicorn_logger = logging.getLogger("uvicorn")
 uvicorn_logger.handlers = logger.handlers
 uvicorn_logger.setLevel(logging.INFO)
 
-@app.post("/set-env")
-async def set_env(env: str = Body(..., embed=True)):
-    valid_envs = ["TestEnv", "ProdEnv", "DevEnv"]
-    if env not in valid_envs:
-        raise HTTPException(status_code=400, detail=f"無效的環境名稱，請使用: {valid_envs}")
-    Config.ENV = env
-    logger.info(f"✅ 環境變更為: {Config.ENV}")
-    return {"message": f"成功切換到環境: {env}"}
+# 用於儲存測試結果
+test_results = {
+    "status": "not_started",
+    "data": None
+}
 
-@app.post("/set-merchant")
-async def set_merchant(merchant: str = Body(..., embed=True)):
-    valid_merchants = ["Merchant1", "Merchant2", "Merchant5", "Merchant7"]
-    if merchant not in valid_merchants:
-        raise HTTPException(status_code=400, detail=f"無效的商戶，請使用: {valid_merchants}")
-    Config.MERCHANT = merchant
-    logger.info(f"✅ 商戶變更為: {Config.MERCHANT}")
-    return {"message": f"成功切換到商戶: {merchant}"}
-
-
-# 測試執行函數
 def run_test_in_process(test_class, shared_results):
     process_id = os.getpid()
     logger.info(f"開始運行測試類 {test_class.__name__}，進程 ID: {process_id}")
@@ -93,9 +80,11 @@ def run_test_in_process(test_class, shared_results):
     test_results = result.get_results()
     shared_results[test_class.__name__] = test_results
 
-@app.get("/run-tests")
-async def run_tests():
+def run_tests_background():
+    global test_results
+    test_results["status"] = "running"
     start_time = time.time()
+
     try:
         config = Config.get_current_config()
         logger.info(f"開始運行測試，當前環境: {config.BASE_URL}")
@@ -115,54 +104,65 @@ async def run_tests():
         passed_tests = []
         failed_tests = []
 
-        for test_class_name, test_results in shared_results.items():
-            if "summary" not in test_results:
+        for test_class_name, test_results_raw in shared_results.items():
+            if "summary" not in test_results_raw:
                 logger.error(f"測試類 {test_class_name} 結果缺少 'summary' 鍵，跳過處理")
                 continue
-            pass_count += test_results["summary"]["pass_count"]
-            fail_count += test_results["summary"]["fail_count"]
-            passed_tests.extend(test_results["passed_tests"])
-            failed_tests.extend(test_results["failed_tests"])
+            pass_count += test_results_raw["summary"]["pass_count"]
+            fail_count += test_results_raw["summary"]["fail_count"]
+            passed_tests.extend(test_results_raw["passed_tests"])
+            failed_tests.extend(test_results_raw["failed_tests"])
 
-        total_count = pass_count + fail_count
-        logger.info("\n📌測試結果摘要:")
-        logger.info(f"✅ 通過測試數: {pass_count}")
-        logger.info(f"❌ 失敗測試數: {fail_count}")
-        logger.info(f"📊 總測試數: {total_count}")
+        run_time = time.time() - start_time
 
-        end_time = time.time()
-        run_time = end_time - start_time
-
-        response_data = {
+        test_results["status"] = "completed"
+        test_results["data"] = {
             "summary": {
                 "pass_count": pass_count,
                 "fail_count": fail_count,
-                "total_count": total_count
+                "total_count": pass_count + fail_count
             },
             "passed_tests": passed_tests,
             "failed_tests": failed_tests,
             "run_time": f"{run_time:.2f} 秒"
         }
 
-        logger.info("測試運行完成")
-        return JSONResponse(
-            content=response_data,
-            status_code=200,
-            media_type="application/json;charset=utf-8"
-        )
-
+        logger.info("✅ 測試執行完成")
     except Exception as e:
-        logger.error(f"測試執行過程中發生錯誤: {str(e)}\n堆棧跟踪: {traceback.format_exc()}")
-        error_response = {
-            "error": str(e),
-            "detail": "測試執行失敗",
-            "run_time": f"{time.time() - start_time:.2f} 秒"
-        }
-        return JSONResponse(
-            content=error_response,
-            status_code=500,
-            media_type="application/json;charset=utf-8"
-        )
+        test_results["status"] = "failed"
+        test_results["data"] = {"error": str(e)}
+        logger.exception("❌ 測試執行失敗")
+
+@app.post("/run-tests")
+async def run_tests():
+    global test_results
+    if test_results["status"] == "running":
+        return {"status": "still_running"}
+    thread = threading.Thread(target=run_tests_background)
+    thread.start()
+    return {"status": "started"}
+
+@app.get("/test-results")
+async def get_test_results():
+    return test_results
+
+@app.post("/set-env")
+async def set_env(env: str = Body(..., embed=True)):
+    valid_envs = ["TestEnv", "ProdEnv", "DevEnv"]
+    if env not in valid_envs:
+        raise HTTPException(status_code=400, detail=f"無效的環境名稱，請使用: {valid_envs}")
+    Config.ENV = env
+    logger.info(f"✅ 環境變更為: {Config.ENV}")
+    return {"message": f"成功切換到環境: {env}"}
+
+@app.post("/set-merchant")
+async def set_merchant(merchant: str = Body(..., embed=True)):
+    valid_merchants = ["Merchant1", "Merchant2", "Merchant5", "Merchant7"]
+    if merchant not in valid_merchants:
+        raise HTTPException(status_code=400, detail=f"無效的商戶，請使用: {valid_merchants}")
+    Config.MERCHANT = merchant
+    logger.info(f"✅ 商戶變更為: {Config.MERCHANT}")
+    return {"message": f"成功切換到商戶: {merchant}"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, log_config=None)

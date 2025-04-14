@@ -42,15 +42,13 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-
 export default {
   name: 'TestPanel',
   setup() {
-    // 環境切換相關
     const selectedEnv = ref('TestEnv');
     const isProdEnv = ref(false);
     // const API_BASE = `http://${window.location.hostname}:8000`;
-    const API_BASE = `https://hidden-kelkoo-principle-satisfied.trycloudflare.com`;
+    const API_BASE = `https://teach-awful-trusted-minolta.trycloudflare.com`;
     const resultText = ref('尚未執行測試');
     const isRunning = ref(false);
     const error = ref(false);
@@ -67,43 +65,63 @@ export default {
       }
     };
 
-    // 執行測試功能（保留原有邏輯）
     const runTests = async () => {
       isRunning.value = true;
       resultText.value = '測試執行中...';
       error.value = false;
+
       try {
-        const response = await fetch(`${API_BASE}/run-tests`);
-        if (!response.ok) {
-          throw new Error(`伺服器回傳錯誤: ${response.status} ${response.statusText}`);
-        }
+        const response = await fetch(`${API_BASE}/run-tests`, { method: 'POST' });
         const data = await response.json();
-        if (!data.summary || !data.passed_tests || !data.failed_tests || !data.run_time) {
-          throw new Error('回傳的資料結構不符合預期，缺少必要的鍵');
+        if (data.status === 'still_running') {
+          resultText.value = '⚠️ 前一輪測試尚未完成，請稍後再試';
+          isRunning.value = false;
+          return;
         }
-        let text = `✅ 成功數: ${data.summary.pass_count}\n❌ 失敗數: ${data.summary.fail_count}\n⏱️ 執行時間: ${data.run_time}\n\n`;
-        if (data.passed_tests.length > 0) {
-          text += '🟢 成功的測試:\n';
-          text += data.passed_tests.join('\n') + '\n\n';
-        } else {
-          text += '⚠️ 沒有成功的測試用例\n\n';
-        }
-        if (data.failed_tests.length > 0) {
-          text += '🔴 失敗的測試:\n';
-          text += data.failed_tests.join('\n');
-        } else {
-          text += '🎉 所有測試通過!';
-        }
-        resultText.value = text;
+
+        resultText.value = '✅ 測試已啟動，等待結果...';
+
+        const poll = setInterval(async () => {
+          const res = await fetch(`${API_BASE}/test-results`);
+          const statusData = await res.json();
+
+          if (statusData.status === 'completed') {
+            clearInterval(poll);
+            const d = statusData.data;
+
+            let text = `✅ 成功數: ${d.summary.pass_count}\n❌ 失敗數: ${d.summary.fail_count}\n⏱️ 執行時間: ${d.run_time}\n\n`;
+            if (d.passed_tests.length > 0) {
+              text += '🟢 成功的測試:\n' + d.passed_tests.join('\n') + '\n\n';
+            } else {
+              text += '⚠️ 沒有成功的測試用例\n\n';
+            }
+            if (d.failed_tests.length > 0) {
+              text += '🔴 失敗的測試:\n' + d.failed_tests.join('\n');
+            } else {
+              text += '🎉 所有測試通過!';
+            }
+
+            resultText.value = text;
+            error.value = false;
+            isRunning.value = false;
+
+          } else if (statusData.status === 'failed') {
+            clearInterval(poll);
+            resultText.value = `❌ 測試失敗: ${statusData.data.error}`;
+            error.value = true;
+            isRunning.value = false;
+
+          } else {
+            resultText.value = '⏳ 測試執行中...';
+          }
+        }, 10000);
       } catch (err) {
-        resultText.value = `❌ 測試執行失敗：${err.message}`;
+        resultText.value = `❌ 執行測試時發生錯誤: ${err.message}`;
         error.value = true;
-      } finally {
         isRunning.value = false;
       }
     };
 
-    // 新增：商戶切換功能
     const selectedMerchant = ref('Merchant1');
     const updateMerchant = async () => {
       try {
@@ -124,7 +142,6 @@ export default {
       resultText,
       isRunning,
       error,
-      // 商戶切換相關
       selectedMerchant,
       updateMerchant,
     };
@@ -133,6 +150,7 @@ export default {
 </script>
 
 <style scoped>
+/* 原樣保留 CSS */
 .container {
   display: flex;
   flex-direction: column;
@@ -141,7 +159,6 @@ export default {
   background-color: #f5f5f5;
 }
 
-/* 上方控制區 */
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -151,7 +168,6 @@ export default {
   border-bottom: 1px solid #ccc;
 }
 
-/* 環境切換樣式 */
 .env-switch label {
   margin-right: 10px;
   font-weight: bold;
@@ -170,7 +186,6 @@ export default {
   font-weight: bold;
 }
 
-/* 新增：商戶切換樣式 */
 .merchant-switch {
   margin-left: 20px;
 }
@@ -179,7 +194,6 @@ export default {
   margin-right: 5px;
 }
 
-/* 切換開關 */
 .switch {
   position: relative;
   width: 50px;
@@ -218,7 +232,6 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-/* 按鈕樣式 */
 .test-button button {
   padding: 8px 16px;
   font-size: 14px;
@@ -236,7 +249,6 @@ input:checked + .slider:before {
   cursor: not-allowed;
 }
 
-/* 測試結果輸出區 */
 .result-panel {
   flex: 1;
   padding: 24px;
@@ -255,7 +267,6 @@ input:checked + .slider:before {
   min-height: 300px;
 }
 
-/* 成功／失敗配色 */
 .success #result-box {
   border-left-color: #4caf50;
 }
