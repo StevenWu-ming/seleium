@@ -49,8 +49,8 @@ export default {
     // 環境切換相關
     const selectedEnv = ref('TestEnv');
     const isProdEnv = ref(false);
-    const API_BASE = `http://${window.location.hostname}:8000`;
-    // const API_BASE = `https://motorola-burning-massive-barnes.trycloudflare.com`;
+    // const API_BASE = `http://${window.location.hostname}:8000`;
+    const API_BASE = `https://hidden-kelkoo-principle-satisfied.trycloudflare.com`;
     const resultText = ref('尚未執行測試');
     const isRunning = ref(false);
     const error = ref(false);
