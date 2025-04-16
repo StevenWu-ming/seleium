@@ -6,37 +6,19 @@ from urllib.parse import urljoin
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
 import base64
-
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config  # 導入 Config 和 config
 
-
-file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
 config = Config.get_current_config()
-
-# 讀取原始 token（可選：在發送請求前讀取當前 token）
-token = None
-try:
-    with open(file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-    token = data.get("before_token")
-    if not token:
-        raise ValueError("JSON 檔案中缺少 'token' 字段")
-except FileNotFoundError:
-    print(f"錯誤：找不到檔案 {file_path}")
-except json.JSONDecodeError:
-    print("錯誤：JSON 檔案格式無效")
-except Exception as e:
-    print(f"發生錯誤：{str(e)}")
+file_path = Config.RANDOM_DATA_JSON_PATH
 
 
 class LoginAPI:
     def run_setup_api():
-        url = (
-            "https://uat-newplatform.mxsyl.com/v1/api/auth/setup?s="
-            "eSGwvL70s4%2F1Uc8jOs%2BEdjTTY7ABjG%2BCJta8QmZOtHULSAbatME47%2Bt1QY8ktqW9wbPxFmh7huwAApMflnR6PtjBqoTz%2FCmzADuNcMhdNxr0jRR5TfVyi%2FmSDnEPwGpNwpfwwKllYmSPqufI9RpgwuKI112fHbrG7jFq4F0spPZIxdC2aenXt5SwdPQv8D4xc2yw%2BOwRpttIaMKKo8xXiaqxrr52UfIfQyJCPfdjS0dIPtivex81oo6813jBPMjzNMMcmaJw4efnfDQPG6xfERAdTf8OdRj1XrNNFjTcP3rIg%2Bp89ObbZ7plal5xoQovmdF7JKiZi85RQzuuV%2BQgEg%3D%3D"
-            )
+        query_string = ("/v1/api/auth/setup?s=eSGwvL70s4%2F1Uc8jOs%2BEdjTTY7ABjG%2BCJta8QmZOtHULSAbatME47%2Bt1QY8ktqW9wbPxFmh7huwAApMflnR6PtjBqoTz%2FCmzADuNcMhdNxr0jRR5TfVyi%2FmSDnEPwGpNwpfwwKllYmSPqufI9RpgwuKI112fHbrG7jFq4F0spPZIxdC2aenXt5SwdPQv8D4xc2yw%2BOwRpttIaMKKo8xXiaqxrr52UfIfQyJCPfdjS0dIPtivex81oo6813jBPMjzNMMcmaJw4efnfDQPG6xfERAdTf8OdRj1XrNNFjTcP3rIg%2Bp89ObbZ7plal5xoQovmdF7JKiZi85RQzuuV%2BQgEg%3D%3D")
+        url = urljoin(config.BASE_URL, query_string)
+        
 
         headers = {
             "user-agent": (
@@ -46,7 +28,6 @@ class LoginAPI:
                 )
                 }
 
-       
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
@@ -97,6 +78,22 @@ class LoginAPI:
 
     @staticmethod
     def login():
+                
+        # 讀取原始 token（可選：在發送請求前讀取當前 token）
+        token = None
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+            token = data.get("before_token")
+            if not token:
+                raise ValueError("JSON 檔案中缺少 'before_token' 字段")
+        except FileNotFoundError:
+            print(f"錯誤：找不到檔案 {file_path}")
+        except json.JSONDecodeError:
+            print("錯誤：JSON 檔案格式無效")
+        except Exception as e:
+            print(f"發生錯誤：{str(e)}")
+
         # 拼接 URL
         url = urljoin(config.BASE_URL, config.LOGIN_API)
         print("🔐 RSA 密碼加密工具 (模擬前端 JSEncrypt)")

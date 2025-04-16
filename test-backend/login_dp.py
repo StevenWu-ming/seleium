@@ -2,8 +2,14 @@ import time
 import json
 from login_api import LoginAPI
 from deposit_api import deposit_api
+import os
+import sys
 
-json_file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from config.config import Config  # 導入 Config 和 config
+
+config = Config.get_current_config()
+json_file_path = Config.RANDOM_DATA_JSON_PATH
 
 def read_token_from_json():
     try:

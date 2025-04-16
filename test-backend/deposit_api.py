@@ -11,9 +11,10 @@ from config.config import Config  # 導入 Config 和 config
 config = Config.get_current_config()
 
 
+
 class deposit_api():
     def deposit():
-        json_file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+        json_file_path = Config.RANDOM_DATA_JSON_PATH
         
         try:
             with open(json_file_path, 'r', encoding='utf-8') as file:

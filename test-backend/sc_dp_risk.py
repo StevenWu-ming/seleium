@@ -8,8 +8,9 @@ from urllib.parse import urljoin
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config
 
-json_file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
 config = Config.get_current_config()
+json_file_path = Config.RANDOM_DATA_JSON_PATH
+
 
 class DepositRiskProcessor:
     def __init__(self, json_path=json_file_path):

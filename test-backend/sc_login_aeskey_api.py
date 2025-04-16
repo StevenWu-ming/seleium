@@ -11,8 +11,9 @@ from requests.exceptions import RequestException
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config  # 導入 Config 和 config
 
-file_path = "/Users/steven/deepseek/seleium/config/random_data.json"
+
 config = Config.get_current_config()
+file_path = Config.RANDOM_DATA_JSON_PATH
 
 
 def load_encrypt_key(json_path: str) -> str:
