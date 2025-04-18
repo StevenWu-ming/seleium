@@ -15,12 +15,12 @@ def run_full_flow(userName: str, user_name: str, password: str, amount: float):
     processor.run()
 
 
-# if __name__ == "__main__":
-#     # 測試用參數（你可以隨時改）
-#     #"" , None , " " 都會抓config裡的值 但如果"abc" 就會用abc
-#     userName =  None
-#     user_name = None
-#     password = None
-#     amount = 0
+if __name__ == "__main__":
+    # 測試用參數（你可以隨時改）
+    #"" , None , " " 都會抓config裡的值 但如果"abc" 就會用abc
+    userName =  None
+    user_name = None
+    password = None
+    amount = 0
 
-#     run_full_flow(userName=userName, user_name=user_name, password=password, amount=amount)
+    run_full_flow(userName=userName, user_name=user_name, password=password, amount=amount)

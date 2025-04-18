@@ -1,18 +1,9 @@
 <template>
-  <div id="app">
-    <TestPanel />
-  </div>
+  <MainPanel />
 </template>
 
-<script>
-import TestPanel from './components/TestPanel.vue';
-
-export default {
-  name: 'App',
-  components: {
-    TestPanel,
-  },
-};
+<script setup>
+import MainPanel from './components/MainPanel.vue'
 </script>
 
 <style>

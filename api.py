@@ -176,11 +176,12 @@ async def set_merchant(merchant: str = Body(..., embed=True)):
 
 @app.post("/run-login_deposit")
 def run_all(params: RunParams):
+
     try:
         run_full_flow(userName=params.userName, user_name=params.user_name, password=params.password, amount=params.amount)
         return {"message": "✅ 自動化小工具-存款流程完成"}
     except Exception as e:
-        return {"error": "❌" f"執行失敗: {str(e)}"}
+        return {"error": "❎" f"執行失敗: {str(e)}"}
 
 
 if __name__ == "__main__":
