@@ -42,6 +42,8 @@ class Config:
         class MerchantBase:
             """測試環境的商戶基礎類，定義共用的 API 端點與帳戶資料"""
             # 後台相關
+            SET_UP_API = "/v1/api/auth/setup?s=eSGwvL70s4%2F1Uc8jOs%2BEdjTTY7ABjG%2BCJta8QmZOtHULSAbatME47%2Bt1QY8ktqW9wbPxFmh7huwAApMflnR6PtjBqoTz%2FCmzADuNcMhdNxr0jRR5TfVyi%2FmSDnEPwGpNwpfwwKllYmSPqufI9RpgwuKI112fHbrG7jFq4F0spPZIxdC2aenXt5SwdPQv8D4xc2yw%2BOwRpttIaMKKo8xXiaqxrr52UfIfQyJCPfdjS0dIPtivex81oo6813jBPMjzNMMcmaJw4efnfDQPG6xfERAdTf8OdRj1XrNNFjTcP3rIg%2Bp89ObbZ7plal5xoQovmdF7JKiZi85RQzuuV%2BQgEg%3D%3D"
+            public_key_content = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1lcU5lRpSOqdLicIimSso8wSCTDWdtv3BXGeixALS+bcqOMmV2Tm5F5O3sOAku/a+XxeC+yXkaVrCXpgsl0LEPGVnqO5XoVs4LTeo0zwCJQ+H7TN1ZlqkpfFCL7Mn1+dUXvy+N2p5ijlTZiFsfetc+Jr/JH2Zj62nnc/Vpxne0RsKLwh4Mwp6i/BSv2H9xurablJpz3GPb0qoTniCuxzXvCR9h2tFfbCNacrdpOFVW/A8g27g5em+uqjVB5xAhM1pj0b5PlgR6Oyn5c5mmK1waBx/P+NZJRmGrDbHZMq07v3ma9LTOCGGoG90ReYHxVFRSlAzfl5NGF9nrkfZW4skQIDAQAB"
             BASE_SC_URL = "http://uat-admin-api.mxsyl.com:5012" # 後台基礎網址
             SC_LOGIN_API = "/api/v1/admin/auth/login" # 後台登入 API
             AES_KEY_API = "/api/v1/admin/auth/getpasswordencryptkey" # 獲取密碼加密金鑰
@@ -54,7 +56,7 @@ class Config:
             SC_PASSWORD = "QA006" # 後台測試密碼
             # 驗證碼與金額
             VERIFY_CODE = "123456" # 測試用驗證碼
-            DP_Amount = '100' # 測試用存款金額/
+            DP_Amount = '101' # 測試用存款金額/
 
         class Merchant1(MerchantBase):
             """測試環境的 Merchant1 配置，繼承 MerchantBase"""
@@ -70,15 +72,17 @@ class Config:
             VALID_PASSWORD = "1234Qwer" # 測試密碼
 
         class Merchant2(MerchantBase):
+            SET_UP_API = "/v1/api/auth/setup?s=FK%2F8U1UoR1pvYyPGRc9Hf1UtH5CbChSdUcQi6LW5sHQUTdCvKymW1Pf7GbIRFka3v6oLkenl613jzTPscfyMupzFB6dG6ev7FC26xlxui%2FcTXAtpX9zc6uKG8yy%2F13ifghSFHvgR0Ya2g9A6hbLNwDcKcTY%2BAKKImQ%2BiDHHQXPs3eouxU5EECjcBGB0iDZqI0k0mZx1FuwaNzvB%2FvpHCsLpEqxhZCea9EVXOcLADGQ%2B4P9qU5zuwEMImvRsc8wREm56JT9ACcmvsE03QbDJKDsmPAqbKvKzFK59LRiXz%2BAvMYI5%2BBgegU5VFQu6NpyESqB81rKwyMONDcjBhqIRHmQ%3D%3D"
             BASE_URL = "https://uat2-newplatform.mxsyl.com/"
             LOGIN_URL = "https://uat2-newplatform.mxsyl.com/zh-cn/login"
             REGISTER_URL = "https://uat2-newplatform.mxsyl.com/zh-cn/register"
 
             PHONE_NUMBER = ""
             EMAIL = ""
-            VALID_USERNAME = ""
-            VALID_DP_USERNAME = ""
-            VALID_PASSWORD = ""
+            VALID_USERNAME = "cooper023"
+            VALID_DP_USERNAME = "cooper023"
+            VALID_DP_NAME = "测试" # 存款測試名稱
+            VALID_PASSWORD = "1234Qwer"
 
         class Merchant5(MerchantBase):
 
@@ -108,6 +112,8 @@ class Config:
         class MerchantBase:
             """正式環境的商戶基礎類，定義共用的 API 端點與帳戶資料"""
             # 後台相關
+            SET_UP_API = "/v1/api/auth/setup?s=ftR3rOe39MF%2Fz7uj0TAxv%2B8f4%2FKCIfnsJgyah1%2FhPlBq3R0BmTbbGxUUdKpBtu3kPzg%2B9ALkFhSVMyxYTtywOMiM3k%2BI06gDTm3Ch2YlKTbUOX%2FDZkbVzO7nFhXPSqXpdPWbDCMCRN9Antj6XIoQWMpFapzQs2GUt7EOxLDhMg30zMxFno4S8%2BkjIEwy90famJExmRTKX0MJP%2FSbiJETJHklQVGKwP94c1PvA4CUoIwtF7YvfRjDwoz1HPaTKmzTcgXsr95WQPPQ0RHF4tMKyIRvPQya%2BR4pV4lRI2Kr7pq6Fn12Zq4Rj4M7uiAGdh8PLnUpuPS7Hw9LkF3c3IRpWw%3D%3D"
+            public_key_content = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoTgcVORkxBPRQJimRKTUHrSS+vTBzbAm8l6bwaFqr1Mya/pjsHrUPCErJnchMfmfgEBFrsfX5/FLGfXvKFT//F949jgcl3My2oGCOk4dTh+zpp16q8e0qoOG5JtKmQjs2W+s2sAp2Xsk4hMfRY9ZzxsSORjS6YYvgLb0TwbLXZ1GAHhwJSVJS38AUqJH2Z0ng7xzDAklEqLfcP+99PBVau0iqRBEypUsJqcTPXTJMQw0wZg3Frci0SuOhTexmG7NzVhHZIV0cp07czo8lp8+2YvC14iaPwn2xB4dVXNtIILQFXorfNS9U+IO5uL0Y432GeWax1tVXrl6jowihrd1nwIDAQAB"
             BASE_SC_URL = "https://www.gobackend.xyz/" # 後台基礎網址
             SC_LOGIN_API = "/api/v1/admin/auth/login" # 後台登入 API
             AES_KEY_API = "/api/v1/admin/auth/getpasswordencryptkey" # 獲取密碼加密金鑰 API
@@ -124,7 +130,7 @@ class Config:
 
         class Merchant1(MerchantBase):
             """正式環境的 Merchant1 配置，繼承 MerchantBase"""
-            BASE_URL = "https://www.lt.com/" # 前台基礎網址
+            BASE_URL = "https://www.lt.com" # 前台基礎網址
             LOGIN_URL = "https://www.lt.com/zh-cn/login" # 登入頁面網址
             REGISTER_URL = "https://www.lt.com/zh-cn/register" # 註冊頁面網址
 

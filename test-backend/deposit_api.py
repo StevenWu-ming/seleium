@@ -13,7 +13,11 @@ config = Config.get_current_config()
 
 
 class deposit_api():
-    def deposit():
+    @staticmethod
+    def deposit(user_name=None, amount=None):
+        user_name = user_name or config.VALID_DP_NAME
+        amount = amount or config.DP_Amount
+
         json_file_path = Config.RANDOM_DATA_JSON_PATH
         
         try:
@@ -34,22 +38,22 @@ class deposit_api():
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
         }
         payload = {
-            "amount": 100,
+            "amount": amount,
             "currency": "CNY",
             "paymentCode": "C2CBankTransfer",
             "actionType": 1,
-            "userName": config.VALID_DP_NAME,
+            "userName": user_name,
             "bankCode": "CMBC",
             "activityNo": "2607512053222021"
         }
 
         try:
             response = requests.post(url, json=payload, headers=headers)
-            print(url)
+            # print(url)
             print(f"Response status code: {response.status_code}")
             if response.status_code == 200:
                 result = response.json()
-                print("Response data:", result)
+                # print("Response data:", result)
                 
             if result.get("success") and result.get("data"):
                 order_id = result["data"].get("orderId")

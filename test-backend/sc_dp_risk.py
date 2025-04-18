@@ -39,7 +39,11 @@ class DepositRiskProcessor:
     def dp_risk(self):
         url = "http://uat-admin-api.mxsyl.com:5012/api/v1/asset/transaction/getlist"
         headers = {"authorization": self.authorization}
-        params = {"OrderNum": self.order_id}
+        params = {
+            "Category": "Deposit",
+            "TenantId": "-1",
+            "OrderNum": self.order_id
+            }
         try:
             response = requests.get(url, params=params, headers=headers)
             if response.status_code == 200:

@@ -15,8 +15,17 @@ import sys
 import os
 import traceback
 import threading
+from pydantic import BaseModel
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "test-backend")))
+from runner_wrapper import run_full_flow
 
 app = FastAPI()
+class RunParams(BaseModel):
+    userName: str
+    user_name: str
+    password: str
+    amount: float
+
 
 # 掛載 static 目錄，提供靜態檔案
 app.mount("/static", StaticFiles(directory="static", html=True), name="static")
@@ -163,6 +172,16 @@ async def set_merchant(merchant: str = Body(..., embed=True)):
     Config.MERCHANT = merchant
     logger.info(f"✅ 商戶變更為: {Config.MERCHANT}")
     return {"message": f"成功切換到商戶: {merchant}"}
+
+
+@app.post("/run-login_deposit")
+def run_all(params: RunParams):
+    try:
+        run_full_flow(userName=params.userName, user_name=params.user_name, password=params.password, amount=params.amount)
+        return {"message": "✅ 自動化小工具-存款流程完成"}
+    except Exception as e:
+        return {"error": "❌" f"執行失敗: {str(e)}"}
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, log_config=None)
