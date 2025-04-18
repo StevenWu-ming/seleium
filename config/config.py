@@ -180,6 +180,8 @@ class Config:
         """根據全域 ENV 與 MERCHANT 參數取得當前配置"""
         env_class = getattr(cls, cls.ENV) # 獲取環境類（如 TestEnv 或 ProdEnv）
         merchant_config = getattr(env_class, cls.MERCHANT) # 獲取商戶配置（如 Merchant1）
+        # print("⚙️ 目前選擇的環境：", Config.ENV)
+        # print("⚙️ 目前選擇的商戶：", Config.MERCHANT)
         return merchant_config
 
     @staticmethod

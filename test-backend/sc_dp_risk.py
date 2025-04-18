@@ -8,9 +8,7 @@ from urllib.parse import urljoin
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config
 
-config = Config.get_current_config()
-json_file_path = Config.RANDOM_DATA_JSON_PATH
-
+json_file_path = Config.RANDOM_DATA_JSON_PATH  # ✅ 全域不動態化
 
 class DepositRiskProcessor:
     def __init__(self, json_path=json_file_path):
@@ -37,13 +35,14 @@ class DepositRiskProcessor:
             print(f"❌ 初始化錯誤：{str(e)}")
 
     def dp_risk(self):
-        url = "http://uat-admin-api.mxsyl.com:5012/api/v1/asset/transaction/getlist"
+        cfg = Config.get_current_config()
+        url = urljoin(cfg.BASE_SC_URL, "/api/v1/asset/transaction/getlist")
         headers = {"authorization": self.authorization}
         params = {
             "Category": "Deposit",
             "TenantId": "-1",
             "OrderNum": self.order_id
-            }
+        }
         try:
             response = requests.get(url, params=params, headers=headers)
             if response.status_code == 200:
@@ -58,7 +57,8 @@ class DepositRiskProcessor:
         return None
 
     def dp_risk1(self, trans_id):
-        url = "http://uat-admin-api.mxsyl.com:5012/api/v1/asset/transaction/depositrecorddetail"
+        cfg = Config.get_current_config()
+        url = urljoin(cfg.BASE_SC_URL, "/api/v1/asset/transaction/depositrecorddetail")
         headers = {"authorization": self.authorization}
         params = {"id": trans_id}
         try:
@@ -75,6 +75,7 @@ class DepositRiskProcessor:
         return None
 
     def dp_risk2(self, third_order_num):
+        # ✅ 保留固定 IP，不動用 cfg
         url = "http://20.198.224.251:8002/api/v1/deposit/confirm"
         headers = {
             "accept": "text/plain",
@@ -98,6 +99,7 @@ class DepositRiskProcessor:
         return None
 
     def dp_risk3(self, third_order_num):
+        # ✅ 保留固定 IP，不動用 cfg
         url = "http://20.198.224.251:8002/api/v1/deposit/notify"
         headers = {
             "accept": "text/plain",

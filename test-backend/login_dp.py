@@ -1,15 +1,15 @@
 import time
 import json
-from login_api import LoginAPI
-from deposit_api import deposit_api
 import os
 import sys
+from login_api import LoginAPI
+from deposit_api import deposit_api
 
+# 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config.config import Config  # 導入 Config 和 config
+from config.config import Config  # 導入 Config
 
-config = Config.get_current_config()
-json_file_path = Config.RANDOM_DATA_JSON_PATH
+json_file_path = Config.RANDOM_DATA_JSON_PATH  # ✅ 全域設定保留
 
 def read_token_from_json():
     try:
@@ -21,6 +21,8 @@ def read_token_from_json():
         return None
 
 def main(userName=None, user_name=None, password=None, amount=None):
+    print(f"⚙️ 目前選擇的環境： {Config.ENV}")
+    print(f"⚙️ 目前選擇的商戶： {Config.MERCHANT}")
     print("🔹 Step 1: Running setup API...")
     LoginAPI.run_setup_api()
 
@@ -29,13 +31,11 @@ def main(userName=None, user_name=None, password=None, amount=None):
     print("🔹 Step 2: Logging in...")
     login_result = LoginAPI.login(userName=userName, password=password)
 
-    if not login_result or not login_result.get("data"):
+    if not login_result or not isinstance(login_result.get("data"), dict):
         print("❌ No token returned from login, aborting.")
         return
 
     token = login_result["data"].get("token")
-    # print(f"✅ Token received: {token}")
-
     time.sleep(2)  # 確保寫入完成
 
     json_token = read_token_from_json()

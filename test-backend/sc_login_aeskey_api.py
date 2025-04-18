@@ -7,13 +7,12 @@ from Crypto.Util.Padding import pad
 import base64
 from urllib.parse import urljoin
 from requests.exceptions import RequestException
+
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config.config import Config  # 導入 Config 和 config
+from config.config import Config  # 導入 Config
 
-
-config = Config.get_current_config()
-file_path = Config.RANDOM_DATA_JSON_PATH
+file_path = Config.RANDOM_DATA_JSON_PATH  # ✅ 此為全域值，保留
 
 
 def load_encrypt_key(json_path: str) -> str:
@@ -33,14 +32,12 @@ def save_encrypted_to_json(json_path: str, encrypted: str):
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-PLAINTEXT = config.SC_PASSWORD  # 從 config.py 獲取明文
-
 class aes_key_api:
     @staticmethod
     def aes_key():
+        cfg = Config.get_current_config()
         endpoint = "/api/v1/admin/auth/getpasswordencryptkey"
-        url = urljoin(config.BASE_SC_URL, endpoint)
-        # url = "http://uat-admin-api.mxsyl.com:5012/api/v1/admin/auth/getpasswordencryptkey"
+        url = urljoin(cfg.BASE_SC_URL, endpoint)
         
         try:
             print(f"Requesting URL: {url}")
@@ -57,8 +54,7 @@ class aes_key_api:
         if result and isinstance(result, dict):
             new_key = result.get("key", "")
             new_encyptKey = result.get("encyptKey", "")
-            
-            # 讀取現有 JSON 檔案
+
             if os.path.exists(file_path):
                 with open(file_path, "r", encoding="utf-8") as f:
                     try:
@@ -67,14 +63,13 @@ class aes_key_api:
                         existing_data = {}
             else:
                 existing_data = {}
-            
-            # 更新 key 和 encyptKey 到 JSON
+
             existing_data["key"] = new_key
             existing_data["encyptKey"] = new_encyptKey
-            
+
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(existing_data, f, indent=4, ensure_ascii=False)
-            
+
             print("✅ Request successful!")
             print(f"🔹 Data updated in: {file_path}")
             print(f"🔹 Key value: {new_key}")
@@ -100,44 +95,29 @@ class encrypt_by_ae:
 class AdminAPIClient:
     """用於處理管理員API請求的類別"""
     
-    def __init__(self, base_url=config.BASE_SC_URL):
-        """初始化API客戶端
-        
-        Args:
-            base_url (str): API的基本URL，預設為UAT環境
-        """
-        self.base_url = base_url
+    def __init__(self):
+        cfg = Config.get_current_config()
+        self.base_url = cfg.BASE_SC_URL
         self.session = requests.Session()
         self.headers = {
             'Content-Type': 'application/json'
         }
 
-    def login(self, username=config.SC_USERNAME, 
-             password=load_encrypt_key_ted()[1], 
-             password_key=load_encrypt_key_ted()[0]
-             ):
-        """執行管理員登錄
-        
-        Args:
-            username (str): 用戶名，預設為"QA006"
-            password (str): 密碼，預設為加密後的值
-            password_key (str): 密碼密鑰
-            
-        Returns:
-            dict: 包含狀態碼和響應數據的字典
-            
-        Raises:
-            RequestException: 當請求失敗時拋出
-        """
-        endpoint = config.SC_LOGIN_API
+    def login(self, username=None, password=None, password_key=None):
+        cfg = Config.get_current_config()
+        username = username or cfg.SC_USERNAME
+        password = password or load_encrypt_key_ted()[1]
+        password_key = password_key or load_encrypt_key_ted()[0]
+
+        endpoint = cfg.SC_LOGIN_API
         url = urljoin(self.base_url, endpoint)
-        
+
         payload = {
             "userName": username,
             "password": password,
             "passwordKey": password_key
         }
-        
+
         try:
             response = self.session.post(
                 url,
@@ -154,20 +134,20 @@ class AdminAPIClient:
             raise RequestException(f"Login failed: {str(e)}")
 
     def __enter__(self):
-        """支援上下文管理器"""
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """關閉session"""
         self.session.close()
 
 
 def run_admin_login_workflow():
-    """執行整體管理員登入流程，包括取得密鑰、加密密碼、登入並存儲 token"""
-    # 1. 取得 AES 密鑰
+    cfg = Config.get_current_config()
+    PLAINTEXT = cfg.SC_PASSWORD  # ✅ 動態取得明文密碼
+
+    # Step 1: Get AES Key
     aes_key_api.aes_key()
 
-    # 2. 使用新的 key 對密碼加密
+    # Step 2: Encrypt password
     KEY = load_encrypt_key(file_path)
     encrypted = encrypt_by_ae.encrypt_by_aes(PLAINTEXT, KEY)
 
@@ -175,11 +155,10 @@ def run_admin_login_workflow():
     print(f"密鑰: {KEY}")
     print(f"密文: {encrypted}")
 
-    # 3. 存儲加密密碼到 JSON
+    # Step 3: Save encrypted password to JSON
     save_encrypted_to_json(file_path, encrypted)
-    print(f"密文已存入 {file_path}")
 
-    # 4. 使用 Admin API 登入並儲存 token
+    # Step 4: Perform login with Admin API
     client = AdminAPIClient()
     try:
         result = client.login()
