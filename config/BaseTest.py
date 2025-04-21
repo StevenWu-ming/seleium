@@ -18,7 +18,7 @@ class BaseTest(unittest.TestCase): # 定義基礎測試類別，繼承自 unitte
         chrome_options = Options() # 創建 Chrome 瀏覽器選項對象，用於設置瀏覽器行為
         chrome_options.add_argument("--log-level=3") # 設置 Chrome 日誌級別為 3（僅顯示嚴重錯誤），減少不必要的輸出
         chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"}) # 關閉瀏覽器控制台日誌，提升測試效率
-        chrome_options.add_argument("--headless") # 啟用無頭模式（不顯示瀏覽器窗口），適合在無圖形界面的環境運行
+        # chrome_options.add_argument("--headless") # 啟用無頭模式（不顯示瀏覽器窗口），適合在無圖形界面的環境運行
         chrome_options.add_argument("--no-sandbox") # 禁用沙盒模式，提升在某些系統上的相容性
         chrome_options.add_argument("--disable-dev-shm-usage") # 禁用 /dev/shm 使用，避免在容器化環境中出現記憶體問題
 

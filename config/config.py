@@ -193,6 +193,21 @@ class Config:
         return random_username
 
     @staticmethod
+    def generate_chinese_phone_number():
+        """生成隨機中國手機號，格式為：1 + 第二位號段 + 9 位數字"""
+        # 常見中國號段開頭（可依實際調整）
+        prefixes = ['130', '131', '132', '133', '134', '135', '136', '137', '138', '139',
+                    '150', '151', '152', '153', '155', '156', '157', '158', '159',
+                    '170', '171', '173', '175', '176', '177', '178', '179',
+                    '180', '181', '182', '183', '185', '186', '187', '188', '189',
+                    '198', '199']
+        prefix = random.choice(prefixes)
+        remaining_digits = ''.join(str(random.randint(0, 9)) for _ in range(8))  # 8 位數字
+        chinese_phone = prefix + remaining_digits
+        save_random_data_to_json({"chinese_phone_number": chinese_phone})  # 儲存到 JSON
+        return chinese_phone
+
+    @staticmethod
     def generate_japanese_phone_number():
         """生成隨機日本手機號，格式為 070/080/090 + 8 位數字"""
         prefixes = ['070', '080', '090'] # 日本手機號前綴
