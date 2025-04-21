@@ -10,9 +10,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config  # 導入 Config
 
 class deposit_api():
+
     @staticmethod
+    
     def deposit(user_name=None, amount=None):
         cfg = Config.get_current_config()
+       
         user_name = user_name or cfg.VALID_DP_NAME
         amount = amount or cfg.DP_Amount
 
@@ -47,7 +50,12 @@ class deposit_api():
 
         try:
             response = requests.post(url, json=payload, headers=headers)
-            print(f"Response status code: {response.status_code}")
+            data = response.json().get("data", {})
+            print(f"回傳狀態碼: {response.status_code}")
+            print(f"✅ 充值金額: {data.get('amount')}")
+            print(f"✅ 銀行名稱: {data.get('bankInfo', {}).get('bankName')}")
+            print(f"✅ 銀行帳號: {data.get('bankInfo', {}).get('bankAccountNumber')}")
+
             result = None  # ✅ 保護避免 result 未定義錯誤
 
             if response.status_code == 200:
@@ -76,7 +84,7 @@ class deposit_api():
 
                 return result
             else:
-                print(f"Error {response.status_code}: {response.text}")
+                print(f"錯誤 {response.status_code}: {response.text}")
                 return None
         except requests.exceptions.RequestException as e:
             print(f"網路請求失敗：{str(e)}")

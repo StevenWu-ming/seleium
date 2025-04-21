@@ -4,13 +4,13 @@ from sc_login_aeskey_api import run_admin_login_workflow
 from sc_dp_risk import DepositRiskProcessor
 
 def run_full_flow(userName: str, user_name: str, password: str, amount: float):
-    print("✅ 執行 login_dp 登入 + 存款流程")
+    # print("✅ 執行 login_dp 登入 + 存款流程")
     login_and_deposit(userName=userName, user_name=user_name, password=password, amount=amount)
 
-    print("✅ 執行 sc_login_aeskey_api 後台登入 AES Key 擷取流程")
+    # print("✅ 執行 sc_login_aeskey_api 後台登入 AES Key 擷取流程")
     run_admin_login_workflow()
 
-    print("✅ 執行 sc_dp_risk 風控流程")
+    # print("✅ 執行 sc_dp_risk 風控流程")
     processor = DepositRiskProcessor()
     processor.run()
 

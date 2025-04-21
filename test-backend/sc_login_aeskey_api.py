@@ -40,15 +40,18 @@ class aes_key_api:
         url = urljoin(cfg.BASE_SC_URL, endpoint)
         
         try:
-            print(f"Requesting URL: {url}")
+            print(f"請求URL: {url}")
             response = requests.get(url)
-            print(f"Status Code: {response.status_code}")
-            print(f"Response Headers: {response.headers}")
-            print(f"Response Text: {response.text}")
+            print(f"狀態碼: {response.status_code}")
+            # data = response.json()
+            # print(f"✅ encyptKey: {data.get('key')}")
+            # print(f"✅ key: {data.get('encyptKey')}")
+            # print(f"Response Headers: {response.headers}")
+            # print(f"Response Text: {response.text}")
             response.raise_for_status()
             result = response.json()
         except requests.exceptions.RequestException as e:
-            print(f"Error {response.status_code if 'response' in locals() else 'N/A'}: {str(e)}")
+            print(f"錯誤 {response.status_code if '回傳' in locals() else 'N/A'}: {str(e)}")
             return None
         
         if result and isinstance(result, dict):
@@ -70,12 +73,12 @@ class aes_key_api:
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(existing_data, f, indent=4, ensure_ascii=False)
 
-            print("✅ Request successful!")
-            print(f"🔹 Data updated in: {file_path}")
-            print(f"🔹 Key value: {new_key}")
-            print(f"🔹 EncyptKey value: {new_encyptKey}")
+            print("✅ 請求後台密碼加密成功")
+            print(f"🔹 數據更新: {file_path}")
+            # print(f"🔹 加密key: {new_key}")
+            # print(f"🔹 加密密鑰: {new_encyptKey}")
         else:
-            print("❌ Request failed!")
+            print("❌ 請求失敗!")
         
         return result
 
@@ -162,8 +165,8 @@ def run_admin_login_workflow():
     client = AdminAPIClient()
     try:
         result = client.login()
-        print(f"Status Code: {result['status_code']}")
-        print(f"Response: {result['response']}")
+        print(f"登入成功 狀態碼: {result['status_code']}")
+        # print(f"Response: {result['response']}")
 
         # 儲存 token 到 JSON
         if isinstance(result.get("response"), dict):
@@ -182,8 +185,8 @@ def run_admin_login_workflow():
 
                 with open(file_path, "w", encoding="utf-8") as f:
                     json.dump(existing_data, f, indent=4, ensure_ascii=False)
-
-                print(f"sc_token 已儲存: {token_value}")
+                print(f"後台token已更新")
+                # print(f"後台token已更新: {token_value}")
             else:
                 print("回傳結果中無 token")
     except RequestException as e:

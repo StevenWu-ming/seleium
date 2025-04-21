@@ -11,7 +11,7 @@ import base64
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config  # 導入 Config
 
-file_path = Config.RANDOM_DATA_JSON_PATH  # ✅ 適用於 run_setup_api()
+file_path = Config.RANDOM_DATA_JSON_PATH  
 
 class LoginAPI:
     def run_setup_api():
@@ -31,7 +31,7 @@ class LoginAPI:
         if response.status_code == 200:
             result = response.json()
         else:
-            print(f"Error {response.status_code}: {response.text}")
+            print(f"錯誤 {response.status_code}: {response.text}")
             result = None
 
         if result is not None and result.get("success"):
@@ -51,17 +51,18 @@ class LoginAPI:
             with open(file_path, "w") as f:
                 json.dump(existing_data, f, indent=4)
 
-            print(f"✅ {Config.ENV} Login successful!")  # ✅ 改為全域
-            print(f"🔹 Token updated in: {file_path}")
+            print(f"✅ {Config.ENV} 獲取未登入Token成功!")  
+            print(f"🔹 Token 更新至: {file_path}")
         else:
-            print("❌ Login failed!")
+            print("❌ 登入失敗")
             if result:
-                print(f"Error details: {result}")
+                print(f"錯誤訊息: {result}")
             else:
-                print("No valid response received.")
-
+                print("未收到錯誤訊息")
         return result
 
+
+    #前台登入密碼加密流程
     @staticmethod
     def encrypt_password(password: str, public_key_pem: str) -> str:
         rsa_key = RSA.import_key(public_key_pem)
@@ -92,7 +93,7 @@ class LoginAPI:
 
         url = urljoin(cfg.BASE_URL, cfg.LOGIN_API)
 
-        print("🔐 RSA 密碼加密工具 (模擬前端 JSEncrypt)")
+        print("🔐 RSA 密碼加密工具")
         rsa_public_key = f"""-----BEGIN PUBLIC KEY-----
         {cfg.public_key_content}
         -----END PUBLIC KEY-----"""
@@ -100,7 +101,7 @@ class LoginAPI:
             password = cfg.VALID_PASSWORD
             encrypted = LoginAPI.encrypt_password(password, rsa_public_key)
         except Exception as e:
-            print("❌ 發生錯誤：", str(e))
+            print("❌ 錯誤訊息：", str(e))
 
         headers = {
             "authorization": f"Bearer {token}",
@@ -117,7 +118,7 @@ class LoginAPI:
         if response.status_code == 200:
             result = response.json()
         else:
-            print(f"Error {response.status_code}: {response.text}")
+            print(f"錯誤 {response.status_code}: {response.text}")
             result = None
 
         if result is not None and result.get("success"):
@@ -137,14 +138,14 @@ class LoginAPI:
             with open(file_path, "w") as f:
                 json.dump(existing_data, f, indent=4)
 
-            print(f"✅ {Config.ENV} Login successful!")  # ✅ 改為 Config
-            print(f"🔹 Token updated in: {file_path}")
+            print(f"✅ {Config.ENV} 登入成功!")  
+            print(f"🔹 登入Token更新至: {file_path}")
         else:
-            print("❌ Login failed!")
+            print("❌ 登入失敗")
             if result:
-                print(f"Error details: {result}")
+                print(f"失敗訊息: {result}")
             else:
-                print("No valid response received.")
+                print("未收到錯誤訊息")
 
         return result
 

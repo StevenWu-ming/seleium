@@ -23,12 +23,12 @@ def read_token_from_json():
 def main(userName=None, user_name=None, password=None, amount=None):
     print(f"⚙️ 目前選擇的環境： {Config.ENV}")
     print(f"⚙️ 目前選擇的商戶： {Config.MERCHANT}")
-    print("🔹 Step 1: Running setup API...")
+    # print("🔹 Step 1: Running setup API...")
     LoginAPI.run_setup_api()
 
     time.sleep(2)
 
-    print("🔹 Step 2: Logging in...")
+    # print("🔹 Step 2: Logging in...")
     login_result = LoginAPI.login(userName=userName, password=password)
 
     if not login_result or not isinstance(login_result.get("data"), dict):
@@ -40,7 +40,7 @@ def main(userName=None, user_name=None, password=None, amount=None):
 
     json_token = read_token_from_json()
     if json_token == token:
-        print("✅ Token successfully written to JSON. Proceeding to deposit...")
+        # print("✅ Token successfully written to JSON. Proceeding to deposit...")
         deposit_api.deposit(user_name=user_name, amount=amount)
     else:
         print("❌ Token mismatch or not written correctly. Aborting deposit.")
