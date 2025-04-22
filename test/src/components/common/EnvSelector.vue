@@ -31,7 +31,9 @@ import { ref } from 'vue'
 import axios from 'axios'
 
 const emit = defineEmits(['update'])
-const API_BASE = `http://localhost:8000`
+// const API_BASE = `http://localhost:8000`
+const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
+
 
 const selectedEnv = ref('TestEnv')
 const isProdEnv = ref(false)

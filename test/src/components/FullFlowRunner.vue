@@ -53,9 +53,9 @@ const amountInput = ref(0)
 
 
 // const API_BASE = `http://localhost:8000`
-const API_BASE = `https://takes-az-southwest-ruled.trycloudflare.com`
+const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
 
-// 從 EnvSelector 傳回來的環境與商戶狀態
+// 從 EnvSelector 傳回來的環境與商戶狀態s
 const currentEnv = ref('TestEnv')
 const currentMerchant = ref('Merchant1')
 
