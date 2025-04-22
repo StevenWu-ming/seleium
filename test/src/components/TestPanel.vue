@@ -26,8 +26,8 @@ const error = ref(false)
 const currentEnv = ref('TestEnv')
 const currentMerchant = ref('Merchant1')
 
-const API_BASE = `http://localhost:8000`
-// const API_BASE = `https://teach-awful-trusted-minolta.trycloudflare.com`
+// const API_BASE = `http://localhost:8000`
+const API_BASE = `https://takes-az-southwest-ruled.trycloudflare.com`
 
 const handleUpdate = ({ env, merchant }) => {
   currentEnv.value = env
