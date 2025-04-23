@@ -32,7 +32,8 @@ import axios from 'axios'
 
 const emit = defineEmits(['update'])
 // const API_BASE = `http://localhost:8000`
-const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
+// const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
+import { API_BASE } from '@/config/api'
 
 
 const selectedEnv = ref('TestEnv')
@@ -45,7 +46,7 @@ function emitStatus() {
     merchant: selectedMerchant.value
   })
 }
-
+console.log("🔥 API_BASE = ", API_BASE)
 const switchEnv = async () => {
   selectedEnv.value = isProdEnv.value ? 'ProdEnv' : 'TestEnv'
   try {

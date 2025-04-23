@@ -53,7 +53,8 @@ const amountInput = ref(0)
 
 
 // const API_BASE = `http://localhost:8000`
-const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
+// const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
+import { API_BASE } from '@/config/api'
 
 // 從 EnvSelector 傳回來的環境與商戶狀態s
 const currentEnv = ref('TestEnv')
