@@ -14,7 +14,7 @@ def run_tests():
         # 指定特定的測試用例
         loader = unittest.TestLoader()
         # 格式為 "module_name.ClassName.test_method_name"
-        suite = loader.loadTestsFromName('test_01_registration.registrationPageTest.test_01_02_registration')
+        suite = loader.loadTestsFromName('test_03deposit.DepositTest.test_01_01_deposit')
         
         # 執行測試
         # runner = unittest.TextTestRunner(stream=buffer, verbosity=2)

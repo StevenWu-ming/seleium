@@ -50,7 +50,7 @@ class DepositTest(BaseTest):
     def test_01_01_deposit(self):
         """充值"""
         # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
-        input_text(self.driver, self.wait, "//input[@maxlength='18']", (self.config.VALID_USERNAME))
+        input_text(self.driver, self.wait, "//input[@maxlength='18']", (self.config.VALID_DP_USERNAME))
         # 輸入密碼到密碼輸入框
         input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含“登录”文字的按鈕來提交登入表單
