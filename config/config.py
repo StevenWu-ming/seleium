@@ -10,7 +10,7 @@ class Config:
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
     ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
-    MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
+    MERCHANT = "Merchant2"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
 
@@ -63,6 +63,7 @@ class Config:
             BASE_URL = "https://uat-newplatform.mxsyl.com" # 前台基礎網址
             LOGIN_URL = "https://uat-newplatform.mxsyl.com/zh-cn/login" # 登入頁面網址
             REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register" # 註冊頁面網址
+            KYC_URL = "https://uat-newplatform.mxsyl.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = "13100000021" # 測試用手機號
             EMAIL = "hrtqdwmk@sharklasers.com" # 測試用電子郵件
@@ -76,6 +77,7 @@ class Config:
             BASE_URL = "https://uat2-newplatform.mxsyl.com/"
             LOGIN_URL = "https://uat2-newplatform.mxsyl.com/zh-cn/login"
             REGISTER_URL = "https://uat2-newplatform.mxsyl.com/zh-cn/register"
+            KYC_URL = "https://uat2-newplatform.mxsyl.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = ""
             EMAIL = ""
@@ -89,6 +91,7 @@ class Config:
             BASE_URL = "https://uat5-newplatform.mxsyl"
             LOGIN_URL = "https://uat5-newplatform.mxsyl/zh-cn/login"
             REGISTER_URL = "https://uat5-newplatform.mxsyl/zh-cn/register"
+            KYC_URL = "https://uat5-newplatform.mxsyl/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = ""
             EMAIL = ""
@@ -100,6 +103,7 @@ class Config:
             BASE_URL = "https://uat7-newplatform.mxsyl.com"
             LOGIN_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/login"
             REGISTER_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/register"
+            KYC_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = ""
             EMAIL = ""
@@ -133,6 +137,7 @@ class Config:
             BASE_URL = "https://www.lt.com" # 前台基礎網址
             LOGIN_URL = "https://www.lt.com/zh-cn/login" # 登入頁面網址
             REGISTER_URL = "https://www.lt.com/zh-cn/register" # 註冊頁面網址
+            KYC_URL = "https://www.lt.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = "18700000005" # 測試用手機號
             EMAIL = "" # 電子郵件
@@ -145,6 +150,7 @@ class Config:
             BASE_URL = "https://www.mrcatgo.com"
             LOGIN_URL = "https://www.mrcatgo.com/zh-cn/login"
             REGISTER_URL = "https://www.mrcatgo.com/zh-cn/register"
+            KYC_URL = "https://www.mrcatgo.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = ""
             EMAIL = ""
@@ -156,7 +162,8 @@ class Config:
             BASE_URL = "https://www.letou1.vip"
             LOGIN_URL = "https://www.letou1.vip/zh-cn#login"
             REGISTER_URL = "https://www.letou1.vip/zh-cn#register"
-
+            KYC_URL = "https://www.letou1.vip/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
+    
             PHONE_NUMBER = ""
             EMAIL = ""
             VALID_USERNAME = ""
@@ -167,6 +174,7 @@ class Config:
             BASE_URL = "https://vwin158.com"
             LOGIN_URL = "https://vwin158.com/zh-cn/login"
             REGISTER_URL = "https://vwin158.com/zh-cn/register"
+            KYC_URL = "https://vwin158.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = ""
             EMAIL = ""

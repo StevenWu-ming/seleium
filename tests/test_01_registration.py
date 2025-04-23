@@ -95,9 +95,9 @@ class registrationPageTest(BaseTest):
         logger.info("測試用例通過：帳號密碼正確註冊成功")
 
  # Step 2: 進行 KYC 驗證
-        kyc_url = "https://uat-newplatform.mxsyl.com/zh-cn/userCenter/kyc"
-        self.driver.get(kyc_url)
-
+        self.kyc_url = self.config.KYC_URL  # 指定 KYC 驗證頁面
+        self.driver.get(self.kyc_url)
+        print(f"設定的測試 URL: {self.kyc_url}")
         click_element(self.driver, self.wait, "//button[contains(text(), ' 立即开始 ')]")
         #定位手機區碼 並且點擊
         click_element(self.driver, self.wait, "//button[.//p[text()='+81']]")
