@@ -10,7 +10,7 @@ class Config:
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
     ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
-    MERCHANT = "Merchant2"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
+    MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
 
