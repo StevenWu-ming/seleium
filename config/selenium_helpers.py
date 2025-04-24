@@ -4,6 +4,7 @@ import time # 導入 time 模組（此處未直接使用，可能為未來擴展
 from selenium.webdriver.common.by import By # 導入 By，用於指定定位元素的方式（如 XPath）
 from selenium.webdriver.support import expected_conditions as EC # 導入 expected_conditions，用於顯式等待條件
 from selenium.common.exceptions import TimeoutException, StaleElementReferenceException # 導入 Selenium 的異常類
+from selenium.webdriver.support.ui import WebDriverWait
 
 def close_popup(driver, wait):
     """重複嘗試關閉彈出窗口，直到找不到或超時"""
@@ -32,6 +33,17 @@ def wait_for_success_message(wait, success_text="我的钱包"):
     """等待頁面中出現成功訊息，返回該元素文字"""
     element = wait.until(EC.presence_of_element_located((By.XPATH, f"//span[contains(text(), '{success_text}')]"))) # 等待包含指定文字的 <span> 元素出現
     return element.text # 返回元素的文字內容
+
+
+def wait_for_success_message1(wait, success_text="我的钱包", timeout=3):
+    try:
+        element = WebDriverWait(wait._driver, timeout).until(
+            EC.visibility_of_element_located((By.XPATH, f"//span[contains(text(), '{success_text}')]"))
+        )
+        return element.text.strip()
+    except TimeoutException:
+        print(f"⚠️ 未在 {timeout} 秒內等到訊息: {success_text}")
+        return None
 
 def wait_for_err_message(wait, success_text="我的钱包"): 
     """等待頁面中出現指定的錯誤訊息，並返回該元素的文字"""

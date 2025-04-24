@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException  # 確保導入
-from config.selenium_helpers import close_popup, perform_login, wait_for_success_message, wait_for_err_message, input_text, click_element
+from config.selenium_helpers import close_popup, perform_login, wait_for_success_message, wait_for_err_message, input_text, click_element, wait_for_success_message1
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner, log_and_fail_on_exception
 
 
@@ -122,7 +122,9 @@ class registrationPageTest(BaseTest):
 
         click_element(self.driver, self.wait, "//button[contains(text(), '继续')]")
 
-        success_message = wait_for_success_message(self.wait, "账户已验证")
+        success_message = wait_for_success_message1(self.wait, "账户已验证", timeout=2)
+        if not success_message or "账户已验证" not in success_message:
+            self.fail("❌ 點擊『继续』後，未在預期時間內出現『账户已验证』訊息")
         self.assertIn("账户已验证", success_message)
         logger.info("測試用例通過：KYC 驗證成功）")
 
