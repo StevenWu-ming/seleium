@@ -30,7 +30,8 @@ class RunParams(BaseModel):
     password: str
     amount: float
 
-app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+# app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+app.mount("/screenshots", StaticFiles(directory="/Users/steven/deepseek/seleium/screenshots"), name="screenshots")
 
 origins = ["http://localhost", "http://127.0.0.1:8000", "*"]
 app.add_middleware(

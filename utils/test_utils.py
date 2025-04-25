@@ -159,7 +159,8 @@ class CleanTextTestResult(TextTestResult):
                 "total_count": total
             },
             "passed_tests": self.passed_tests,  # 返回成功的測試用例訊息
-            "failed_tests": [test["test_name"] for test in self.failed_tests]  # 返回失敗訊息
+            "failed_tests": self.failed_tests,  # 返回成功的測試用例訊息
+            # "failed_tests": [test["test_name"] for test in self.failed_tests]  # 返回失敗訊息
         }
 
 class CustomTextTestRunner(unittest.TextTestRunner):

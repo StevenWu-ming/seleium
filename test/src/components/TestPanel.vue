@@ -9,7 +9,7 @@
 
     <div class="result-panel" :class="{ success: !error, failure: error }">
       <h3>測試結果：</h3>
-      <div id="result-box">{{ resultText }}</div>
+      <div id="result-box" v-html="resultText"></div>
     </div>
   </div>
 </template>
@@ -26,8 +26,6 @@ const error = ref(false)
 const currentEnv = ref('TestEnv')
 const currentMerchant = ref('Merchant1')
 
-// const API_BASE = `http://localhost:8000`
-// const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
 import { API_BASE } from '@/config/api'
 
 const handleUpdate = ({ env, merchant }) => {
@@ -70,18 +68,43 @@ const runTests = async () => {
         clearInterval(poll)
         const d = statusData.data
 
-        let text = `✅ 成功數: ${d.summary.pass_count}\n❌ 失敗數: ${d.summary.fail_count}\n⏱️ 執行時間: ${d.run_time}\n\n`
+        let text = `
+          <div class="summary">
+            <p>✅ 成功數: ${d.summary.pass_count}</p>
+            <p>❌ 失敗數: ${d.summary.fail_count}</p>
+            <p>⏱️ 執行時間: ${d.run_time}</p>
+          </div>
+        `
 
         if (d.passed_tests.length > 0) {
-          text += '🟢 成功的測試:\n' + d.passed_tests.join('\n') + '\n\n'
+          text += `
+            <div class="test-section">
+              <h4>🟢 成功的測試:</h4>
+              <ul>
+                ${d.passed_tests.map(test => `<li>✔ ${test}</li>`).join('')}
+              </ul>
+            </div>
+          `
         } else {
-          text += '⚠️ 沒有成功的測試用例\n\n'
+          text += '<div class="test-section"><p>⚠️ 沒有成功的測試用例</p></div>'
         }
 
         if (d.failed_tests.length > 0) {
-          text += '🔴 失敗的測試:\n' + d.failed_tests.join('\n')
+          text += `
+            <div class="test-section">
+              <h4>🔴 失敗的測試:</h4>
+              <ul>
+                ${d.failed_tests.map(test => `
+                  <li>
+                    ✗ ${test.test_name}
+                    <a href="${API_BASE}/screenshots/${test.screenshot.split('/').pop()}" target="_blank">[查看截圖]</a>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `
         } else {
-          text += '🎉 所有測試通過!'
+          text += '<div class="test-section"><p>🎉 所有測試通過!</p></div>'
         }
 
         resultText.value = text
@@ -89,15 +112,15 @@ const runTests = async () => {
         isRunning.value = false
       } else if (statusData.status === 'failed') {
         clearInterval(poll)
-        resultText.value = `❌ 測試失敗: ${statusData.data.error}`
+        resultText.value = `<div class="test-section"><p>❌ 測試失敗: ${statusData.data.error}</p></div>`
         error.value = true
         isRunning.value = false
       } else {
-        resultText.value = '⏳ 測試執行中...'
+        resultText.value = '<div class="test-section"><p>⏳ 測試執行中...</p></div>'
       }
     }, 10000)
   } catch (err) {
-    resultText.value = `❌ 執行測試時發生錯誤: ${err.message}`
+    resultText.value = `<div class="test-section"><p>❌ 執行測試時發生錯誤: ${err.message}</p></div>`
     error.value = true
     isRunning.value = false
   }
@@ -145,7 +168,6 @@ const runTests = async () => {
   background-color: #ffffff;
   border-left: 4px solid #ccc;
   border-radius: 4px;
-  white-space: pre-line;
   font-family: 'Courier New', monospace;
   font-size: 14px;
   line-height: 1.6;
@@ -158,5 +180,32 @@ const runTests = async () => {
 .failure #result-box {
   border-left-color: #f44336;
   color: #c62828;
+}
+
+/* 新增樣式 */
+.summary p {
+  margin: 4px 0;
+}
+.test-section {
+  margin-top: 16px;
+}
+.test-section h4 {
+  margin-bottom: 8px;
+}
+.test-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+.test-section li {
+  margin-bottom: 8px;
+}
+.test-section a {
+  color: #007bff;
+  text-decoration: none;
+  margin-left: 8px;
+  font-size: 14px;
+}
+.test-section a:hover {
+  text-decoration: underline;
 }
 </style>
