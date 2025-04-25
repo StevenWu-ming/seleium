@@ -3,6 +3,7 @@ import time # 導入 time 模組，用於生成時間戳記
 import logging # 導入 logging 模組，用於記錄測試過程中的訊息
 import unittest # 導入 unittest 模組，提供測試框架
 import traceback # 導入 traceback 模組，用於格式化異常堆疊追蹤
+import shutil # 導入 shutil 模組，用於清空目錄
 from functools import wraps # 導入 wraps，用於保留被裝飾函數的元數據
 from unittest.runner import TextTestResult # 導入 TextTestResult，作為自定義結果類的基類
 
@@ -28,6 +29,15 @@ def log_and_fail_on_exception(test_func):
             self.fail() # 標記測試為失敗
     return wrapper
 
+def clear_screenshots_directory():
+    """
+    清空 screenshots 目錄並重新創建
+    """
+    screenshot_dir = "screenshots"
+    if os.path.exists(screenshot_dir):
+        shutil.rmtree(screenshot_dir) # 刪除目錄及其內容
+    os.makedirs(screenshot_dir, exist_ok=True) # 重新創建空目錄
+    logger.info("已清空 screenshots 目錄")
 
 class CleanTextTestResult(TextTestResult):
     """
@@ -71,7 +81,7 @@ class CleanTextTestResult(TextTestResult):
             super().addFailure(test, err)
             self.fail_count += 1
             
-            #截圖處理
+            # 截圖處理
             if hasattr(test, 'driver'):
                 timestamp = time.strftime("%Y%m%d_%H%M%S")
                 screenshot_name = f"screenshot_{test._testMethodName}_{timestamp}.png"
@@ -81,7 +91,6 @@ class CleanTextTestResult(TextTestResult):
                 test.driver.save_screenshot(screenshot_path)
             else:
                 screenshot_path = "無法取得 driver 截圖"
-
 
             # 使用 docstring（如果有）或測試方法名稱來生成失敗訊息
             failure_msg = f"測試用例失敗：{test._testMethodDoc or test._testMethodName} - 錯誤: {str(err[1])}"
@@ -123,7 +132,7 @@ class CleanTextTestResult(TextTestResult):
                 "error_type": str(err[0].__name__),
                 "error_message": str(err[1]),
                 "stack_trace": ''.join(traceback.format_tb(err[2])),
-                "screenshot": screenshot_path  # ←✨ 加這行
+                "screenshot": screenshot_path
             }
             self.failed_tests.append(error_info)
         logger.error(f"測試用例錯誤: {test._testMethodName} - 錯誤: {str(err[1])}")
@@ -159,6 +168,8 @@ class CustomTextTestRunner(unittest.TextTestRunner):
         self.verbosity = 0
 
     def run(self, test):
+        # 在測試運行前清空截圖目錄
+        clear_screenshots_directory()
         result = super().run(test)
         # 不再調用 printSummary，由主進程負責打印總結
         return result
