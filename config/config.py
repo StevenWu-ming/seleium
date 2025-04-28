@@ -9,7 +9,7 @@ class Config:
     """全域配置，包含環境參數、商戶選擇與隨機資料生成方法"""
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
-    ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
+    ENV = "ProdEnv"         # 可選："TestEnv", "ProdEnv"
     MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
@@ -139,12 +139,12 @@ class Config:
             REGISTER_URL = "https://www.lt.com/zh-cn/register" # 註冊頁面網址
             KYC_URL = "https://www.lt.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
-            PHONE_NUMBER = "18700000005" # 測試用手機號
-            EMAIL = "" # 電子郵件
+            PHONE_NUMBER = "18700000002" # 測試用手機號
+            EMAIL = "fvi15097@jioso.com" # 電子郵件
             VALID_DP_NAME = "测试" # 存款測試名稱
-            VALID_USERNAME = "QA_M1_05" # 有效測試用戶名
-            VALID_DP_USERNAME = "QA_M1_05" # 存款測試用戶名
-            VALID_PASSWORD = "QA_M1_05" # 測試密碼
+            VALID_USERNAME = "QA_M1_02" # 有效測試用戶名
+            VALID_DP_USERNAME = "QA_M1_02" # 存款測試用戶名
+            VALID_PASSWORD = "QA_M1_02" # 測試密碼
 
         class Merchant2(MerchantBase):
             BASE_URL = "https://www.mrcatgo.com"
@@ -192,12 +192,20 @@ class Config:
         # print("⚙️ 目前選擇的商戶：", Config.MERCHANT)
         return merchant_config
 
+    # @staticmethod
+    # def generate_random_username():
+    #     """生成隨機用戶名，格式為 QAM1 + 時間戳記"""
+    #     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S") # 獲取當前時間戳記
+    #     random_username = f"QAM1{timestamp}" # 組合用戶名
+    #     save_random_data_to_json({"random_username": random_username}) # 儲存到 JSON
+    #     return random_username
+
     @staticmethod
     def generate_random_username():
-        """生成隨機用戶名，格式為 QAM1 + 時間戳記"""
-        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S") # 獲取當前時間戳記
-        random_username = f"QAM1{timestamp}" # 組合用戶名
-        save_random_data_to_json({"random_username": random_username}) # 儲存到 JSON
+        """生成隨機用戶名，格式為 QAM1 + Unix時間戳（秒級）"""
+        timestamp = int(datetime.datetime.now().timestamp())  # 獲取當前Unix時間戳（秒級）
+        random_username = f"GB_Test{timestamp}"  # 組合用戶名
+        save_random_data_to_json({"random_username": random_username})  # 儲存到 JSON
         return random_username
 
     @staticmethod
@@ -259,3 +267,4 @@ if __name__ == "__main__":
     print(f"BASE_URL: {config.BASE_URL}")
     print(f"LOGIN_URL: {config.LOGIN_URL}")
     print(f"VALID_USERNAME: {config.VALID_USERNAME}")
+    print(Config.generate_random_username())
