@@ -122,7 +122,7 @@ class registrationPageTest(BaseTest):
 
         click_element(self.driver, self.wait, "//button[contains(text(), '继续')]")
 
-        success_message = wait_for_success_message1(self.wait, "账户已验证", timeout=2)
+        success_message = wait_for_success_message1(self.wait, "账户已验证", timeout=3)
         if not success_message or "账户已验证" not in success_message:
             self.fail("❌ 點擊『继续』後，未在預期時間內出現『账户已验证』訊息")
         self.assertIn("账户已验证", success_message)

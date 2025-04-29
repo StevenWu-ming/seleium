@@ -3,14 +3,15 @@ import json
 import os
 import sys
 from urllib.parse import urljoin
-from .sc_login_aeskey_api import run_admin_login_workflow
+
 
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config
+from .sc_login_aeskey_api import run_admin_login_workflow
 
 json_file_path = Config.RANDOM_DATA_JSON_PATH
-
+run_admin_login_workflow()
 class DepositRiskProcessor:
     pass
     def __init__(self, json_path=json_file_path):
@@ -62,6 +63,5 @@ class DepositRiskProcessor:
         return self.otp()  # 修正筆誤：selfsubjec -> self
 
 if __name__ == "__main__":
-    run_admin_login_workflow()
     processor = DepositRiskProcessor()
     processor.run()

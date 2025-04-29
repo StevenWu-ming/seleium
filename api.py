@@ -17,7 +17,7 @@ import uvicorn
 from config.config import Config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "test-backend")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "testbackend")))
 from runner_wrapper import run_full_flow
 
 BASE_TEST_DIR = os.path.join(os.path.dirname(__file__), "tests")
