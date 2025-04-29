@@ -14,6 +14,8 @@ from config.BaseTest import BaseTest
 from selenium.common.exceptions import StaleElementReferenceException
 from config.selenium_helpers import close_popup, perform_login, wait_for_success_message, wait_for_err_message, input_text, click_element
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner, log_and_fail_on_exception
+from testbackend.sc_otp import DepositRiskProcessor
+from testbackend.sc_login_aeskey_api import run_admin_login_workflow
 
 CustomTextTestRunner(unittest.TextTestRunner)
 
@@ -39,19 +41,70 @@ class DepositTest(BaseTest):
     @log_and_fail_on_exception
     def test_01_01_deposit(self):
         """充值"""
-        # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
-        input_text(self.driver, self.wait, "//input[@maxlength='18']", self.config.VALID_DP_USERNAME)
-        # 輸入密碼到密碼輸入框
-        input_text(self.driver, self.wait, "//input[@type='password']", self.config.VALID_PASSWORD)
-        # 點擊包含“登录”文字的按鈕來提交登入表單
-        click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
+        # # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
+        # input_text(self.driver, self.wait, "//input[@maxlength='18']", self.config.VALID_DP_USERNAME)
+        # # 輸入密碼到密碼輸入框
+        # input_text(self.driver, self.wait, "//input[@type='password']", self.config.VALID_PASSWORD)
+        # # 點擊包含“登录”文字的按鈕來提交登入表單
+        # click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
-        # 關閉公告彈窗
-        close_popup(self.driver, self.wait)
+        perform_login(self.driver, self.wait, self.config.VALID_USERNAME, self.config.VALID_PASSWORD)
+        
+        # 調用 wait_for_success_message 函數，等待並獲取包含 "我的钱包" 的成功提示信息
+        try:
+            success_message = wait_for_success_message(self.wait, "我的钱包")
+            # 斷言檢查成功提示信息中是否包含 "我的钱包" 這個關鍵字，
+            # 以驗證界面上顯示的信息符合預期     
+            self.assertIn("我的钱包", success_message)
+            # 記錄成功信息到日誌，表示手機號碼直接登入測試用例通過
+            logger.info("測試用例通過：手機號碼直接登入成功")
+            
+        except Exception as direct_login_error:
+            # 當上述任一操作失敗時，捕獲異常並記錄警告，
+            # 提示直接登入失敗，可能需要驗證碼處理，並顯示錯誤信息
+            logger.warning(f"直接登入失敗，可能需要驗證碼: {str(direct_login_error)}")
 
-        # 等待遮罩層消失
-        WebDriverWait(self.driver, 5).until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop")))
+            # 點擊發送驗證碼的按鈕或連結
+            # 此元素必須同時包含 'input-group-txt' 和 'get-code' 兩個 CSS 類名，用以定位發送驗證碼的按鈕
+            click_element(self.driver, self.wait, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")
+            phone_number = self.config.PHONE_NUMBER
+            last_six_digits = phone_number[-6:]
+            input_elements = self.driver.find_elements(By.XPATH, "//code-input//input[@type='number']")
+            
+            if len(input_elements) != 6:
+                raise Exception("未找到六個驗證碼輸入框")
+
+            # 逐一輸入六位數字
+            for i in range(6):
+                input_elements[i].clear()
+                input_elements[i].send_keys(last_six_digits[i])
+            click_element(self.driver, self.wait, "//div[@class='btn-container']//button[contains(text(), '确定')]")
+
+            success_toast = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'toast-text')]//p[contains(text(), '成功')]")))
+            print(f"驗證碼發送成功{success_toast}")
+
+            run_admin_login_workflow()
+            processor = DepositRiskProcessor()
+            
+            # 在輸入框中填入驗證碼
+            # 此輸入框為數字類型並限制最大長度為6位，通常用於輸入驗證碼
+            # 使用 config.VERIFY_CODE 中的測試驗證碼進行填入
+            verify_codes = processor.otp()
+            if verify_codes:
+                verify_code = verify_codes[0]  # 取第一個驗證碼
+            else:
+                raise Exception("無法獲取驗證碼")
+
+            input_text(self.driver, self.wait, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']", verify_code)
+            time.sleep(self.delay_seconds)
+
+            # 關閉公告彈窗
+            close_popup(self.driver, self.wait)
+
+            # 等待遮罩層消失
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located((By.CLASS_NAME, "cdk-overlay-backdrop")))
+            
 
         if Config.ENV == "ProdEnv":
             self.deposit_method_b()
