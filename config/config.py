@@ -9,7 +9,7 @@ class Config:
     """全域配置，包含環境參數、商戶選擇與隨機資料生成方法"""
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
-    ENV = "ProdEnv"         # 可選："TestEnv", "ProdEnv"
+    ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
     MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
@@ -66,6 +66,7 @@ class Config:
             KYC_URL = "https://uat-newplatform.mxsyl.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = "13100000021" # 測試用手機號
+            PHONE_OTP = "+8613100******" # +86 測試用手機號碼（前五碼後面*）
             EMAIL = "hrtqdwmk@sharklasers.com" # 測試用電子郵件
             VALID_USERNAME = "cooper005" # 有效測試用戶名
             VALID_DP_USERNAME = "cooper024" # 存款測試用戶名
@@ -140,6 +141,7 @@ class Config:
             KYC_URL = "https://www.lt.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
 
             PHONE_NUMBER = "18700000002" # 測試用手機號
+            PHONE_OTP = "+8613100******" # +86 測試用手機號碼（前五碼後面*）
             EMAIL = "fvi15097@jioso.com" # 電子郵件
             VALID_DP_NAME = "测试" # 存款測試名稱
             VALID_USERNAME = "QA_M1_02" # 有效測試用戶名
