@@ -15,22 +15,56 @@ from config.config import Config  # 導入 Config
 file_path = Config.RANDOM_DATA_JSON_PATH  # ✅ 此為全域值，保留
 
 
+# def load_encrypt_key(json_path: str) -> str:
+#     with open(json_path, 'r', encoding='utf-8') as f:
+#         data = json.load(f)
+#         return data["encyptKey"]
+
 def load_encrypt_key(json_path: str) -> str:
-    with open(json_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-        return data["encyptKey"]
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            return data.get("encyptKey", "")  # 默認返回空字符串
+    except (json.JSONDecodeError, FileNotFoundError):
+        print(f"錯誤：無法讀取 {json_path} 或文件格式錯誤")
+        return ""
+
+
+# def load_encrypt_key_ted(json_path: str = file_path) -> tuple[str, str]:
+#     with open(json_path, 'r', encoding='utf-8') as f:
+#         data = json.load(f)
+#         return data["key"], data["encrypted"]
 
 def load_encrypt_key_ted(json_path: str = file_path) -> tuple[str, str]:
-    with open(json_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-        return data["key"], data["encrypted"]
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            return data.get("key", ""), data.get("encrypted", "")
+    except (json.JSONDecodeError, FileNotFoundError):
+        print(f"錯誤：無法讀取 {json_path} 或文件格式錯誤")
+        return "", ""
+
+
+
+# def save_encrypted_to_json(json_path: str, encrypted: str):
+#     with open(json_path, 'r', encoding='utf-8') as f:
+#         data = json.load(f)
+#     data["encrypted"] = encrypted
+#     with open(json_path, 'w', encoding='utf-8') as f:
+#         json.dump(data, f, ensure_ascii=False, indent=4)
 
 def save_encrypted_to_json(json_path: str, encrypted: str):
-    with open(json_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    data = {}
+    if os.path.exists(json_path) and os.path.getsize(json_path) > 0:
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except json.JSONDecodeError:
+            print(f"警告：{json_path} 格式錯誤，將初始化為空數據")
     data["encrypted"] = encrypted
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
 
 class aes_key_api:
     @staticmethod
@@ -40,47 +74,79 @@ class aes_key_api:
         url = urljoin(cfg.BASE_SC_URL, endpoint)
         
         try:
-            print(f"請求URL: {url}")
             response = requests.get(url)
-            print(f"狀態碼: {response.status_code}")
-            # data = response.json()
-            # print(f"✅ encyptKey: {data.get('key')}")
-            # print(f"✅ key: {data.get('encyptKey')}")
-            # print(f"Response Headers: {response.headers}")
-            # print(f"Response Text: {response.text}")
             response.raise_for_status()
             result = response.json()
         except requests.exceptions.RequestException as e:
-            print(f"錯誤 {response.status_code if '回傳' in locals() else 'N/A'}: {str(e)}")
+            print(f"錯誤：請求失敗 - {e}")
             return None
         
         if result and isinstance(result, dict):
             new_key = result.get("key", "")
             new_encyptKey = result.get("encyptKey", "")
-
-            if os.path.exists(file_path):
-                with open(file_path, "r", encoding="utf-8") as f:
-                    try:
-                        existing_data = json.load(f)
-                    except json.JSONDecodeError:
-                        existing_data = {}
-            else:
-                existing_data = {}
-
-            existing_data["key"] = new_key
-            existing_data["encyptKey"] = new_encyptKey
-
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(existing_data, f, indent=4, ensure_ascii=False)
-
-            print("✅ 請求後台密碼加密成功")
-            print(f"🔹 數據更新: {file_path}")
-            # print(f"🔹 加密key: {new_key}")
-            # print(f"🔹 加密密鑰: {new_encyptKey}")
+            
+            if not new_key or not new_encyptKey:
+                print("警告：API 響應缺少 key 或 encyptKey")
+                return None
+            
+            data = {"key": new_key, "encyptKey": new_encyptKey}
+            try:
+                with open(file_path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=4, ensure_ascii=False)
+                print(f"✅ 數據已保存至 {file_path}")
+            except Exception as e:
+                print(f"錯誤：無法寫入 {file_path} - {e}")
         else:
-            print("❌ 請求失敗!")
+            print("❌ 無效的 API 響應")
         
         return result
+    
+        # cfg = Config.get_current_config()
+        # endpoint = "/api/v1/admin/auth/getpasswordencryptkey"
+        # url = urljoin(cfg.BASE_SC_URL, endpoint)
+        
+        # try:
+        #     print(f"請求URL: {url}")
+        #     response = requests.get(url)
+        #     print(f"狀態碼: {response.status_code}")
+        #     # data = response.json()
+        #     # print(f"✅ encyptKey: {data.get('key')}")
+        #     # print(f"✅ key: {data.get('encyptKey')}")
+        #     # print(f"Response Headers: {response.headers}")
+        #     # print(f"Response Text: {response.text}")
+        #     response.raise_for_status()
+        #     result = response.json()
+        # except requests.exceptions.RequestException as e:
+        #     print(f"錯誤 {response.status_code if '回傳' in locals() else 'N/A'}: {str(e)}")
+        #     return None
+        
+        # if result and isinstance(result, dict):
+        #     new_key = result.get("key", "")
+        #     new_encyptKey = result.get("encyptKey", "")
+
+        #     if os.path.exists(file_path):
+        #         with open(file_path, "r", encoding="utf-8") as f:
+        #             try:
+        #                 existing_data = json.load(f)
+        #             except json.JSONDecodeError:
+        #                 existing_data = {}
+        #     else:
+        #         existing_data = {}
+
+        #     existing_data["key"] = new_key
+        #     existing_data["encyptKey"] = new_encyptKey
+
+        #     with open(file_path, "w", encoding="utf-8") as f:
+        #         json.dump(existing_data, f, indent=4, ensure_ascii=False)
+
+        #     print("✅ 請求後台密碼加密成功")
+        #     print(f"🔹 數據更新: {file_path}")
+        #     # print(f"🔹 加密key: {new_key}")
+        #     # print(f"🔹 加密密鑰: {new_encyptKey}")
+        # else:
+        #     print("❌ 請求失敗!")
+        
+        # return result
 
 class encrypt_by_ae:
     @staticmethod

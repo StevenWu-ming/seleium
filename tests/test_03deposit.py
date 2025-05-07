@@ -48,7 +48,7 @@ class DepositTest(BaseTest):
         # # 點擊包含“登录”文字的按鈕來提交登入表單
         # click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
-        perform_login(self.driver, self.wait, self.config.VALID_USERNAME, self.config.VALID_PASSWORD)
+        perform_login(self.driver, self.wait, self.config.VALID_DP_USERNAME, self.config.VALID_PASSWORD)
         
         # 調用 wait_for_success_message 函數，等待並獲取包含 "我的钱包" 的成功提示信息
         try:
