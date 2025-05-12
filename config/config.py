@@ -1,3 +1,4 @@
+###管理Selenium測試環境配置，支持多商戶、動態路徑，生成隨機用戶名、電話、郵件並存JSON。
 import datetime # 導入 datetime 模組，用於生成時間戳記
 import json # 導入 json 模組，用於讀寫 JSON 檔案
 import os # 導入 os 模組，用於處理檔案路徑與目錄操作
@@ -9,7 +10,7 @@ class Config:
     """全域配置，包含環境參數、商戶選擇與隨機資料生成方法"""
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
-    ENV = "ProdEnv"         # 可選："TestEnv", "ProdEnv"
+    ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
     MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
