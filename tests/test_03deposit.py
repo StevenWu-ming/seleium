@@ -1,3 +1,4 @@
+# 測試充值功能，支援不同環境（TestEnv 和 ProdEnv）的充值方式，包含登入、金額輸入及訂單狀態檢查
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))

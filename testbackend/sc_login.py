@@ -1,3 +1,4 @@
+# 提供後台管理員 API 客戶端功能，處理登入請求並將返回的 token 儲存至 JSON 文件
 import requests
 import json
 import os

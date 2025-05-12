@@ -1,3 +1,4 @@
+# 提供登入相關 API 調用功能，包括獲取初始 token、RSA 密碼加密及用戶登入流程
 import requests
 import json
 import os

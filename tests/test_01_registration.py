@@ -1,4 +1,4 @@
-# seleium/tests/test_01_registration.py
+# 測試註冊頁面功能，包括按鈕啟用檢查、正確註冊與 KYC 驗證、以及重複帳號註冊失敗
 import os
 import sys
 # 添加項目根目錄到 sys.path

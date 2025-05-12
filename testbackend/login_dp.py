@@ -1,3 +1,4 @@
+# 執行自動化流程：環境配置、獲取初始 token、用戶登入並進行存款操作
 import time
 import json
 import os

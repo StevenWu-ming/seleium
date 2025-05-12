@@ -1,4 +1,4 @@
-# selenium_helpers.py
+# 提供 Selenium 自動化網頁操作的輔助函數，包括彈窗關閉、元素點擊、文字輸入、等待訊息及登入流程封裝
 import os # 導入 os 模組（此處未直接使用，可能為未來擴展保留）
 import time # 導入 time 模組（此處未直接使用，可能為未來擴展保留）
 from selenium.webdriver.common.by import By # 導入 By，用於指定定位元素的方式（如 XPath）

@@ -1,3 +1,4 @@
+# 透過 API 批量註冊帳號，使用動態 token 和加密密碼，支援用戶輸入前綴和數量
 import requests
 import time
 from selenium import webdriver

@@ -1,3 +1,4 @@
+# 執行後台管理員登入流程，包含 AES 密鑰獲取、密碼加密、保存加密數據及 API 登入
 import requests
 import json
 import os

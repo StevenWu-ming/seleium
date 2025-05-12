@@ -1,4 +1,4 @@
-# selenium_tests/test_login.py
+# 測試登入頁面功能，包括手機號碼、郵箱登入，錯誤憑證測試及按鈕啟用檢查
 import os
 import sys
 # 添加項目根目錄到 sys.path

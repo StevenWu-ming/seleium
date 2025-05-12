@@ -1,3 +1,4 @@
+# 提供 FastAPI 服務，支援自動化測試執行、環境與商戶切換、測試結果查詢及存款流程運行
 import os
 import signal
 import subprocess

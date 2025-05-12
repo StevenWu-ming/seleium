@@ -1,3 +1,4 @@
+# 執行指定的單元測試用例並捕獲輸出，檢查結果並重複運行直到失敗
 import unittest
 import sys
 from io import StringIO
