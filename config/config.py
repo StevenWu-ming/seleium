@@ -56,8 +56,9 @@ class Config:
             SC_USERNAME = "QA006" # 後台測試帳號
             SC_PASSWORD = "QA006" # 後台測試密碼
             # 驗證碼與金額
-            VERIFY_CODE = "123456" # 測試用驗證碼
+            VERIFY_CODE = "123456" # 測試用驗證碼 已經可以不用了我直接從後台抓取驗證碼
             DP_Amount = '100' # 測試用存款金額/
+            WD_Amount = '10' # 測試用提款金額
 
         class Merchant1(MerchantBase):
             """測試環境的 Merchant1 配置，繼承 MerchantBase"""

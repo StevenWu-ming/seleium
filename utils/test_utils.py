@@ -7,6 +7,9 @@ import traceback # 導入 traceback 模組，用於格式化異常堆疊追蹤
 import shutil # 導入 shutil 模組，用於清空目錄
 from functools import wraps # 導入 wraps，用於保留被裝飾函數的元數據
 from unittest.runner import TextTestResult # 導入 TextTestResult，作為自定義結果類的基類
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # 設置日誌記錄器，名稱為當前模組名稱 (__name__)
 logger = logging.getLogger(__name__)
@@ -30,6 +33,40 @@ def log_and_fail_on_exception(test_func):
             self.fail() # 標記測試為失敗
     return wrapper
 
+def wait_for_loading_to_disappear(driver, timeout=15):
+    """等待畫面中的 loading 遮罩消失（支援多種常見 class 名稱）"""
+
+    possible_loading_classes = [
+        "app-local-loading",  # 你目前使用的
+        "loading",            # 常見
+        "spinner",            # 常見
+        "overlay",            # 遮罩類型
+        "loading-container",  # 元件外框
+        "lds-spinner",        # 第三方 UI 套件常用
+    ]
+
+    found = False
+    for class_name in possible_loading_classes:
+        try:
+            loading_element = WebDriverWait(driver, 3).until(
+                EC.presence_of_element_located((By.CLASS_NAME, class_name))
+            )
+            logger.info(f"🔄 偵測到 loading: class='{class_name}', outerHTML: {loading_element.get_attribute('outerHTML')}")
+            found = True
+            break
+        except:
+            continue
+
+    if not found:
+        logger.info("✅ 沒有偵測到 loading 畫面，繼續執行")
+        return
+
+    # 等待該 loading 元素消失
+    WebDriverWait(driver, timeout).until(
+        EC.invisibility_of_element_located((By.CLASS_NAME, class_name))
+    )
+    logger.info(f"✅ loading 已消失: class='{class_name}'")
+
 def clear_screenshots_directory():
     """
     清空 screenshots 目錄並重新創建
@@ -39,6 +76,14 @@ def clear_screenshots_directory():
         shutil.rmtree(screenshot_dir) # 刪除目錄及其內容
     os.makedirs(screenshot_dir, exist_ok=True) # 重新創建空目錄
     logger.info("已清空 screenshots 目錄")
+
+
+def clear_log_file(log_file_path="test.log"):
+    """清空指定的日誌文件"""
+    if os.path.exists(log_file_path):
+        open(log_file_path, 'w').close()
+    logger.info("已清空日誌文件")
+
 
 class CleanTextTestResult(TextTestResult):
     """
@@ -170,8 +215,8 @@ class CustomTextTestRunner(unittest.TextTestRunner):
         self.verbosity = 0
 
     def run(self, test):
-        # 在測試運行前清空截圖目錄
-        clear_screenshots_directory()
+        clear_screenshots_directory() # 在測試運行前清空截圖目錄
+        clear_log_file()  # 清空日誌文件
         result = super().run(test)
         # 不再調用 printSummary，由主進程負責打印總結
         return result

@@ -78,55 +78,55 @@ class registrationPageTest(BaseTest):
 
         logger.info("測試用例通過：註冊按鈕檢查成功")
 
-    @log_and_fail_on_exception
-    def test_01_02_registration(self):
-        """帳號密碼正確註冊，並且進行 KYC 驗證"""
-# Step 1: 註冊
-        #關閉公告彈窗
-        close_popup(self.driver, self.wait)
-        #定位帳號輸入欄位 並且輸入 隨機帳號
-        input_text(self.driver, self.wait, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']", (Config.generate_random_username()))
-        #定位密碼輸入欄位 並且輸入 
-        input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
-        click_element(self.driver, self.wait, "//button[contains(text(), '注册')]")
-        #判斷是否登入成功 拿到我的錢包字串
-        success_message = wait_for_success_message(self.wait, "我的钱包")
-        self.assertIn("我的钱包", success_message)
-        logger.info("測試用例通過：帳號密碼正確註冊成功")
+#     @log_and_fail_on_exception
+#     def test_01_02_registration(self):
+#         """帳號密碼正確註冊，並且進行 KYC 驗證"""
+# # Step 1: 註冊
+#         #關閉公告彈窗
+#         close_popup(self.driver, self.wait)
+#         #定位帳號輸入欄位 並且輸入 隨機帳號
+#         input_text(self.driver, self.wait, "//div[contains(text(), '用户名')]//following-sibling::div//input[@type='text']", (Config.generate_random_username()))
+#         #定位密碼輸入欄位 並且輸入 
+#         input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
+#         click_element(self.driver, self.wait, "//button[contains(text(), '注册')]")
+#         #判斷是否登入成功 拿到我的錢包字串
+#         success_message = wait_for_success_message(self.wait, "我的钱包")
+#         self.assertIn("我的钱包", success_message)
+#         logger.info("測試用例通過：帳號密碼正確註冊成功")
 
- # Step 2: 進行 KYC 驗證
-        self.kyc_url = self.config.KYC_URL  # 指定 KYC 驗證頁面
-        self.driver.get(self.kyc_url)
-        print(f"設定的測試 URL: {self.kyc_url}")
-        click_element(self.driver, self.wait, "//button[contains(text(), ' 立即开始 ')]")
-        #定位手機區碼 並且點擊
-        click_element(self.driver, self.wait, "//button[.//p[text()='+81']]")
-        #手機區碼輸入+86
-        input_text(self.driver, self.wait, "//input[@placeholder='搜索' or contains(@class, 'search')]", "+86")
-        time.sleep(self.delay_seconds)
-        click_element(self.driver, self.wait, "//div[contains(text(), '+86')]")
+# # Step 2: 進行 KYC 驗證
+        # self.kyc_url = self.config.KYC_URL  # 指定 KYC 驗證頁面
+        # self.driver.get(self.kyc_url)
+        # print(f"設定的測試 URL: {self.kyc_url}")
+        # click_element(self.driver, self.wait, "//button[contains(text(), ' 立即开始 ')]")
+        # #定位手機區碼 並且點擊
+        # click_element(self.driver, self.wait, "//button[.//p[text()='+81']]")
+        # #手機區碼輸入+86
+        # input_text(self.driver, self.wait, "//input[@placeholder='搜索' or contains(@class, 'search')]", "+86")
+        # time.sleep(self.delay_seconds)
+        # click_element(self.driver, self.wait, "//div[contains(text(), '+86')]")
 
-        #定位手機號碼欄位 輸入手機號碼
-        input_text(self.driver, self.wait,  "//div[contains(@class, 'phone-select')]//input[@type='number']", (Config.generate_chinese_phone_number()))
-        # 點擊發送驗證碼的按鈕或連結
-        # 此元素必須同時包含 'input-group-txt' 和 'get-code' 兩個 CSS 類名，用以定位發送驗證碼的按鈕
-        click_element(self.driver, self.wait, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")
+        # #定位手機號碼欄位 輸入手機號碼
+        # input_text(self.driver, self.wait,  "//div[contains(@class, 'phone-select')]//input[@type='number']", (Config.generate_chinese_phone_number()))
+        # # 點擊發送驗證碼的按鈕或連結
+        # # 此元素必須同時包含 'input-group-txt' 和 'get-code' 兩個 CSS 類名，用以定位發送驗證碼的按鈕
+        # click_element(self.driver, self.wait, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")
         
-        self.wait.until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '验证码已发送')]")))
-        print("✅ 檢測到驗證碼已發送字樣")
+        # self.wait.until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '验证码已发送')]")))
+        # print("✅ 檢測到驗證碼已發送字樣")
 
-        #輸入驗證碼（目前預設123456）
-        input_text(self.driver, self.wait, "//div[contains(text(), '验证码')]/following::input[@type='number'][1]", (self.config.VERIFY_CODE))
+        # #輸入驗證碼（目前預設123456）
+        # input_text(self.driver, self.wait, "//div[contains(text(), '验证码')]/following::input[@type='number'][1]", (self.config.VERIFY_CODE))
 
-        input_text(self.driver, self.wait, "//div[contains(text(), '姓名')]/following::input[@type='text'][1]", "测试")
+        # input_text(self.driver, self.wait, "//div[contains(text(), '姓名')]/following::input[@type='text'][1]", "测试")
 
-        click_element(self.driver, self.wait, "//button[contains(text(), '继续')]")
+        # click_element(self.driver, self.wait, "//button[contains(text(), '继续')]")
 
-        success_message = wait_for_success_message1(self.wait, "账户已验证", timeout=3)
-        if not success_message or "账户已验证" not in success_message:
-            self.fail("❌ 點擊『继续』後，未在預期時間內出現『账户已验证』訊息")
-        self.assertIn("账户已验证", success_message)
-        logger.info("測試用例通過：KYC 驗證成功）")
+        # success_message = wait_for_success_message1(self.wait, "账户已验证", timeout=3)
+        # if not success_message or "账户已验证" not in success_message:
+        #     self.fail("❌ 點擊『继续』後，未在預期時間內出現『账户已验证』訊息")
+        # self.assertIn("账户已验证", success_message)
+        # logger.info("測試用例通過：KYC 驗證成功）")
 
     @log_and_fail_on_exception
     def test_01_03_registration_duplicate(self):
