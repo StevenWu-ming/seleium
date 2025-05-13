@@ -65,6 +65,18 @@ uvicorn_logger.setLevel(logging.INFO)
 
 api_test_results = {"status": "not_started", "data": None}
 
+# def discover_test_classes():
+#     discovered = []
+#     for filename in os.listdir(BASE_TEST_DIR):
+#         if filename.startswith("test_") and filename.endswith(".py"):
+#             module_name = filename[:-3]
+#             module = importlib.import_module(f"tests.{module_name}")
+#             for attr in dir(module):
+#                 obj = getattr(module, attr)
+#                 if isinstance(obj, type) and issubclass(obj, unittest.TestCase):
+#                     discovered.append(obj)
+#     return discovered
+
 def discover_test_classes():
     discovered = []
     for filename in os.listdir(BASE_TEST_DIR):
@@ -73,11 +85,29 @@ def discover_test_classes():
             module = importlib.import_module(f"tests.{module_name}")
             for attr in dir(module):
                 obj = getattr(module, attr)
-                if isinstance(obj, type) and issubclass(obj, unittest.TestCase):
-                    discovered.append(obj)
+                if (isinstance(obj, type) and 
+                    issubclass(obj, unittest.TestCase) and 
+                    obj.__name__ != "BaseTest"):  # 排除 BaseTest
+                    suite = unittest.TestSuite()
+                    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(obj))
+                    test_count = suite.countTestCases()
+                    if test_count > 0:  # 只添加有測試用例的類
+                        discovered.append(obj)
+                        logger.info(f"測試類 {obj.__name__} 包含 {test_count} 條測試用例")
     return discovered
 
 def run_test_in_process(test_class, result_dict, env, merchant):
+    # Config.ENV = env
+    # Config.MERCHANT = merchant
+    # config = Config.get_current_config()
+    # process_id = os.getpid()
+    # logger.info(f"開始運行測試類 {test_class.__name__}，進程 ID: {process_id}")
+    # suite = unittest.TestSuite()
+    # suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_class))
+    # runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=0)
+    # result = runner.run(suite)
+    # result_dict[test_class.__name__] = result.get_results()
+
     Config.ENV = env
     Config.MERCHANT = merchant
     config = Config.get_current_config()
@@ -87,7 +117,9 @@ def run_test_in_process(test_class, result_dict, env, merchant):
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_class))
     runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=0)
     result = runner.run(suite)
-    result_dict[test_class.__name__] = result.get_results()
+    test_results = result.get_results()
+    logger.info(f"測試類 {test_class.__name__} 結果: {test_results}")
+    result_dict[test_class.__name__] = test_results
 
 def run_tests_background():
     global api_test_results
@@ -102,6 +134,40 @@ def run_tests_background():
         config.INVALID_PHONE_NUMBER = Config.generate_japanese_phone_number()
         config.INVALID_EMAIL = Config.generate_random_email()
 
+        # test_classes = discover_test_classes()
+        # with Manager() as manager:
+        #     shared_results = manager.dict()
+        #     max_workers = cpu_count()
+        #     active_processes = []
+
+        #     for test_class in test_classes:
+        #         while len(active_processes) >= max_workers:
+        #             for p in active_processes:
+        #                 if not p.is_alive():
+        #                     active_processes.remove(p)
+        #             time.sleep(0.2)
+
+        #         # p = Process(target=run_test_in_process, args=(test_class, shared_results))
+        #         p = Process(target=run_test_in_process, args=(test_class, shared_results, Config.ENV, Config.MERCHANT))
+
+        #         p.start()
+        #         active_processes.append(p)
+
+        #     for p in active_processes:
+        #         p.join()
+
+        #     pass_count = 0
+        #     fail_count = 0
+        #     passed_tests = []
+        #     failed_tests = []
+
+        #     for test_class_name, result in shared_results.items():
+        #         summary = result.get("summary", {})
+        #         pass_count += summary.get("pass_count", 0)
+        #         fail_count += summary.get("fail_count", 0)
+        #         passed_tests.extend(result.get("passed_tests", []))
+        #         failed_tests.extend(result.get("failed_tests", []))
+
         test_classes = discover_test_classes()
         with Manager() as manager:
             shared_results = manager.dict()
@@ -115,14 +181,19 @@ def run_tests_background():
                             active_processes.remove(p)
                     time.sleep(0.2)
 
-                # p = Process(target=run_test_in_process, args=(test_class, shared_results))
                 p = Process(target=run_test_in_process, args=(test_class, shared_results, Config.ENV, Config.MERCHANT))
-
                 p.start()
                 active_processes.append(p)
 
             for p in active_processes:
                 p.join()
+
+            # 檢查是否所有測試類都有結果
+            missing_classes = [cls.__name__ for cls in test_classes if cls.__name__ not in shared_results]
+            if missing_classes:
+                logger.error(f"以下測試類結果遺漏: {missing_classes}")
+            else:
+                logger.info(f"所有測試類結果已收集: {list(shared_results.keys())}")
 
             pass_count = 0
             fail_count = 0
@@ -135,6 +206,7 @@ def run_tests_background():
                 fail_count += summary.get("fail_count", 0)
                 passed_tests.extend(result.get("passed_tests", []))
                 failed_tests.extend(result.get("failed_tests", []))
+
 
             run_time = time.time() - start_time
             api_test_results["status"] = "completed"

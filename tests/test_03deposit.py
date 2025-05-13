@@ -40,7 +40,7 @@ class DepositTest(BaseTest):
         super().setUp()
 
     @log_and_fail_on_exception
-    def test_01_01_deposit(self):
+    def test_03_01_deposit(self):
         """充值"""
         # # 輸入使用者名稱到指定輸入框（最大長度為18個字元）
         # input_text(self.driver, self.wait, "//input[@maxlength='18']", self.config.VALID_DP_USERNAME)
