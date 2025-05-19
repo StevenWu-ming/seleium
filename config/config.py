@@ -71,7 +71,7 @@ class Config:
             PHONE_NUMBER = "13100000021" # 測試用手機號
             PHONE_OTP = "+8613100******" # +86 測試用手機號碼（前五碼後面*）
             EMAIL = "hrtqdwmk@sharklasers.com" # 測試用電子郵件
-            VALID_USERNAME = "cooper005" # 有效測試用戶名
+            VALID_USERNAME = "cooper004" # 有效測試用戶名
             VALID_DP_USERNAME = "cooper024" # 存款測試用戶名
             VALID_DP_NAME = "测试" # 存款測試名稱
             VALID_WD_USERNAME = "cooper006" # 提款款測試用戶名

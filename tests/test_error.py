@@ -1,3 +1,4 @@
+'''
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -144,7 +145,7 @@ class LoginPageTest(BaseTest):
         logger.info("測試用例通過：錯誤手機號碼登入測試")
 
     @log_and_fail_on_exception
-    def test_02_013check_login_button_enabled_after_username_and_password(self):
+    def test_02_03check_login_button_enabled_after_username_and_password(self):
         """檢查登入按鈕是否在輸入帳號密碼後啟用"""
         login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
         initial_disabled = "disabled" in login_button.get_attribute("class")
@@ -201,7 +202,7 @@ class LoginPageTest(BaseTest):
         self.assertIsNotNone(success_message)
 
     @log_and_fail_on_exception
-    def test_03_06_mail_login(self):
+    def test_02_06_mail_login(self):
         """郵箱登入"""  
         click_element(self.driver, self.wait, "//div[contains(@class, 'tab') and contains(text(), ' 邮箱 ')]")
         input_text(self.driver, self.wait, "//input[@type='text']", (self.config.EMAIL))
@@ -230,3 +231,4 @@ if __name__ == "__main__":
     runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=2)
     result = runner.run(suite)
     logger.info("測試運行完成")
+    '''

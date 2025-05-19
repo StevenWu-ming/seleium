@@ -149,7 +149,7 @@ class LoginPageTest(BaseTest):
         logger.info("測試用例通過：錯誤手機號碼登入測試")
 
     @log_and_fail_on_exception
-    def test_02_013check_login_button_enabled_after_username_and_password(self):
+    def test_02_03check_login_button_enabled_after_username_and_password(self):
         """檢查登入按鈕是否在輸入帳號密碼後啟用"""
         # 使用顯式等待，直到頁面上包含「登录」文字的按鈕元素出現，並將其賦值給 login_button
         login_button = self.wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), '登录')]")))
@@ -286,7 +286,7 @@ class LoginPageTest(BaseTest):
         logger.info("測試用例通過：帳號密碼錯誤無法登入成功")
 
     @log_and_fail_on_exception
-    def test_03_06_mail_login(self):
+    def test_02_06_mail_login(self):
         """郵箱登入"""  
         # 點擊選項卡，切換到「 邮箱 」登入方式
         # 利用 XPath 定位 class 包含 "tab" 且文本包含 " 邮箱 " 的元素
