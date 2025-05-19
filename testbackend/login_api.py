@@ -11,7 +11,21 @@ import base64
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.config import Config  # 導入 Config
+import logging
 
+# 設置日誌文件路徑為 selenium_tests/test_log.log
+log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
+log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
+# 配置日誌，調整級別為 INFO
+logging.basicConfig(
+    level=logging.INFO,  # 改為 INFO 級別
+    format='%(asctime)s - %(levelname)s - [%(name)s] %(message)s',
+    handlers=[
+        logging.FileHandler(log_file, mode='w'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 file_path = Config.RANDOM_DATA_JSON_PATH  
 
 class LoginAPI:
