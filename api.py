@@ -17,6 +17,10 @@ from pydantic import BaseModel
 import uvicorn
 from config.config import Config
 from utils.test_utils import CleanTextTestResult, CustomTextTestRunner
+from playwright.async_api import async_playwright
+from pathlib import Path
+import re
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "testbackend")))
 from runner_wrapper import run_full_flow
@@ -65,18 +69,6 @@ uvicorn_logger.setLevel(logging.INFO)
 
 api_test_results = {"status": "not_started", "data": None}
 
-# def discover_test_classes():
-#     discovered = []
-#     for filename in os.listdir(BASE_TEST_DIR):
-#         if filename.startswith("test_") and filename.endswith(".py"):
-#             module_name = filename[:-3]
-#             module = importlib.import_module(f"tests.{module_name}")
-#             for attr in dir(module):
-#                 obj = getattr(module, attr)
-#                 if isinstance(obj, type) and issubclass(obj, unittest.TestCase):
-#                     discovered.append(obj)
-#     return discovered
-
 def discover_test_classes():
     discovered = []
     for filename in os.listdir(BASE_TEST_DIR):
@@ -97,16 +89,6 @@ def discover_test_classes():
     return discovered
 
 def run_test_in_process(test_class, result_dict, env, merchant):
-    # Config.ENV = env
-    # Config.MERCHANT = merchant
-    # config = Config.get_current_config()
-    # process_id = os.getpid()
-    # logger.info(f"開始運行測試類 {test_class.__name__}，進程 ID: {process_id}")
-    # suite = unittest.TestSuite()
-    # suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_class))
-    # runner = CustomTextTestRunner(resultclass=CleanTextTestResult, verbosity=0)
-    # result = runner.run(suite)
-    # result_dict[test_class.__name__] = result.get_results()
 
     Config.ENV = env
     Config.MERCHANT = merchant
@@ -260,6 +242,34 @@ def run_all(params: RunParams):
         return {"message": "✅ 自動化小工具-存款流程完成"}
     except Exception as e:
         return {"error": "❎" f"執行失敗: {str(e)}"}
+
+
+@app.post("/run-sports-screenshot")
+async def run_sports_screenshot():
+    result = subprocess.run(
+        ["python", "tests/sports-screenshot.py"],
+        capture_output=True,
+        text=True,
+        timeout=300
+    )
+
+    output = result.stdout + "\n" + result.stderr  # 結合 stdout 和 stderr（斷言錯誤會出現在 stderr）
+
+    # ✅ 解析成功與失敗
+    success_matches = re.findall(r"📸 已儲存 (\w+) 畫面", output)
+    failed_matches = re.findall(r"❌ 找不到 (\w+) 的 iframe", output)
+
+    # ✅ 統一回傳格式（不論 returncode）
+    return JSONResponse(content={
+        "message": "擷取完成",
+        "success": success_matches,
+        "failed": failed_matches,
+        "count": {
+            "total": len(success_matches) + len(failed_matches),
+            "success": len(success_matches),
+            "fail": len(failed_matches)
+        },
+    })
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, log_config=None)

@@ -35,28 +35,53 @@
       <h3>測試結果：</h3>
       <pre>{{ result }}</pre>
     </div>
+
+    <!-- 第三方體育轉跳檢查工具區塊 -->
+    <hr />
+    <div class="screenshot-section">
+      <h2>第三方體育轉跳檢查</h2>
+      <button :disabled="isRunningScreenshot" @click="runScreenshot">
+        {{ isRunningScreenshot ? '擷取中...' : '執行體育截圖' }}
+      </button>
+
+      <div v-if="screenshotResult" class="screenshot-result">
+        <h3>擷取結果：</h3>
+        <ul>
+          <li><strong>✅ 成功：</strong>
+            <span v-if="screenshotResult.success?.length">{{ screenshotResult.success.join(', ') }}</span>
+            <span v-else>無</span>
+          </li>
+          <li><strong>❌ 失敗：</strong>
+            <span v-if="screenshotResult.failed?.length">{{ screenshotResult.failed.join(', ') }}</span>
+            <span v-else>無</span>
+          </li>
+          <li><strong>統計：</strong> 成功 {{ screenshotResult.count?.success || 0 }} / 總共 {{ screenshotResult.count?.total || 0 }}</li>
+        </ul>
+
+        <details style="margin-top: 8px;">
+          <summary>查看原始回應 JSON</summary>
+          <pre>{{ screenshotResult }}</pre>
+        </details>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import EnvSelector from '@/components/common/EnvSelector.vue'
+import { API_BASE } from '@/config/api'
 
 const isRunning = ref(false)
 const result = ref('尚未執行測試')
+const isRunningScreenshot = ref(false)
+const screenshotResult = ref(null)
 
-// 使用者輸入參數
 const userNameInput = ref('')
 const userRealNameInput = ref('')
 const passwordInput = ref('')
 const amountInput = ref(0)
 
-
-// const API_BASE = `http://localhost:8000`
-// const API_BASE = `https://ou-debut-composite-hawk.trycloudflare.com`
-import { API_BASE } from '@/config/api'
-
-// 從 EnvSelector 傳回來的環境與商戶狀態s
 const currentEnv = ref('TestEnv')
 const currentMerchant = ref('Merchant1')
 
@@ -96,71 +121,41 @@ const runTest = async () => {
     isRunning.value = false
   }
 }
+
+const runScreenshot = async () => {
+  isRunningScreenshot.value = true
+  screenshotResult.value = null
+  try {
+    const res = await fetch(`${API_BASE}/run-sports-screenshot`, {
+      method: 'POST'
+    })
+    const data = await res.json()
+    screenshotResult.value = data
+  } catch (error) {
+    screenshotResult.value = {
+      message: '❌ 擷取失敗',
+      success: [],
+      failed: [],
+      count: { total: 0, success: 0, fail: 0 }
+    }
+  } finally {
+    isRunningScreenshot.value = false
+  }
+}
 </script>
 
 <style scoped>
-/* 原樣保留所有 CSS */
 .container {
   padding: 20px;
 }
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.env-switch, .merchant-switch, .test-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.switch-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-}
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 20px;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-input:checked + .slider {
-  background-color: #2196F3;
-}
-input:checked + .slider:before {
-  transform: translateX(20px);
+.test-button {
+  margin-top: 8px;
 }
 .input-area {
   display: flex;
   flex-wrap: wrap;
-  gap: 1px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin: 16px 0;
   align-items: center;
 }
 .field-group {
@@ -170,7 +165,7 @@ input:checked + .slider:before {
 }
 .field-group label {
   font-weight: 500;
-  min-width: 20px;
+  min-width: 40px;
 }
 .input-area input {
   padding: 6px 8px;
@@ -183,6 +178,17 @@ input:checked + .slider:before {
   border-radius: 8px;
   border: 1px solid #ccc;
   min-height: 200px;
+  margin-top: 16px;
+}
+.screenshot-section {
+  margin-top: 32px;
+}
+.screenshot-result {
+  margin-top: 12px;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 pre {
   white-space: pre-wrap;

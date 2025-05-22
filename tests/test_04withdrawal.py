@@ -192,7 +192,7 @@ class withdrawal(BaseTest):
             # 直接定位符合條件的 customize-button
             target_customize_button = WebDriverWait(self.driver, 30).until(
                 EC.presence_of_element_located((By.XPATH, "//customize-button[@class='n-m' and @size='large']")))
-            logger.info("成功找到符合條件的 customize-button")
+            logger.info("成功找到符合條件的 第三次繼續")
 
             # 定位內層的按鈕
             continue_button = target_customize_button.find_element(By.XPATH, ".//button[contains(@class, 'customize-button')]")
@@ -204,8 +204,9 @@ class withdrawal(BaseTest):
             logger.info("按鈕未被禁用")
 
             # 點擊按鈕
-            logger.info("✅ 正在點擊繼續按鈕")
-            ActionChains(self.driver).move_to_element(continue_button).click().perform()
+            # ActionChains(self.driver).move_to_element(continue_button).click().perform()
+            self.driver.execute_script("arguments[0].click();", continue_button)
+            logger.info("✅ 點擊繼續按鈕")
 
         except Exception as e:
             logger.error(f"無法定位或點擊繼續按鈕: {str(e)}")
