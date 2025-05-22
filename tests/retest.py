@@ -5,7 +5,7 @@ from io import StringIO
 from test_01_registration import registrationPageTest,CleanTextTestResult, CustomTextTestRunner
 from test_02_login import LoginPageTest,CleanTextTestResult, CustomTextTestRunner
 from test_03deposit import DepositTest,CleanTextTestResult, CustomTextTestRunner
-from test_error import LoginPageTest,CleanTextTestResult, CustomTextTestRunner
+from tests.test_05bet import LoginPageTest,CleanTextTestResult, CustomTextTestRunner
 
 def run_tests():
     while True:

@@ -67,14 +67,15 @@ class Config:
             REGISTER_URL = "https://uat-newplatform.mxsyl.com/zh-cn/register" # 註冊頁面網址
             KYC_URL = "https://uat-newplatform.mxsyl.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
             WD_URL = "https://uat-newplatform.mxsyl.com/zh-cn/withdrawal/fiat"  # 提款頁面網址
+            SB_URL = "https://uat-newplatform.mxsyl.com/zh-cn/play/SaBaSport-1/All"  # 體育頁面網址
 
-            PHONE_NUMBER = "13100000021" # 測試用手機號
+            PHONE_NUMBER = "13100000021" # 測試用手機號 cooper007
             PHONE_OTP = "+8613100******" # +86 測試用手機號碼（前五碼後面*）
-            EMAIL = "hrtqdwmk@sharklasers.com" # 測試用電子郵件
-            VALID_USERNAME = "cooper004" # 有效測試用戶名
-            VALID_DP_USERNAME = "cooper024" # 存款測試用戶名
+            EMAIL = "hrtqdwmk@sharklasers.com" # 測試用電子郵件 cooper005
+            VALID_USERNAME = "cooper004" # 有效測試用戶名 cooper004
+            VALID_DP_USERNAME = "cooper024" # 存款測試用戶名 cooper024
             VALID_DP_NAME = "测试" # 存款測試名稱
-            VALID_WD_USERNAME = "cooper006" # 提款款測試用戶名
+            VALID_WD_USERNAME = "cooper006" # 提款款測試用戶名 cooper006
             VALID_PASSWORD = "1234Qwer" # 測試密碼
 
         class Merchant2(MerchantBase):
