@@ -194,7 +194,19 @@ class DepositTest(BaseTest):
         success_message = WebDriverWait(self.driver, 15).until(
             EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
         self.assertIn("请在有效期内完成", success_message.text)
-        logger.info("測試用例通過：充值成功提交")
+
+        # 抓取訂單號碼
+        try:
+            order_element = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '订单：')]"))
+            )
+            order_text = order_element.text.strip()  # "订单：D2730855698421509G"
+            order_id = order_text.split("订单：")[-1].strip()  # 拿純訂單編號
+            self._testMethodDoc = f"充值成功 訂單：{order_id}"  # ✅ 顯示在報告中
+            logger.info(f"測試用例通過：充值成功提交，訂單：{order_id}")
+        except TimeoutException:
+            logger.warning("⚠️ 未能在頁面中找到訂單號碼")
+            logger.info("測試用例通過：充值成功提交（未找到訂單號）")
 
 
 
@@ -295,7 +307,20 @@ class DepositTest(BaseTest):
         success_message = WebDriverWait(self.driver, 15).until(
             EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '请在有效期内完成')]")))
         self.assertIn("请在有效期内完成", success_message.text)
-        logger.info("測試用例通過：充值成功提交")
+
+         # 抓取訂單號碼
+        try:
+            order_element = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//span[contains(text(), '订单：')]"))
+            )
+            order_text = order_element.text.strip()  # "订单：D2730855698421509G"
+            order_id = order_text.split("订单：")[-1].strip()  # 拿純訂單編號
+            self._testMethodDoc = f"充值成功 訂單：{order_id}"  # ✅ 顯示在報告中
+            logger.info(f"測試用例通過：充值成功提交，訂單：{order_id}")
+        except TimeoutException:
+            logger.warning("⚠️ 未能在頁面中找到訂單號碼")
+            logger.info("測試用例通過：充值成功提交（未找到訂單號）")
+
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(DepositTest)
