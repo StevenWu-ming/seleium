@@ -6,6 +6,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import time
 import logging
 import unittest
+import random
+import string
 from config.config import Config  
 from config.BaseTest import BaseTest
 from selenium.webdriver.common.by import By
@@ -270,8 +272,11 @@ class LoginPageTest(BaseTest):
     @log_and_fail_on_exception
     def test_02_05_invalid_credentials(self):
         """帳號密碼錯誤登入"""
+        base_username = Config.generate_random_username()
+        extra_char = random.choice(string.ascii_letters + string.digits)
+        final_username = base_username + extra_char
         # 輸入隨機生成的使用者名稱到指定輸入框（最大長度為18個字元）
-        input_text(self.driver, self.wait, "//input[@maxlength='18']", (Config.generate_random_username()))
+        input_text(self.driver, self.wait, "//input[@maxlength='18']", final_username)
         # 輸入有效的密碼到密碼輸入框
         input_text(self.driver, self.wait, "//input[@type='password']", (self.config.VALID_PASSWORD))
         # 點擊包含“登录”文字的按鈕來提交登入表單
