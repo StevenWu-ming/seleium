@@ -11,7 +11,7 @@ class Config:
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
     ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
-    MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
+    MERCHANT = "Merchant8"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
 
@@ -110,6 +110,17 @@ class Config:
             LOGIN_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/login"
             REGISTER_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/register"
             KYC_URL = "https://uat7-newplatform.mxsyl.com/zh-cn/userCenter/kyc" # KYC 驗證頁面網址
+
+            PHONE_NUMBER = ""
+            EMAIL = ""
+            VALID_USERNAME = ""
+            VALID_DP_USERNAME = ""
+            VALID_PASSWORD = ""
+        class Merchant8(MerchantBase):
+            BASE_URL = "https://uat8-newplatform.mxsyl.com"
+            LOGIN_URL = ""
+            REGISTER_URL = ""
+            KYC_URL = "" # KYC 驗證頁面網址
 
             PHONE_NUMBER = ""
             EMAIL = ""
