@@ -1,4 +1,3 @@
-# 提供登入相關 API 調用功能，包括獲取初始 token、RSA 密碼加密及用戶登入流程
 import requests
 import json
 import os
@@ -7,18 +6,17 @@ from urllib.parse import urljoin
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
 import base64
+import logging
 
 # 添加項目根目錄到 sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from config.config import Config  # 導入 Config
-import logging
+from config.config import Config
 
-# 設置日誌文件路徑為 selenium_tests/test_log.log
-log_dir = os.path.dirname(__file__)  # 獲取當前腳本所在目錄 (selenium_tests)
-log_file = os.path.join(log_dir, 'test_log.log')  # 直接放在 selenium_tests 根目錄
-# 配置日誌，調整級別為 INFO
+# 設置日誌
+log_dir = os.path.dirname(__file__)
+log_file = os.path.join(log_dir, 'test_log.log')
 logging.basicConfig(
-    level=logging.INFO,  # 改為 INFO 級別
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - [%(name)s] %(message)s',
     handlers=[
         logging.FileHandler(log_file, mode='w'),
@@ -26,61 +24,44 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
-file_path = Config.RANDOM_DATA_JSON_PATH  
+file_path = Config.RANDOM_DATA_JSON_PATH
 
 LOGIN_URL = "https://uat8-newplatform.mxsyl.com/v1/member/auth/loginbyemail"
-
+VERIFY2FA_URL = "https://uat8-newplatform.mxsyl.com/v1/member/auth/verify2fa"
 
 class LoginAPI:
+    # 分別存 setup token（before_token）和登入後 token（last_token）
+    before_token = None
+    last_token = None
+    last_uniCode = None
+    last_email = None
+
+    @staticmethod
     def run_setup_api():
         cfg = Config.get_current_config()
-
         url = urljoin(cfg.BASE_URL, cfg.SET_UP_API)
         headers = {
-            "user-agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/134.0.0.0 Safari/537.36"
-            )
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0"
         }
-
         response = requests.get(url, headers=headers)
-
         if response.status_code == 200:
             result = response.json()
         else:
-            print(f"錯誤 {response.status_code}: {response.text}")
+            logger.error(f"錯誤 {response.status_code}: {response.text}")
             result = None
 
         if result is not None and result.get("success"):
-            new_token = result["data"]
-
-            if os.path.exists(file_path):
-                with open(file_path, "r") as f:
-                    try:
-                        existing_data = json.load(f)
-                    except json.JSONDecodeError:
-                        existing_data = {}
-            else:
-                existing_data = {}
-
-            existing_data["before_token"] = new_token
-
-            with open(file_path, "w") as f:
-                json.dump(existing_data, f, indent=4)
-
-            print(f"✅ {Config.ENV} 獲取未登入Token成功!")  
-            print(f"🔹 Token 更新至: {file_path}")
+            LoginAPI.before_token = result["data"]
+            logger.info(f"✅ {Config.ENV} setup 成功 before_token: {LoginAPI.before_token}")
         else:
-            print("❌ 登入失敗")
+            logger.error("❌ setup 失敗")
             if result:
-                print(f"錯誤訊息: {result}")
+                logger.error(f"錯誤訊息: {result}")
             else:
-                print("未收到錯誤訊息")
+                logger.error("未收到錯誤訊息")
         return result
 
-
-    #前台登入密碼加密流程
     @staticmethod
     def encrypt_password(password: str, public_key_pem: str) -> str:
         rsa_key = RSA.import_key(public_key_pem)
@@ -91,86 +72,98 @@ class LoginAPI:
     @staticmethod
     def login(email=None, password=None):
         cfg = Config.get_current_config()
+        email = email or "cooper009@grr.la"
+        password = password or "1234Qwer"
 
-        email = email or "cooper003@grr.la"
-        password = password or  "1234Qwer"
+        token = LoginAPI.before_token
+        if not token:
+            logger.error("❌ before_token 尚未取得，請先執行 run_setup_api")
+            return None
 
-        token = None
-        try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-            token = data.get("before_token")
-            if not token:
-                raise ValueError("JSON 檔案中缺少 'before_token' 字段")
-        except FileNotFoundError:
-            print(f"錯誤：找不到檔案 {file_path}")
-        except json.JSONDecodeError:
-            print("錯誤：JSON 檔案格式無效")
-        except Exception as e:
-            print(f"發生錯誤：{str(e)}")
-
-        url = LOGIN_URL
-
-
-        print("🔐 RSA 密碼加密工具")
         rsa_public_key = f"""-----BEGIN PUBLIC KEY-----
-        {cfg.public_key_content}
-        -----END PUBLIC KEY-----"""
+{cfg.public_key_content}
+-----END PUBLIC KEY-----"""
         try:
-            password = "1234Qwer"
             encrypted = LoginAPI.encrypt_password(password, rsa_public_key)
         except Exception as e:
-            print("❌ 錯誤訊息：", str(e))
+            logger.error(f"❌ 密碼加密失敗: {str(e)}")
+            return None
 
         headers = {
             "authorization": f"Bearer {token}",
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+                          "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0"
         }
         payload = {
             "email": email,
             "password": encrypted
         }
 
-        response = requests.post(url, json=payload, headers=headers)
-
+        response = requests.post(LOGIN_URL, json=payload, headers=headers)
         if response.status_code == 200:
             result = response.json()
         else:
-            print(f"錯誤 {response.status_code}: {response.text}")
+            logger.error(f"錯誤 {response.status_code}: {response.text}")
             result = None
 
         if result is not None and result.get("success"):
-            new_token = result["data"].get("token", "")
-
-            if os.path.exists(file_path):
-                with open(file_path, "r") as f:
-                    try:
-                        existing_data = json.load(f)
-                    except json.JSONDecodeError:
-                        existing_data = {}
-            else:
-                existing_data = {}
-
-            existing_data["token"] = new_token
-
-            with open(file_path, "w") as f:
-                json.dump(existing_data, f, indent=4)
-
-            print(f"✅ {Config.ENV} 登入成功!")  
-            print(f"🔹 登入Token更新至: {file_path}")
+            data = result["data"]
+            LoginAPI.last_token = data.get("token", "")
+            LoginAPI.last_uniCode = data.get("uniCode", "")
+            LoginAPI.last_email = email
+            logger.info(f"✅ {Config.ENV} 登入成功 last_token: {LoginAPI.last_token} uniCode: {LoginAPI.last_uniCode}")
         else:
-            print("❌ 登入失敗")
+            logger.error("❌ 登入失敗")
             if result:
-                print(f"失敗訊息: {result}")
+                logger.error(f"失敗訊息: {result}")
             else:
-                print("未收到錯誤訊息")
-                print(email, encrypted)  
+                logger.error("未收到錯誤訊息")
+            logger.error(f"payload: {payload}")
 
         return result
 
+class TwoFAAPI:
+    @staticmethod
+    def verify_2fa(email=None, email_code="123456", use_setup_token=True):
+        """
+        預設使用登入後 token 驗證 2FA。
+        如需用 before_token 驗證（非標準流程，僅測試用），請設 use_setup_token=True
+        """
+        token = LoginAPI.before_token if use_setup_token else LoginAPI.last_token
+        uniCode = LoginAPI.last_uniCode
+        email = email or LoginAPI.last_email
 
-# Example usage
+        if not (uniCode and email):
+            logger.error("❌ 尚未登入成功，token/uniCode/email 不完整")
+            return None
+
+        headers = {
+            "authorization": f"Bearer {token}",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "uniCode": uniCode,
+            "email": email,
+            "emailCode": email_code
+        }
+        logger.info(f"發送 2FA 請求，用 {'before_token' if use_setup_token else 'last_token'}，payload: {payload}")
+
+        response = requests.post(VERIFY2FA_URL, headers=headers, json=payload)
+        try:
+            result = response.json()
+        except Exception:
+            logger.error(f"⚠️ 2FA response JSON 解析失敗: {response.text}")
+            return None
+
+        logger.info(f"2FA 回應: {json.dumps(result, ensure_ascii=False)}")
+        return result
+
 if __name__ == "__main__":
     LoginAPI.run_setup_api()
     LoginAPI.login()
+    # 預設正常驗證（登入後 token）
+    TwoFAAPI.verify_2fa()
+    # 如需驗證 setup token（除錯用，正常不需這樣做）
+    # TwoFAAPI.verify_2fa(use_setup_token=True)

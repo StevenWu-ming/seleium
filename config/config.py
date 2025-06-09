@@ -11,7 +11,7 @@ class Config:
 
     # 全域設定，直接在這裡指定要使用的環境與商戶
     ENV = "TestEnv"         # 可選："TestEnv", "ProdEnv"
-    MERCHANT = "Merchant8"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
+    MERCHANT = "Merchant1"  # 可選："Merchant1", "Merchant2", "Merchant3", "Merchant4"
     DELAY_SECONDS = 0.5 # 測試步驟間的延遲時間（秒）
     WAIT_TIMEOUT = 10 # Selenium 等待網頁元素的超時時間（秒）
 
@@ -44,6 +44,7 @@ class Config:
             """測試環境的商戶基礎類，定義共用的 API 端點與帳戶資料"""
             # 後台相關
             SET_UP_API = "/v1/api/auth/setup?s=eSGwvL70s4%2F1Uc8jOs%2BEdjTTY7ABjG%2BCJta8QmZOtHULSAbatME47%2Bt1QY8ktqW9wbPxFmh7huwAApMflnR6PtjBqoTz%2FCmzADuNcMhdNxr0jRR5TfVyi%2FmSDnEPwGpNwpfwwKllYmSPqufI9RpgwuKI112fHbrG7jFq4F0spPZIxdC2aenXt5SwdPQv8D4xc2yw%2BOwRpttIaMKKo8xXiaqxrr52UfIfQyJCPfdjS0dIPtivex81oo6813jBPMjzNMMcmaJw4efnfDQPG6xfERAdTf8OdRj1XrNNFjTcP3rIg%2Bp89ObbZ7plal5xoQovmdF7JKiZi85RQzuuV%2BQgEg%3D%3D"
+            # SET_UP_API = "/v1/api/auth/setup?s=DUw7HmopCF6PUigDKIuImTfOAiSP3CLHQty9LQ6m%2Bmm26LDyl2xxiEc%2B6Jb1XDX6QS4QrHMxlXK6NXUctpuvkdMpKFJVczvq%2Bzn%2FLJtnmj9u5UYwIhk4FSIFyXSy%2F3ADTxr7p4UVLmQw0w3vQ0N1c50hL5rgy9KAP7VyNiYdFYzTcsfqfaZiL1K8uWsURg8j2ndNMnZtMODJtSI6FBu88wkaaw3z364%2FJmtga5aBDNUGL6L%2FnUuOUCc7hhI7h45IbW3oXwXMxX3z7CtYbLR2NESv6FHe7ch6872lB%2B6XNg%2FrAszx7clOUJnOHZJ15cPDGibsDMlidsTY8fS5Fy1E2A%3D%3D"
             public_key_content = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1lcU5lRpSOqdLicIimSso8wSCTDWdtv3BXGeixALS+bcqOMmV2Tm5F5O3sOAku/a+XxeC+yXkaVrCXpgsl0LEPGVnqO5XoVs4LTeo0zwCJQ+H7TN1ZlqkpfFCL7Mn1+dUXvy+N2p5ijlTZiFsfetc+Jr/JH2Zj62nnc/Vpxne0RsKLwh4Mwp6i/BSv2H9xurablJpz3GPb0qoTniCuxzXvCR9h2tFfbCNacrdpOFVW/A8g27g5em+uqjVB5xAhM1pj0b5PlgR6Oyn5c5mmK1waBx/P+NZJRmGrDbHZMq07v3ma9LTOCGGoG90ReYHxVFRSlAzfl5NGF9nrkfZW4skQIDAQAB"
             BASE_SC_URL = "http://uat-admin-api.mxsyl.com:5012" # 後台基礎網址
             SC_LOGIN_API = "/api/v1/admin/auth/login" # 後台登入 API
@@ -75,7 +76,7 @@ class Config:
             VALID_USERNAME = "cooper004" # 有效測試用戶名 cooper004
             VALID_DP_USERNAME = "cooper024" # 存款測試用戶名 cooper024
             VALID_DP_NAME = "测试" # 存款測試名稱
-            VALID_WD_USERNAME = "cooper006" # 提款款測試用戶名 cooper006
+            VALID_WD_USERNAME = "cooper007" # 提款款測試用戶名 cooper006
             VALID_PASSWORD = "1234Qwer" # 測試密碼
 
         class Merchant2(MerchantBase):
