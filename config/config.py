@@ -76,7 +76,7 @@ class Config:
             VALID_USERNAME = "cooper004" # 有效測試用戶名 cooper004
             VALID_DP_USERNAME = "cooper024" # 存款測試用戶名 cooper024
             VALID_DP_NAME = "测试" # 存款測試名稱
-            VALID_WD_USERNAME = "cooper007" # 提款款測試用戶名 cooper006
+            VALID_WD_USERNAME = "cooper006" # 提款款測試用戶名 cooper006
             VALID_PASSWORD = "1234Qwer" # 測試密碼
 
         class Merchant2(MerchantBase):
