@@ -12,46 +12,68 @@ from config.config import Config
 logger = logging.getLogger(__name__)
 config = Config.get_current_config()
 
-
-
 class BaseTest(unittest.TestCase):
     def setUp(self):
+        # 延迟设定
         self.delay_seconds = Config.DELAY_SECONDS
 
+        # 1. 配置 ChromeOptions
         chrome_options = Options()
+        # 明确指定本机 Chrome.app 二进制（138 版）
         chrome_options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-        chrome_options.add_argument("--headless")  # ✅ Headless 模式（若要看視覺效果可關掉這行）
+        # 窗口大小 & headless 引擎
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--log-level=3")
-        chrome_options.set_capability("goog:loggingPrefs", {"browser": "OFF"})
-        chrome_options.add_argument("--window-size=1920,1080")
-
-        logger.info("🚀 啟動 webdriver_manager，檢查快取或下載 ChromeDriver")
-        downloaded_driver_path = ChromeDriverManager().install()
-
-        # ✅ 若自定路徑不存在，就複製一次
-        if not os.path.exists(Config.CHROMEDRIVER_PATH):
-            os.makedirs(os.path.dirname(Config.CHROMEDRIVER_PATH), exist_ok=True)
-            shutil.copy(downloaded_driver_path, Config.CHROMEDRIVER_PATH)
-            os.chmod(Config.CHROMEDRIVER_PATH, 0o755)
-            logger.info(f"📥 複製 ChromeDriver 至指定路徑: {Config.CHROMEDRIVER_PATH}")
-        else:
-            logger.info(f"✅ 使用已存在的 ChromeDriver 路徑: {Config.CHROMEDRIVER_PATH}")
-
-        # ✅ 初始化 driver
-        self.driver = webdriver.Chrome(
-            service=Service(Config.CHROMEDRIVER_PATH),
-            options=chrome_options
+        # 隐藏 automation 特征
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option("useAutomationExtension", False)
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        # 覆盖 User-Agent：去掉 HeadlessChrome 标识
+        normal_ua = (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/138.0.7204.94 Safari/537.36"
         )
+        chrome_options.add_argument(f"--user-agent={normal_ua}")
+        # 强制 browserName 为 chrome，避免部分工具识别为 headless
+        chrome_options.set_capability("browserName", "chrome")
 
+        # 2. 下载并安装对应的 ChromeDriver (138)
+        logger.info("🚀 使用 webdriver_manager 获取 ChromeDriver")
+        driver_path = ChromeDriverManager().install()
+        service = Service(driver_path)
+
+        # 3. 启动 WebDriver
+        self.driver = webdriver.Chrome(service=service, options=chrome_options)
         self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)
 
+        # 4. （可选）上报版本到后端
+        try:
+            caps = self.driver.capabilities
+            payload = {
+                "browserVersion": caps.get("browserVersion"),
+                "chromedriverVersion": caps.get("chrome", {}).get("chromedriverVersion", "").split(" ", 1)[0],
+                "testSuite": self.__class__.__name__
+            }
+            # 替换成你们后端版本上报接口
+            logging.info(f"上报版本: {payload}")
+            # requests.post("https://your-backend/api/test/version", json=payload, timeout=5)
+        except Exception as e:
+            logger.warning(f"版本上报失败: {e}")
+
+        # 5. 导航至测试页面 (子类可设 self.url)
         if hasattr(self, "url") and self.url:
             self.driver.get(self.url)
-            logger.info(f"🌐 導航至指定測試頁面: {self.url}")
+            logger.info(f"导航至: {self.url}")
 
     def tearDown(self):
-        logger.info("🧹 測試結束，關閉瀏覽器")
-        self.driver.quit()
+        logger.info("🧹 测试结束，关闭浏览器")
+        if hasattr(self, 'driver') and self.driver:
+            self.driver.quit()
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
