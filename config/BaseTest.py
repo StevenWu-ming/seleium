@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from config.config import Config
+from webdriver_manager.chrome import ChromeDriverManager  # 新增匯入
 
 logger = logging.getLogger(__name__)
 config = Config.get_current_config()
@@ -17,10 +18,10 @@ class BaseTest(unittest.TestCase):
 
         # 1. 配置 ChromeOptions
         chrome_options = Options()
-        # 明確指定本機 Chrome.app 二進制（138 版）
+        # 明確指定本機 Chrome.app 二進制（139 版，基於 2025-08-19 版本）
         chrome_options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-        # 窗口大小 & headless 引擎
-        chrome_options.add_argument("--headless=new")
+        # 窗口大小 & headless 引擎（註解掉以使用可見模式）
+        # chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -30,27 +31,28 @@ class BaseTest(unittest.TestCase):
         chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
         chrome_options.add_experimental_option("useAutomationExtension", False)
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-        # 覆蓋 User-Agent：去掉 HeadlessChrome 標識
+        # 覆蓋 User-Agent：去掉 HeadlessChrome 標識，更新為 139 版
         normal_ua = (
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "Chrome/138.0.7204.94 Safari/537.36"
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.7258.128 Safari/537.36"
         )
         chrome_options.add_argument(f"--user-agent={normal_ua}")
         # 強制 browserName 為 chrome，避免部分工具識別為 headless
         chrome_options.set_capability("browserName", "chrome")
 
-        # 2. 使用 config.py 中指定的 ChromeDriver 路徑
-        logger.info(f"🚀 使用固定 ChromeDriver 路徑: {Config.get_chromedriver_path()}")
-        service = Service(Config.get_chromedriver_path())
+        # 2. 使用 webdriver-manager 自動下載/更新 ChromeDriver
+        logger.info("🚀 使用 webdriver-manager 自動管理 ChromeDriver")
+        service = Service(ChromeDriverManager().install())  # 自動下載並返回路徑
 
         # 3. 啟動 WebDriver
         try:
             self.driver = webdriver.Chrome(service=service, options=chrome_options)
             logger.info("✅ WebDriver 成功初始化")
+            # 初始化 self.wait（修復缺失屬性問題）
+            self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)
         except Exception as e:
             logger.error(f"❌ WebDriver 初始化失敗: {e}")
             raise
-        self.wait = WebDriverWait(self.driver, Config.WAIT_TIMEOUT)
 
         # 4. （可選）上報版本到後端
         try:
