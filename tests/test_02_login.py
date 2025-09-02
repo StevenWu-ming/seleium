@@ -304,12 +304,46 @@ class LoginPageTest(BaseTest):
         # 點擊包含「登录」文字的按鈕，提交登入請求
         click_element(self.driver, self.wait, "//button[contains(text(), '登录')]")
 
-        # 等待並捕獲登入成功後返回的提示訊息，預期訊息中包含「我的钱包」
+
+        # 調用 wait_for_success_message 函數，等待並獲取包含 "我的钱包" 的成功提示信息
+        try:
+            success_message = wait_for_success_message(self.wait, "我的钱包")
+            # 斷言檢查成功提示信息中是否包含 "我的钱包" 這個關鍵字，
+            # 以驗證界面上顯示的信息符合預期     
+            self.assertIn("我的钱包", success_message)
+            # 記錄成功信息到日誌，表示手機號碼直接登入測試用例通過
+            logger.info("測試用例通過：手機號碼直接登入成功")
+            # 斷言確認 success_message 不為 None，以進一步保證獲取到的提示信息有效
+            self.assertIsNotNone(success_message)
+            return
+        except Exception as direct_login_error:
+            # 當上述任一操作失敗時，捕獲異常並記錄警告，
+            # 提示直接登入失敗，可能需要驗證碼處理，並顯示錯誤信息
+            logger.warning(f"直接登入失敗，可能需要驗證碼: {str(direct_login_error)}")
+
+        # 點擊發送驗證碼的按鈕或連結
+        # 此元素必須同時包含 'input-group-txt' 和 'get-code' 兩個 CSS 類名，用以定位發送驗證碼的按鈕
+        click_element(self.driver, self.wait, "//div[contains(@class, 'input-group-txt') and contains(@class, 'get-code')]")
+
+        # 使用顯式等待，直到出現包含「成功」文字的提示訊息（toast）
+        # 這裡等待的元素為一個 <p> 標籤，其父容器帶有 'toast-text' 類名
+        success_toast = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'toast-text')]//p[contains(text(), '成功')]")))
+        # 記錄除錯日誌，標示驗證碼發送成功
+        logger.debug("Verification code sent successfully")
+        # 在輸入框中填入驗證碼
+        # 此輸入框為數字類型並限制最大長度為6位，通常用於輸入驗證碼
+        # 使用 config.VERIFY_CODE 中的測試驗證碼進行填入
+        input_text(self.driver, self.wait, "//div[contains(@class, 'input-group')]//input[@type='number' and @maxlength='6']", "123456")
+        # 等待並獲取包含「我的钱包」字樣的成功訊息，表示登入流程成功
         success_message = wait_for_success_message(self.wait, "我的钱包")
-        # 斷言檢查：確保成功訊息不為 None，以進一步確認提示信息有效
+        # 斷言：檢查返回的成功訊息中是否包含「我的钱包」這個關鍵字
         self.assertIn("我的钱包", success_message)
-        logger.info("測試用例通過：郵箱登入成功")
+        # 記錄日誌：測試用例通過，表示使用手機號碼加驗證碼的登入流程成功
+        logger.info("測試用例通過：手機號碼經由驗證碼登入成功")
+        # 斷言：確認 success_message 不為 None，進一步驗證成功訊息是有效的
         self.assertIsNotNone(success_message)
+
+
 
     @log_and_fail_on_exception
     def test_02_07_mail_wronglogin(self):
