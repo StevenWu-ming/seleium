@@ -21,7 +21,7 @@ class BaseTest(unittest.TestCase):
         # 明確指定本機 Chrome.app 二進制（139 版，基於 2025-08-19 版本）
         chrome_options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         # 窗口大小 & headless 引擎（註解掉以使用可見模式）
-        # chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
